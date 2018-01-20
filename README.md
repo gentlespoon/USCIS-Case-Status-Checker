@@ -14,13 +14,13 @@ USCIS does a really bad job of keeping one updated on the progress of a case and
 
 ## Predicting decision time
 
-Fortunately, USCIS issues receipt numbers in **chronological order**, and they process their cases in a first-come-first serve order. That means if we check other people's case status, **we will be able to get an estimate time of case decision**:
+Fortunately, USCIS issues receipt numbers in *chronological order*, and they process their cases in a *first-come-first serve* order. That means if we check other people's case status, *we will be able to get an estimate time of case decision*:
 
 * If a huge proportion of people before (and possibly after) me have their OPTs approved, I should have mine processed soon.
 * However, if the people who submitted around my date are stil waiting for their approval, I can expect to wait a long time.
 
 
-However, doing so manually at [https://egov.uscis.gov/casestatus/mycasestatus.do](https://egov.uscis.gov/casestatus/mycasestatus.do) is a slow and tiring process. Instead, I can write a script to “scrape” the website for the 50,000 or so cases before and after my own number.
+However, doing so manually at [https://egov.uscis.gov/casestatus/mycasestatus.do](https://egov.uscis.gov/casestatus/mycasestatus.do) is a slow and tiring process. Instead, I can write a script to "scrape" the website for the 50,000 or so cases before and after my own number.
 
 
 ## Result
