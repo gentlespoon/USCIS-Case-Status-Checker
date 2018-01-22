@@ -29,23 +29,12 @@ However, doing so manually at [https://egov.uscis.gov/casestatus/mycasestatus.do
 E:\github\EAD-AutoQuery>python app.py
 New column '2018119_1350' added
 YSC1890004628 ,   ,  Card Was Mailed To Me
-INSERT INTO data (caseid, form, valid, `2018119_1350`) VALUES ('YSC1890004628', '', '1', 'Card Was Mailed To Me')
 YSC1890006628 ,   ,  Card Was Mailed To Me
-INSERT INTO data (caseid, form, valid, `2018119_1350`) VALUES ('YSC1890006628', '', '1', 'Card Was Mailed To Me')
 YSC1890008628 ,  I-765 ,  Request for Initial Evidence Was Mailed
-INSERT INTO data (caseid, form, valid, `2018119_1350`) VALUES ('YSC1890008628', 'I-765', '1', 'Request for Initial Evidence Was Mailed')
 YSC1890010628 ,   ,  Card Was Mailed To Me
-INSERT INTO data (caseid, form, valid, `2018119_1350`) VALUES ('YSC1890010628', '', '1', 'Card Was Mailed To Me')
 YSC1890012628 ,  I-130 ,  Case Was Received
-INSERT INTO data (caseid, form, valid, `2018119_1350`) VALUES ('YSC1890012628', 'I-130', '1', 'Case Was Received')
 YSC1890014628 ,   ,  Card Was Mailed To Me
-INSERT INTO data (caseid, form, valid, `2018119_1350`) VALUES ('YSC1890014628', '', '1', 'Card Was Mailed To Me')
 YSC1890016628 ,  I-130 ,  Case Was Received
-INSERT INTO data (caseid, form, valid, `2018119_1350`) VALUES ('YSC1890016628', 'I-130', '1', 'Case Was Received')
 YSC1890018628 ,   ,  Card Was Mailed To Me
-INSERT INTO data (caseid, form, valid, `2018119_1350`) VALUES ('YSC1890018628', '', '1', 'Card Was Mailed To Me')
-YSC1890020628 ,  Validation Error(s)<br/>You must correct the following error(s) before proceeding:
-INSERT INTO data (caseid, form, valid, `2018119_1350`) VALUES ('YSC1890020628', '', '0', 'Validation Error(s)<br/>You must correct the following error(s) before proceeding:')
-YSC1890022628 ,  I-130 ,  Case Was Received
-INSERT INTO data (caseid, form, valid, `2018119_1350`) VALUES ('YSC1890022628', 'I-130', '1', 'Case Was Received')
+YSC1890020628 ,  Validation Error(s)<br/>You must correct the following error(s) before proceeding: correct the following error(s) before proceeding:
 ```
