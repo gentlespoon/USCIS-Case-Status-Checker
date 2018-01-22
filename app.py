@@ -1,6 +1,6 @@
 import datetime
 import string
-import sqlite3
+# import sqlite3
 from time import sleep
 from urllib import request, parse
 
@@ -35,15 +35,27 @@ def CISquery(caseId):
   # I dont care about the error case content
   p = body[body.find('<p>')+3:body.find('</p>')]
 
-  if title != '':
-    # valid case id
+  if title == "Card Was Mailed To Me":
     valid = 1
     formStart = p.find("I-")
     formEnd = p.find(",", formStart)
     form = p[formStart:formEnd]
-    print(caseId, ", ", form, ", ", title)
+    dateStart = p.find("On ")+3
+    dateEnd = p.find(", we mailed")
+    date = p[dateStart:dateEnd]
+
+
+  elif title == "Case Was Received":
+    valid = 1
+    formStart = p.find("I-")
+    formEnd = p.find(",", formStart)
+    form = p[formStart:formEnd]
+    dateStart = p.find("On ")+3
+    dateEnd = p.find(", we received", dateStart)
+    date = p[dateStart:dateEnd]
+
     
-  else:
+  elif title == "":
     # invalid case id
     valid = 0
     # extract error information
@@ -52,14 +64,23 @@ def CISquery(caseId):
     body = (resp[start:end])
     title = body[body.find('<h4>')+4:body.find('</h4>')]
     form = ""
+    date = ""
     # content = body[body.find('<li>')+4:body.find('</li>')]
-    print(caseId, ", ", title)
+    # print(caseId, "  ", title)
     # print(content)
-
+  
+  else :
+    form = ""
+    date = ""
+    
+  print(caseId, "  ", form, "  ", title, "  ", date)
+  # existId = db.execute("SELECT caseid from data WHERE caseid='{0}'".format(caseId))
+  # print(existId.fetchone())
+  
   # sql = "UPDATE data SET {0}='{1}' WHERE caseid='{2}'".format(time, title, caseId)
-  sql = "INSERT INTO data (caseid, form, valid, `{0}`) VALUES ('{1}', '{2}', '{3}', '{4}')".format(time, caseId, form, valid, title)
-  print(sql)
-  db.execute(sql)
+  # sql = "INSERT INTO data (caseid, form, valid, `{0}`) VALUES ('{1}', '{2}', '{3}', '{4}')".format(time, caseId, form, valid, title)
+  # print(sql)
+  # db.execute(sql)
 
 
 
@@ -74,37 +95,34 @@ def main():
   time = "{0}{1}{2}_{3}{4}".format(now.year, now.month, now.day, now.hour, now.minute)
 
   # open database
-  try:
-    conn = sqlite3.connect('data.db')
-  except:
-    print("DB dead")
-    exit()
+  # try:
+  #   conn = sqlite3.connect('data.db')
+  # except:
+  #   print("DB dead")
+  #   exit()
   
-  conn.row_factory = sqlite3.Row
-  global db
-  db = conn.cursor()
+  # conn.row_factory = sqlite3.Row
+  # global db
+  # db = conn.cursor()
 
-  db.execute('SELECT * FROM data LIMIT 1')
+  # db.execute('SELECT * FROM data LIMIT 1')
   # if column for current time does not exist,
   #   create a column with current time
-  try:
-    if db.fetchone()[time]:
-      pass
-  except:
-    sql = 'ALTER TABLE data ADD COLUMN \'{0}\' TEXT'.format(time)
-    db.execute(sql)
-    conn.commit()
-    print("New column \'{0}\' added".format(time))
+
+  # sql = 'ALTER TABLE data ADD COLUMN \'{0}\' TEXT'.format(time)
+  # db.execute(sql)
+  # conn.commit()
+  # print("New column \'{0}\' added".format(time))
 
   # since USCIS case id is in chronological order,
   #   check the previous 40k to next 40k case ids
   #   should give a rough sense of processing status
   myid = 44628
-  step = 2000
+  step = 500
 
 
   base = myid - 40000
-  cap = myid + 40000
+  cap = myid + 5000
   num = base
 
   # Potomac Service Center case id starts with YSC
@@ -113,10 +131,10 @@ def main():
     caseId = "YSC18900"+ str(num).rjust(5, '0')
     CISquery(caseId)
     num += step
-    # limit 1 QPS to avoid IP block
-    sleep(1)
+    # limit 5 QPS to avoid IP block
+    # sleep(0.2)
 
-  conn.commit()
+  # conn.commit()
 
 
 if __name__ == "__main__":
