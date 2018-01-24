@@ -26,10 +26,12 @@ namespace WpfApp1
     {
         bool dev = true;
 
-        // WebClient should be sufficient for simple web requests
-        private WebClient web = new WebClient();
-        Checker checkTask = new Checker();
+        SQLiteConnection sqlite = null;
 
+        // WebClient should be sufficient for simple web requests
+        WebClient web = new WebClient();
+        Checker checkTask = new Checker();
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -51,7 +53,7 @@ namespace WpfApp1
             // System.Threading.Thread.Sleep(1000);
             try
             {
-                web.OpenRead("https://egov.uscis.gov/casestatus/mycasestatus.do");
+                web.OpenRead("https://egov.uscis.gov/casestatus/landing.do");
                 InternetStatus.Foreground = Brushes.ForestGreen;
                 InternetStatus.Content = "√ Connected to USCIS";
                 tb_CaseID.IsEnabled = true;
@@ -119,7 +121,7 @@ namespace WpfApp1
             public int caseIdRangeEnd;
             public int step;
             public int cases;
-            public List<int> caseIds = new List<int>();
+            public List<string> caseIds = new List<string>();
 
             public void RefreshCondRange(int prevCases, int nextCases)
             {
@@ -155,9 +157,11 @@ namespace WpfApp1
 
             if (checkTask.step % 2 > 0 && checkTask.step > 1 && checkTask.step % 5 > 0)
             {
-                if (MessageBox.Show(@"You have entered an odd step value.
-In the case that the case ID is incremented by an odd value greater than 1 but not a multiple of 5, you will very likely to miss your case ID.
-Do you wish to proceed with this odd step value: " + checkTask.step.ToString() + " ?", "Odd Step Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+                if (MessageBox.Show("You have entered an odd step value.\nIn the case that the case ID is" +
+                    "incremented by an odd value greater than 1 but not a multiple of 5, you will very likely" +
+                    "miss your case ID.\nDo you wish to proceed with this odd step value: " +
+                    checkTask.step.ToString() + " ?", "Odd Step Warning",
+                    MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
                 {
                     tb_Step.Foreground = Brushes.Red;
                     return;
@@ -210,7 +214,7 @@ Do you wish to proceed with this odd step value: " + checkTask.step.ToString() +
             }
 
             SQLiteConnection.CreateFile(file.FileName);
-            SQLiteConnection sqlite = new SQLiteConnection("Data Source="+file.FileName+";Version=3;");
+            sqlite = new SQLiteConnection("Data Source=" + file.FileName + ";Version=3;");
             sqlite.Open();
             string sql = @"
 CREATE TABLE `data` (
@@ -254,16 +258,42 @@ CREATE TABLE `data` (
         {
             try
             {
-                SQLiteConnection sqlite = new SQLiteConnection("Data Source=" + filename + ";Version=3;");
+                sqlite = new SQLiteConnection("Data Source=" + filename + ";Version=3;");
                 sqlite.Open();
             }
             catch (Exception err)
             {
                 MessageBox.Show(err.ToString());
+                return;
             }
+
+            string sql = "SELECT * FROM `data` ORDER BY caseid ASC, querydate ASC";
+            SQLiteCommand command = new SQLiteCommand(sql, sqlite);
+            SQLiteDataReader row = command.ExecuteReader();
+            while (row.Read())
+            {
+                //MessageBox.Show(row["caseid"].ToString());
+            }
+
+
+
+
+
+
+
         }
 
 
+        private class Case
+        {
+            public string caseId;
+            public string form;
+            //                         querydate     title
+            public List< KeyValuePair< string,       string >>
+                records = new List<KeyValuePair<string, string>>();
+        }
+
+        List<Case> CaseList = new List<Case>();
 
         /// <summary>
         /// Check the status of one case ID
@@ -272,6 +302,7 @@ CREATE TABLE `data` (
         /// <param name="e"></param>
         private void NewBatchCheck(object sender, RoutedEventArgs e)
         {
+            if (sqlite == null) { MessageBox.Show("Open a Database before checking!"); return; }
             string uri = "";
             if (dev)
             {
@@ -282,23 +313,37 @@ CREATE TABLE `data` (
                 uri = "https://egov.uscis.gov/casestatus/mycasestatus.do";
             }
 
+            string realCaseId = "";
             for (int caseId = checkTask.caseIdRangeStart; caseId < checkTask.caseIdRangeEnd; caseId += checkTask.step)
             {
-                checkTask.caseIds.Add(caseId);
+                realCaseId = checkTask.caseIdLetters + caseId.ToString();
+                checkTask.caseIds.Add(realCaseId);
+
+                string sql = "SELECT * FROM `data` WHERE caseid = '" + realCaseId + "'";
+                SQLiteCommand command = new SQLiteCommand(sql, sqlite);
+                SQLiteDataReader row = command.ExecuteReader();
+                if (!row.Read())
+                {
+                    Console.WriteLine("Creating New Entry");
+                    sql = "INSERT INTO `data` (caseid) VALUES (@caseId)";
+                    command = new SQLiteCommand(sql, sqlite);
+                    command.Parameters.AddWithValue("caseId", realCaseId);
+                    command.ExecuteNonQuery();
+                }
             }
 
             string data = "";
-            foreach (int caseId in checkTask.caseIds)
+            foreach (string caseId in checkTask.caseIds)
             {
                 Dictionary<string, string> param = new Dictionary<string, string>
                 {
-                    { "appReceiptNum", checkTask.caseIdLetters + caseId.ToString() }
+                    { "appReceiptNum", caseId }
                 };
                 data = WebPost(uri, param);
 
                 if (data != "")
                 {
-                    MessageBox.Show(data);
+                    Console.WriteLine(data);
                 }
             }
 
