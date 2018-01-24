@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -23,8 +24,11 @@ namespace WpfApp1
     /// </summary>
     public partial class MainWindow : Window
     {
+        bool dev = true;
+
         // WebClient should be sufficient for simple web requests
         private WebClient web = new WebClient();
+        Checker checkTask = new Checker();
 
         public MainWindow()
         {
@@ -44,20 +48,35 @@ namespace WpfApp1
         /// </summary>
         private void CheckInternet()
         {
+            // System.Threading.Thread.Sleep(1000);
             try
             {
-                web.OpenRead("https://egov.uscis.gov/casestatus/landing.do");
+                web.OpenRead("https://egov.uscis.gov/casestatus/mycasestatus.do");
                 InternetStatus.Foreground = Brushes.ForestGreen;
-                InternetStatus.Content = "√ Internet Connected";
+                InternetStatus.Content = "√ Connected to USCIS";
+                tb_CaseID.IsEnabled = true;
+                tb_NextCases.IsEnabled = true;
+                tb_PrevCases.IsEnabled = true;
+                tb_Step.IsEnabled = true;
+                btn_NewBatchCheck.IsEnabled = true;
+                RefreshCond();
             }
             catch (Exception err)
             {
                 InternetStatus.Foreground = Brushes.Red;
-                InternetStatus.Content = "× Internet Disconnected";
+                InternetStatus.Content = "× Connection Failed";
                 MessageBox.Show(err.Message);
             }
         }
-        
+
+
+
+
+        private void DevStateToggle(object sender, RoutedEventArgs e)
+        {
+            dev = !(bool)cb_DevToggle.IsChecked;
+        }
+
 
         /// <summary>
         /// Post data to URI and return as a string
@@ -89,29 +108,88 @@ namespace WpfApp1
         }
 
         /// <summary>
-        /// Check the status of one case ID
+        /// condition for query
+        /// </summary>
+        public class Checker
+        {
+            public string caseId;
+            public string caseIdLetters;
+            public int caseIdDigits;
+            public int caseIdRangeStart;
+            public int caseIdRangeEnd;
+            public int step;
+            public int cases;
+            public List<int> caseIds = new List<int>();
+
+            public void RefreshCondRange(int prevCases, int nextCases)
+            {
+                // construct case id borders
+                caseIdRangeStart = caseIdDigits - prevCases;
+                caseIdRangeEnd = caseIdDigits + nextCases;
+                cases = (caseIdRangeEnd - caseIdRangeStart) / step;
+            }
+        }
+
+
+        /// <summary>
+        /// Every time the user changes some search condition, refresh the search object with new conditions
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CheckStatus(object sender, RoutedEventArgs e)
+        private void NewCond(object sender, RoutedEventArgs e)
         {
-            string caseId = "YSC1890044628";
-            // localhost dev
-            string uri = "http://localhost";
-            // real deal
-            //string uri = "https://egov.uscis.gov/casestatus/mycasestatus.do";
-            Dictionary<string, string> param = new Dictionary<string, string>
-            {
-                { "appReceiptNum", caseId }
-            };
-
-            string data = WebPost(uri, param);
-            if (data != "")
-            {
-                MessageBox.Show(data);
-
-            }
+            RefreshCond();
         }
+
+        private void RefreshCond()
+        {
+            // validate 3 int textboxes
+            int prevCases = 0, nextCases = 0;
+            try
+            {
+                prevCases = int.Parse(tb_PrevCases.Text);
+                nextCases = int.Parse(tb_NextCases.Text);
+                checkTask.step = int.Parse(tb_Step.Text);
+            }
+            catch (Exception err) { MessageBox.Show(err.ToString()); return; }
+
+            if (checkTask.step % 2 > 0 && checkTask.step > 1 && checkTask.step % 5 > 0)
+            {
+                if (MessageBox.Show(@"You have entered an odd step value.
+In the case that the case ID is incremented by an odd value greater than 1 but not a multiple of 5, you will very likely to miss your case ID.
+Do you wish to proceed with this odd step value: " + checkTask.step.ToString() + " ?", "Odd Step Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+                {
+                    tb_Step.Foreground = Brushes.Red;
+                    return;
+                }
+            }
+
+            // validate case id
+            if (tb_CaseID.Text.Length != 13)
+            {
+                MessageBox.Show("Invalid case ID!");
+                return;
+            }
+            try
+            {
+                checkTask.caseIdDigits = int.Parse(tb_CaseID.Text.Substring(3));
+            }
+            catch (Exception err) { MessageBox.Show(err.ToString()); return; }
+
+            // if all test passed
+            checkTask.caseId = tb_CaseID.Text;
+            checkTask.caseIdLetters = checkTask.caseId.Substring(0, 3);
+
+            checkTask.RefreshCondRange(prevCases, nextCases);
+
+            string str = "Check " + checkTask.cases.ToString() + " Case";
+            if (checkTask.cases > 1) { str += 's'; }
+            lb_CheckNCases.Content = str;
+
+            lb_CaseIdStart.Content = checkTask.caseIdLetters + checkTask.caseIdRangeStart.ToString();
+            lb_CaseIdEnd.Content = checkTask.caseIdLetters + checkTask.caseIdRangeEnd.ToString();
+        }
+
 
         /// <summary>
         /// Create a Database with the user designated filename
@@ -145,6 +223,10 @@ CREATE TABLE `data` (
 ); ";
             SQLiteCommand command = new SQLiteCommand(sql, sqlite);
             command.ExecuteNonQuery();
+            sqlite.Close();
+
+            // Open the database again for rw
+            OpenDB(file.FileName);
         }
 
         /// <summary>
@@ -157,23 +239,74 @@ CREATE TABLE `data` (
             OpenFileDialog file = new OpenFileDialog
             {
                 InitialDirectory = Directory.GetCurrentDirectory(),
-                Filter = "SQLite Database (*.db, *.db3, *.sqlite, *.sqlite3)|*.db;*.db3;*.sqlite;*.sqlite3"
+                Filter = "SQLite Database (*.db, *.db3, *.sqlite, *.sqlite3)|*.db;*.db3;*.sqlite;*.sqlite3|Any Files (*.*)|*.*"
             };
             if (!(bool)file.ShowDialog())
             {
                 return;
             }
 
+            OpenDB(file.FileName);
+        }
+
+
+        private void OpenDB(string filename)
+        {
             try
             {
-                SQLiteConnection sqlite = new SQLiteConnection("Data Source=" + file.FileName + ";Version=3;");
+                SQLiteConnection sqlite = new SQLiteConnection("Data Source=" + filename + ";Version=3;");
                 sqlite.Open();
             }
-            catch(Exception err)
+            catch (Exception err)
             {
                 MessageBox.Show(err.ToString());
             }
         }
+
+
+
+        /// <summary>
+        /// Check the status of one case ID
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void NewBatchCheck(object sender, RoutedEventArgs e)
+        {
+            string uri = "";
+            if (dev)
+            {
+                uri = "http://localhost/index.php";
+            }
+            else
+            {
+                uri = "https://egov.uscis.gov/casestatus/mycasestatus.do";
+            }
+
+            for (int caseId = checkTask.caseIdRangeStart; caseId < checkTask.caseIdRangeEnd; caseId += checkTask.step)
+            {
+                checkTask.caseIds.Add(caseId);
+            }
+
+            string data = "";
+            foreach (int caseId in checkTask.caseIds)
+            {
+                Dictionary<string, string> param = new Dictionary<string, string>
+                {
+                    { "appReceiptNum", checkTask.caseIdLetters + caseId.ToString() }
+                };
+                data = WebPost(uri, param);
+
+                if (data != "")
+                {
+                    MessageBox.Show(data);
+                }
+            }
+
+
+        }
+
+
+
 
     }
 }
