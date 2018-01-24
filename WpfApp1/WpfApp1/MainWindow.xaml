@@ -14,6 +14,9 @@
         <Label x:Name="InternetStatus" Content="Checking Internet ..." Margin="10,0,0,10" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="140" Height="20" Padding="0" HorizontalContentAlignment="Center"/>
         <Button Content="New Database" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="140" Background="{x:Null}" Padding="5" Click="CreateDatabase"/>
         <Button Content="Open Database" HorizontalAlignment="Left" Margin="10,43,0,0" VerticalAlignment="Top" Width="140" Padding="5,5,1,5" Background="{x:Null}" Click="OpenDatabase"/>
+        <Label Content="Interested USCIS Case ID" HorizontalAlignment="Left" Margin="10,76,0,0" VerticalAlignment="Top" Width="140" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="10,102,0,0" TextWrapping="Wrap" Text="YSC1890044628" VerticalAlignment="Top" Width="140" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <Label x:Name="CheckPreviousNCases" Content="Check Previous Cases" HorizontalAlignment="Left" Margin="10,130,0,0" VerticalAlignment="Top" Width="140" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
     </Grid>
 </Window>
     

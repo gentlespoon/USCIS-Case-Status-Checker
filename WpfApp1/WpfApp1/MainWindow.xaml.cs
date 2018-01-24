@@ -34,15 +34,16 @@ namespace WpfApp1
 
         protected override void OnContentRendered(EventArgs e)
         {
-            
             base.OnContentRendered(e);
-            CheckInternet();    
-            
+            // Check internet connection on start
+            CheckInternet();
         }
 
+        /// <summary>
+        /// Check the Internet status on application startup
+        /// </summary>
         private void CheckInternet()
         {
-            // Check internet connection on start
             try
             {
                 web.OpenRead("https://egov.uscis.gov/casestatus/landing.do");
@@ -54,16 +55,27 @@ namespace WpfApp1
                 InternetStatus.Foreground = Brushes.Red;
                 InternetStatus.Content = "× Internet Disconnected";
                 MessageBox.Show(err.Message);
-
             }
         }
+        
 
-        private string LoadUrl(string uri)
+        /// <summary>
+        /// Post data to URI and return as a string
+        /// </summary>
+        /// <param name="uri"></param>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        private string WebPost(string uri, Dictionary<string, string> param)
         {
             string HTML = "";
             try
             {
-                string myParameters = "param1=value1&param2=value2&param3=value3";
+                string myParameters = "";
+                foreach (KeyValuePair<string, string> i in param)
+                {
+                    if (myParameters != "") { myParameters += '&';  }
+                    myParameters += i.Key + '=' + i.Value;
+                }
 
                 web.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
                 HTML = web.UploadString(uri, myParameters);
@@ -76,40 +88,92 @@ namespace WpfApp1
             return HTML;
         }
 
+        /// <summary>
+        /// Check the status of one case ID
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CheckStatus(object sender, RoutedEventArgs e)
         {
-
+            string caseId = "YSC1890044628";
+            // localhost dev
             string uri = "http://localhost";
-            string data = LoadUrl(uri);
+            // real deal
+            //string uri = "https://egov.uscis.gov/casestatus/mycasestatus.do";
+            Dictionary<string, string> param = new Dictionary<string, string>
+            {
+                { "appReceiptNum", caseId }
+            };
+
+            string data = WebPost(uri, param);
             if (data != "")
             {
-                // MessageBox.Show(data);
+                MessageBox.Show(data);
 
             }
         }
 
+        /// <summary>
+        /// Create a Database with the user designated filename
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CreateDatabase(object sender, RoutedEventArgs e)
         {
 
-            FileDialog file = new SaveFileDialog();
-            file.InitialDirectory = Directory.GetCurrentDirectory();
-            file.Filter = "SQLite Database (*.db, *.db3, *.sqlite, *.sqlite3)|*.db;*.db3;*.sqlite;*.sqlite3";
-            //file.RestoreDirectory = true;
+            FileDialog file = new SaveFileDialog
+            {
+                InitialDirectory = Directory.GetCurrentDirectory(),
+                Filter = "SQLite Database (*.db, *.db3, *.sqlite, *.sqlite3)|*.db;*.db3;*.sqlite;*.sqlite3"
+            };
             if (!(bool)file.ShowDialog())
             {
                 return;
             }
 
             SQLiteConnection.CreateFile(file.FileName);
+            SQLiteConnection sqlite = new SQLiteConnection("Data Source="+file.FileName+";Version=3;");
+            sqlite.Open();
+            string sql = @"
+CREATE TABLE `data` (
+	`id`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+	`caseid`	TEXT NOT NULL,
+	`querydate`	TEXT,
+	`form`	TEXT,
+	`title`	TEXT,
+	`content`	TEXT
+); ";
+            SQLiteCommand command = new SQLiteCommand(sql, sqlite);
+            command.ExecuteNonQuery();
         }
 
+        /// <summary>
+        /// Open a database with the user designated filename
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OpenDatabase(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog1 = new OpenFileDialog();
-            openFileDialog1.InitialDirectory = Directory.GetCurrentDirectory();
-            openFileDialog1.Filter = "SQLite Database (*.db, *.db3, *.sqlite, *.sqlite3)|*.db;*.db3;*.sqlite;*.sqlite3";
-            //openFileDialog1.RestoreDirectory = true;
-            MessageBox.Show(openFileDialog1.ShowDialog().ToString());
+            OpenFileDialog file = new OpenFileDialog
+            {
+                InitialDirectory = Directory.GetCurrentDirectory(),
+                Filter = "SQLite Database (*.db, *.db3, *.sqlite, *.sqlite3)|*.db;*.db3;*.sqlite;*.sqlite3"
+            };
+            if (!(bool)file.ShowDialog())
+            {
+                return;
+            }
+
+            try
+            {
+                SQLiteConnection sqlite = new SQLiteConnection("Data Source=" + file.FileName + ";Version=3;");
+                sqlite.Open();
+            }
+            catch(Exception err)
+            {
+                MessageBox.Show(err.ToString());
+            }
         }
+
     }
 }
