@@ -1,4 +1,4 @@
-10.24
+10.30
 
 
 PS E:\github\EAD-AutoQuery> python app.py
@@ -49,7 +49,7 @@ YSC1890026128        Date of Birth Was Updated
 YSC1890026628        Card Was Mailed To Me    January 22, 2018
 YSC1890027128    I-765    Case Was Received    October 30, 2017
 YSC1890027628        New Card Is Being Produced
-YSC1890028128    I-765    Case Was Received    October 30, 2017
+YSC1890028128        New Card Is Being Produced
 YSC1890028628        Case Rejected Because I Sent An Incorrect Fee
 YSC1890029128    I-130    Case Was Received    November 1, 2017
 YSC1890029628    I-130    Case Was Received    November 1, 2017
