@@ -1,4 +1,4 @@
-10.23
+10.24
 
 
 gtspn@GtSpn-L7370:~/github/EAD-AutoQuery$ python3 app.py
@@ -10,7 +10,7 @@ YSC1890006628        Card Was Mailed To Me    December 21, 2017
 YSC1890007128        Card Was Mailed To Me    January 12, 2018
 YSC1890007628    I-130    Case Was Received    October 10, 2017
 YSC1890008128    I-130    Case Was Received    October 10, 2017
-YSC1890008628        Request for Initial Evidence Was Mailed    
+YSC1890008628        Response To USCIS' Request For Evidence Was Received    
 YSC1890009128        Card Was Mailed To Me    January 5, 2018
 YSC1890009628        Card Was Mailed To Me    December 18, 2017
 YSC1890010128    I-130    Case Was Received    October 11, 2017
@@ -36,7 +36,7 @@ YSC1890019628        Card Was Mailed To Me    January 9, 2018
 YSC1890020128        Card Was Mailed To Me    January 11, 2018
 YSC1890020628        Validation Error(s)<br/>You must correct the following error(s) before proceeding:    
 YSC1890021128        Card Was Mailed To Me    January 20, 2018
-YSC1890021628    I-765    Case Was Received    October 23, 2017
+YSC1890021628        New Card Is Being Produced    
 YSC1890022128    I-130    Case Was Received    October 24, 2017
 YSC1890022628    I-130    Case Was Received    October 24, 2017
 YSC1890023128    I-130    Case Was Received    October 24, 2017
