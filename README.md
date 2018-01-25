@@ -36,8 +36,10 @@ YSC1890012628 ,  I-130 ,  Case Was Received
 
 <img src="https://raw.githubusercontent.com/gentlespoon/EAD-AutoQuery/master/CSharp/WpfApp1/2018-01-25-14-31-12.jpg" width="320" height="240">
 
-I was working on this one until USCIS blocked my IP after about 2,000 queries. Apparently a (or, actually, a few dozens of) proxy server is needed. I am not planning any budget for this small project. Thus, deploying the C# application on VPS is not an option. There are not many free proxy server either, I do not trust those "free" proxies. So the only truly free solution seems to be those massive PHP hosting services available online. So I moved on to the PHP version.
+I was working on this one until USCIS blocked my IP after about 2,000 queries. Apparently a (or, actually, a few dozens of) proxy server is needed. I am not planning any budget for this small project. Thus, deploying the C# application on VPS is not an option. There are not many free route proxy server either, I do not trust those "free" proxies. So the only truly free solution seems to be those massive PHP hosting services available online. So I moved on to the PHP version.
 
 ### PHP Version
 
-**Work In Progress**. Thinking about multi-thread PHP scraper.
+Thought about multi-thread PHP scraper. PHP is not suitable for multi-threading... at least not natively. Use AJAX...? CORS (Cross-Origin Resource Sharing) is going to be a problem. Use a PHP script from the same origin as a proxy to load the real page on different origin. This should satisfy all the requirements.
+
+### JavaScript + PHP Proxy
