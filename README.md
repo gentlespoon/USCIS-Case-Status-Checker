@@ -21,7 +21,7 @@ However, doing so manually at https://egov.uscis.gov/casestatus/mycasestatus.do 
 
 ### Python Version
 
-The Python version is the first thing I come up with. It **works**, but soon I am tired of comparing the results in command line from different log files. I decide to create one with GUI. 
+**Works**. The Python version is the first thing I come up with. But soon I am tired of comparing the results in command line from different log files. I decide to create one with GUI. For practice purpose, I used Visual C# .NET. 
 
 ```
 EAD-AutoQuery> python app.py
@@ -32,13 +32,12 @@ YSC1890012628 ,  I-130 ,  Case Was Received
 
 ### C# Version
 
-For practice purpose, I used C# .NET. **Abandoned**. Currently can scrape from USCIS website and dump desired data into the SQLite database. I was working on this one until USCIS blocked my IP after about 2,000 queries. Apparently a (or, actually, a few dozens of) proxy server is needed. Soon I moved on to the PHP version.
+**Abandoned**. Currently can scrape from USCIS website and dump desired data into the SQLite database.
 
-<img src="https://raw.githubusercontent.com/gentlespoon/EAD-AutoQuery/master/C%23/WpfApp1/2018-01-25-14-31-12.jpg" width="320" height="240">
+<img src="https://raw.githubusercontent.com/gentlespoon/EAD-AutoQuery/master/CSharp/WpfApp1/2018-01-25-14-31-12.jpg" width="320" height="240">
 
+I was working on this one until USCIS blocked my IP after about 2,000 queries. Apparently a (or, actually, a few dozens of) proxy server is needed. I am not planning any budget for this small project. Thus, deploying the C# application on VPS is not an option. There are not many free proxy server either, I do not trust those "free" proxies. So the only truly free solution seems to be those massive PHP hosting services available online. So I moved on to the PHP version.
 
 ### PHP Version
 
-I am not planning any budget for this small project. Thus, deploying the C# application on VPS is not an option. There are not many free proxy server either, I do not trust those "free" proxies. So the only truly free solution seems to be those massive PHP hosting services available online. I am using 000webhost.
-
-Thinking about multi-thread PHP scraper.
+**Work In Progress**. Thinking about multi-thread PHP scraper.
