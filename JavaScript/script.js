@@ -27,28 +27,24 @@ $(document).ready( function() {
     // which may result in a lot of junk being included in our result
     // 
     var title = "Invalid Case ID";
+    var content = "";
+
     var titleStart = data.indexOf("<h1>");
     var titleEnd;
-    if (titleStart == -1) {
-      // there is no <h1>, which means something this caseId is not valid
-      // scan for <h4> instead
-      // USCIS use h4 to indicate error
-      cases[currentIndex]['title'] = title;
-      $(`#td_title-${caseId}`).text(title);
-      return;
-    } else {
+    if (titleStart != -1) {
       titleEnd = data.indexOf("</h1>");
+      title = data.substring(titleStart+4, titleEnd);
+
+      var contentStart = data.indexOf("<p>", titleEnd);
+      var contentEnd = data.indexOf("</p>", contentStart);
+      content = data.substring(contentStart+3, contentEnd);
+      cases[currentIndex]['title'] = content;
+      $(`#td_date-${caseId}`).attr("title", content);
+
     }
-    title = data.substring(titleStart+4, titleEnd);
     cases[currentIndex]['title'] = title;
     $(`#td_title-${caseId}`).text(title);
 
-    var content = "";
-    var contentStart = data.indexOf("<p>", titleEnd);
-    var contentEnd = data.indexOf("</p>", contentStart);
-    content = data.substring(contentStart+3, contentEnd);
-    cases[currentIndex]['title'] = content;
-    $(`#td_date-${caseId}`).attr("title", content);
 
     var form = "-";
     var formStart = content.indexOf("Form ");
