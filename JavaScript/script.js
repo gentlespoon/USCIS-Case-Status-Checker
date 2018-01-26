@@ -1,7 +1,8 @@
 'use strict';
 
 var threads = 0;
-var pageURL = window.location.protocol+"//"+window.location.hostname+"/echo.php";
+var pageURL = window.location.protocol+"//"+window.location.hostname+"/casestatus/mycasestatus.do.html";
+// var pageURL = window.location.protocol+"//"+window.location.hostname+"/proxy.php";
 var totalCases = 0;
 var caseIdString = "";
 var caseIdPrefix = "";
@@ -18,7 +19,59 @@ $(document).ready( function() {
 
 
   function updateCaseStatus(currentIndex, caseId, data) {
-    cases[currentIndex]['title'] = data;
+    // var re = /<h1>([\W|\w]+)<\/h1>/gi;
+    // var title = data.match(re);
+    // 
+    // regular expression does not work well,
+    // because there are sooo many identical tags,
+    // which may result in a lot of junk being included in our result
+    // 
+    var title = "Invalid Case ID";
+    var titleStart = data.indexOf("<h1>");
+    var titleEnd;
+    if (titleStart == -1) {
+      // there is no <h1>, which means something this caseId is not valid
+      // scan for <h4> instead
+      // USCIS use h4 to indicate error
+      cases[currentIndex]['title'] = title;
+      $(`#td_title-${caseId}`).text(title);
+      return;
+    } else {
+      titleEnd = data.indexOf("</h1>");
+    }
+    title = data.substring(titleStart+4, titleEnd);
+    cases[currentIndex]['title'] = title;
+    $(`#td_title-${caseId}`).text(title);
+
+    var content = "";
+    var contentStart = data.indexOf("<p>", titleEnd);
+    var contentEnd = data.indexOf("</p>", contentStart);
+    content = data.substring(contentStart+3, contentEnd);
+    cases[currentIndex]['title'] = content;
+    $(`#td_date-${caseId}`).attr("title", content);
+
+    var form = "-";
+    var formStart = content.indexOf("Form ");
+    var formEnd;
+    if (formStart != -1) {
+      // there is form info
+      formEnd = content.indexOf(",", formStart);
+      form = content.substring(formStart+5, formEnd);
+    }
+    $(`#td_form-${caseId}`).text(form);
+
+    var date = "-";
+    var dateStart = content.indexOf("On ");
+    var dateEnd;
+    if (dateStart != -1) {
+      dateEnd = content.indexOf(", we");
+      date = content.substring(dateStart+3, dateEnd);
+    }
+    $(`#td_date-${caseId}`).text(date);
+
+    // console.log(caseId, title, form, date);
+    
+
   }
 
 
@@ -29,7 +82,7 @@ $(document).ready( function() {
     if (index >= cases.length) {
       return;
     }
-    console.log(`Starting new AJAX for ${index}`);
+    // console.log(`Starting new AJAX for ${index}`);
     var currentIndex = index;
     var caseId = cases[index].caseId;
     $(`#td_status-${caseId}`).text("Dispatched");
@@ -40,12 +93,12 @@ $(document).ready( function() {
       data: {appReceiptNum: caseId}
     })
     .done(function(data) {
-      console.log("AJAX for " + caseId + " completed.");
+      // console.log("AJAX for " + caseId + " completed.");
       $(`#td_status-${caseId}`).text("Success");
       updateCaseStatus(currentIndex, caseId, data);
     })
     .fail(function(error) {
-      console.log("AJAX for " + caseId + " failed.");
+      // console.log("AJAX for " + caseId + " failed.");
       $(`#td_status-${caseId}`).text("Failed");
     })
     .always(function() {
@@ -133,7 +186,9 @@ $(document).ready( function() {
   $("#btn_runQuery").click(function() {
     
     // force refresh query condition
-    $("#tb_step").change();
+    if (!$("#tb_step").change()) {
+      return false;
+    }
 
     // clear buffer
     cases = [];
