@@ -1,4 +1,4 @@
-## EAD-AutoQuery
+## USCIS Case Status Auto Query
 
 * **Work In Progress!**
 
