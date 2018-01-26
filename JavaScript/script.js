@@ -17,34 +17,38 @@ var mutex = 1;
 $(document).ready( function() {
 
 
+  function updateCaseStatus(currentIndex, caseId, data) {
+    cases[currentIndex]['title'] = data;
+  }
+
+
+
+
   function runSingleQuery() {
-
     index++;
-
     if (index >= cases.length) {
       return;
     }
-
+    console.log(`Starting new AJAX for ${index}`);
+    var currentIndex = index;
     var caseId = cases[index].caseId;
     $(`#td_status-${caseId}`).text("Dispatched");
-
     $.ajax({
-      // async: false,
       url: pageURL,
       type: 'POST',
       dataType: 'html',
       data: {appReceiptNum: caseId}
-      // data: {appReceiptNum: caseId},
     })
     .done(function(data) {
+      console.log("AJAX for " + caseId + " completed.");
       $(`#td_status-${caseId}`).text("Success");
-      // updateCaseStatus(caseId, data);
+      updateCaseStatus(currentIndex, caseId, data);
     })
     .fail(function(error) {
+      console.log("AJAX for " + caseId + " failed.");
       $(`#td_status-${caseId}`).text("Failed");
     })
     .always(function() {
-      console.log("AJAX for " + caseId + " completed.");
       runSingleQuery();
     });
   }
@@ -123,9 +127,9 @@ $(document).ready( function() {
 
 
 
-/**
- * On click event of the query button
- */
+  /**
+  * On click event of the query button
+  */
   $("#btn_runQuery").click(function() {
     
     // force refresh query condition
@@ -151,8 +155,7 @@ $(document).ready( function() {
         `);
     }
 
-    // console.log(cases);
-    // start ajax
+    // spawn ajax threads
     var threads_init = threads;
     while(threads_init) {
       runSingleQuery();
