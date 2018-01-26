@@ -25,7 +25,11 @@ $(document).ready( function() {
     // regular expression does not work well,
     // because there are sooo many identical tags,
     // which may result in a lot of junk being included in our result
-    // 
+    var banned = data.indexOf("It was reported to us that your IP address or internet gateway");
+    if (banned != -1) {
+      return false;
+    }
+
     var title = "Invalid Case ID";
     var content = "";
 
@@ -82,12 +86,12 @@ $(document).ready( function() {
         form: form,
         title: title,
         date: date,
-        content: content,
+        // content: content,
       }
     );
     
     $(`#td_status-${caseId}`).text("Saved.");
-
+    return true;
   }
 
 
@@ -111,14 +115,16 @@ $(document).ready( function() {
     .done(function(data) {
       // console.log("AJAX for " + caseId + " completed.");
       $(`#td_status-${caseId}`).text("USCIS Returned");
-      analyzeCaseStatus(currentIndex, caseId, data);
+      if (analyzeCaseStatus(currentIndex, caseId, data)) {
+        runSingleQuery();
+      }
     })
     .fail(function(error) {
       // console.log("AJAX for " + caseId + " failed.");
       $(`#td_status-${caseId}`).text("USCIS Failed");
     })
     .always(function() {
-      runSingleQuery();
+      // runSingleQuery();
     });
   }
 
