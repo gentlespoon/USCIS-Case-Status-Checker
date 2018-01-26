@@ -61,6 +61,10 @@ $(document).ready( function() {
     var dateEnd;
     if (dateStart != -1) {
       dateEnd = content.indexOf(", we");
+      if (dateEnd == -1) {
+        // the special case of carrier returns
+        dateEnd = content.indexOf(", the");
+      }
       date = content.substring(dateStart+3, dateEnd);
     }
     $(`#td_date-${caseId}`).text(date);
