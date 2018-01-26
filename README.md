@@ -44,14 +44,23 @@ Thought about multi-thread PHP scraper. PHP is not suitable for multi-threading.
 
 ### JavaScript + PHP Proxy
 
+Sweet combination.
+
 So I have finished this part at 8:45 PM, 1/25/2018. Looks like everything is working properly.
 
 <img src="https://raw.githubusercontent.com/gentlespoon/EAD-AutoQuery/master/JavaScript/2018-01-25-20-51-44.jpg">
 
 After setting up scrape controlling conditions, JavaScript will initialize several AJAX threads. When one AJAX query finishes, in its `always` call back, it starts a new AJAX to query the next case id in queue.
 
-Tested with 60,000 case IDs, 500 threads. Took almost three minutes to finish the scrape.
+When a query is done, JS will extract interested information, i.e.,
+* Form - which form did the case submit
+* Title - a summary of current status
+* ActivityDate - date of last USCIS activity
+* Content - The full paragraph
+* QueryDate - current timestamp
 
-All data in my database for later analyzing.
+Then use another AJAX to store them in my remote database. I used an API on my personal server. This will cause CORS error though. But I dont care. The data will be send to whatever server it is, regardless the origin. CORS protection only kicks in when AJAX tries to receive data. But I do not even intended to get any result. Data is sent to my server, and that's all I want. 
 
-Sweet.
+Tested with 60,000 case IDs with 500 threads. Took almost three minutes to finish the scrape.
+
+IP was blocked at 97,000 queries. Will edit when IP was unblocked.
