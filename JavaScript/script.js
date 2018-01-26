@@ -1,5 +1,6 @@
 'use strict';
 
+var threads = 0;
 var pageURL = window.location.protocol+"//"+window.location.hostname+"/echo.php";
 var totalCases = 0;
 var caseIdString = "";
@@ -54,6 +55,15 @@ $(document).ready( function() {
    */
   $(".conditions").change(function() {
 
+    threads = $("#tb_threads").val();
+    if ($.isNumeric( threads )) {
+      threads = parseInt(threads);
+    } else {
+      alert("Invalid Thread Count (1-inf)");
+      return false;
+    }
+    $("#lb_threads").text( threads );
+
     caseIdString = $("#tb_caseId").val();
     caseIdPrefix = caseIdString.match(/^[A-Z]{3}/gi);
     caseIdDigits = caseIdString.match(/[0-9]{10}$/);
@@ -70,6 +80,7 @@ $(document).ready( function() {
       alert("Invalid Step Width");
       return false;
     }
+    $("#lb_step").text( step );
 
     var prevCases = $("#tb_prevCases").val();
     if ($.isNumeric( prevCases )) {
@@ -79,6 +90,7 @@ $(document).ready( function() {
       alert("Invalid Previous N Cases");
       return false;
     }
+    $("#lb_caseIdRangeStart").text( caseIdPrefix+caseIdRangeStart );
 
     var nextCases = $("#tb_nextCases").val();
     if ($.isNumeric( nextCases )) {
@@ -88,6 +100,7 @@ $(document).ready( function() {
       alert("Invalid Next N Cases");
       return false;
     }
+    $("#lb_caseIdRangeEnd").text( caseIdPrefix+caseIdRangeEnd );
 
     totalCases = Math.ceil ( ( caseIdRangeEnd - caseIdRangeStart ) / step );
     if (totalCases > 1) {
@@ -95,15 +108,12 @@ $(document).ready( function() {
     } else {
       $(".lb_cases_plural").text('');
     }
+    $("#lb_totalCases").text( totalCases );
 
     if (caseIdRangeEnd < caseIdRangeStart) {
       alert("Incorrect Case Range");
       return false;
     }
-    $("#lb_totalCases").text( totalCases );
-    $("#lb_step").text( step );
-    $("#lb_caseIdRangeStart").text( caseIdPrefix+caseIdRangeStart );
-    $("#lb_caseIdRangeEnd").text( caseIdPrefix+caseIdRangeEnd );
 
   });
 
@@ -143,7 +153,11 @@ $(document).ready( function() {
 
     // console.log(cases);
     // start ajax
-    runSingleQuery();
+    var threads_init = threads;
+    while(threads_init) {
+      runSingleQuery();
+      threads_init--;
+    }
     
   });
 

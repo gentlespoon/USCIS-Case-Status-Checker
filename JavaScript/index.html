@@ -29,9 +29,14 @@
               <input type="text" class="conditions" id="tb_nextCases" name="nextCases" value="2000">
               <label for="tb_nextCases">Check Next N Cases</label>
             </div>
-            <div class="input-field col s2">
-              <input type="text" class="conditions" id="tb_step" name="step" value="2000">
+            <div class="input-field col s1">
+              <input type="text" class="conditions" id="tb_step" name="step" value="200">
               <label for="tb_step">Step Width</label>
+            </div>
+
+            <div class="input-field col s1">
+              <input type="text" class="conditions" id="tb_threads" name="threads" value="10">
+              <label for="tb_threads">Threads</label>
             </div>
             <div class="input-field col s3">
               <a class="waves-effect waves-light btn  col s12" id="btn_runQuery">Run Query</a>
@@ -42,7 +47,7 @@
       <div id="queryPreview" class="row col s12">
         This query will check <span id="lb_totalCases">-</span> case<span class="lb_cases_plural"></span>,
         step width <span id="lb_step">-</span> case<span class="lb_cases_plural"></span>,
-        range from <span id="lb_caseIdRangeStart">-</span> to <span id="lb_caseIdRangeEnd">-</span>.
+        range from <span id="lb_caseIdRangeStart">-</span> to <span id="lb_caseIdRangeEnd">-</span>, in <span id="lb_threads">-</span> threads.
       </div>
     </div>
     <div id="dataGrid" class="col s12">
