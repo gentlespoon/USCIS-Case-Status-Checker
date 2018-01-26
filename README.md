@@ -34,7 +34,7 @@ YSC1890012628 ,  I-130 ,  Case Was Received
 
 **Abandoned**. Currently can scrape from USCIS website and dump desired data into the SQLite database.
 
-<img src="https://raw.githubusercontent.com/gentlespoon/EAD-AutoQuery/master/CSharp/2018-01-25-14-31-12.jpg" width="320" height="240">
+<img src="https://raw.githubusercontent.com/gentlespoon/EAD-AutoQuery/master/CSharp/2018-01-25-14-31-12.jpg" width="480">
 
 I was working on this one until USCIS blocked my IP after about 2,000 queries. Apparently a (or, actually, a few dozens of) proxy server is needed. I am not planning any budget for this small project. Thus, deploying the C# application on VPS is not an option. There are not many free route proxy server either, I do not trust those "free" proxies. So the only truly free solution seems to be those massive PHP hosting services available online. So I moved on to the PHP version.
 
@@ -45,6 +45,8 @@ Thought about multi-thread PHP scraper. PHP is not suitable for multi-threading.
 ### JavaScript + PHP Proxy
 
 So I have finished this part at 8:45 PM, 1/25/2018. Looks like everything is working properly.
+
+<img src="https://raw.githubusercontent.com/gentlespoon/EAD-AutoQuery/master/JavaScript/2018-01-25-20-51-44.jpg">
 
 After setting up scrape controlling conditions, JavaScript will initialize several AJAX threads. When one AJAX query finishes, in its `always` call back, it starts a new AJAX to query the next case id in queue.
 
