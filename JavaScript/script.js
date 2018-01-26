@@ -1,8 +1,8 @@
 'use strict';
 
 var threads = 0;
-var pageURL = window.location.protocol+"//"+window.location.hostname+"/casestatus/mycasestatus.do.html";
-// var pageURL = window.location.protocol+"//"+window.location.hostname+"/proxy.php";
+// var pageURL = window.location.protocol+"//"+window.location.hostname+"/casestatus/mycasestatus.do.html";
+var pageURL = window.location.protocol+"//"+window.location.hostname+"/proxy.php";
 var totalCases = 0;
 var caseIdString = "";
 var caseIdPrefix = "";
@@ -18,7 +18,7 @@ var mutex = 1;
 $(document).ready( function() {
 
 
-  function updateCaseStatus(currentIndex, caseId, data) {
+  function analyzeCaseStatus(currentIndex, caseId, data) {
     // var re = /<h1>([\W|\w]+)<\/h1>/gi;
     // var title = data.match(re);
     // 
@@ -70,7 +70,23 @@ $(document).ready( function() {
     $(`#td_date-${caseId}`).text(date);
 
     // console.log(caseId, title, form, date);
+
+
+    $(`#td_status-${caseId}`).text("Saving to Database");
+
+    // will trigger CORS, but I dont care.
+    // Data will be sent to server, but the script wont get info back.
+    $.post('http://gentlespoon.com/api/save-uscis-result.php',
+      {
+        caseid: caseId,
+        form: form,
+        title: title,
+        date: date,
+        content: content,
+      }
+    );
     
+    $(`#td_status-${caseId}`).text("Saved.");
 
   }
 
@@ -85,7 +101,7 @@ $(document).ready( function() {
     // console.log(`Starting new AJAX for ${index}`);
     var currentIndex = index;
     var caseId = cases[index].caseId;
-    $(`#td_status-${caseId}`).text("Dispatched");
+    $(`#td_status-${caseId}`).text("Waiting for USCIS");
     $.ajax({
       url: pageURL,
       type: 'POST',
@@ -94,12 +110,12 @@ $(document).ready( function() {
     })
     .done(function(data) {
       // console.log("AJAX for " + caseId + " completed.");
-      $(`#td_status-${caseId}`).text("Success");
-      updateCaseStatus(currentIndex, caseId, data);
+      $(`#td_status-${caseId}`).text("USCIS Returned");
+      analyzeCaseStatus(currentIndex, caseId, data);
     })
     .fail(function(error) {
       // console.log("AJAX for " + caseId + " failed.");
-      $(`#td_status-${caseId}`).text("Failed");
+      $(`#td_status-${caseId}`).text("USCIS Failed");
     })
     .always(function() {
       runSingleQuery();
