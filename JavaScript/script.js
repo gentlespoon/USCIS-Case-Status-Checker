@@ -225,9 +225,9 @@ $(document).ready( function() {
           <tr>
             <td id='td_caseId-${realCaseId}'>${realCaseId}</td>
             <td id='td_status-${realCaseId}'>In Queue</td>
-            <td id='td_form-${realCaseId}'></td>
-            <td id='td_title-${realCaseId}'></td>
-            <td id='td_date-${realCaseId}'></td>
+            <td id='td_form-${realCaseId}'>-</td>
+            <td id='td_title-${realCaseId}'>-</td>
+            <td id='td_date-${realCaseId}'>-</td>
           </tr>
         `);
     }
