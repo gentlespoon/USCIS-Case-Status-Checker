@@ -70,3 +70,7 @@ IP was blocked at 97,000 queries. Will edit when IP was unblocked.
 > It was reported to us that your IP address or internet gateway has been locked out for a select period of time. This is due to an unusually high rate of use. In order to avoid this issue, please create a Customer account (single applicant) or a Representative account (representing many individuals).
 
 Unblocked after 23 hrs.
+
+<img src="https://raw.githubusercontent.com/gentlespoon/EAD-AutoQuery/master/JavaScript/2018-01-28-0-08-28.jpg"> 
+
+Blocked again. Why did I query on weekends... they are not going to update anything...
