@@ -1,6 +1,9 @@
 ## USCIS Case Status Auto Query
 
-* **Work In Progress!**
+#### This may be considered as a DDOS attack to USCIS system!
+#### You are responsible for all consequences of using this tool.
+#### You have been warned!
+
 
 ### Unsatisfying USCIS Case Status System
 
@@ -19,28 +22,10 @@ Fortunately, USCIS issues receipt numbers in *chronological order*, and they pro
 
 However, doing so manually at https://egov.uscis.gov/casestatus/mycasestatus.do is a slow and tiring process. Instead, I can write a script to check the website for the 50,000 or so cases before and after my own number.
 
-### Python Version
-
-**Works**. The Python version is the first thing I come up with. But soon I am tired of comparing the results in command line from different log files. I decide to create one with GUI. For practice purpose, I used Visual C# .NET. 
-
-```
-EAD-AutoQuery> python app.py
-YSC1890008628 ,  I-765 ,  Request for Initial Evidence Was Mailed
-YSC1890010628 ,   ,  Card Was Mailed To Me
-YSC1890012628 ,  I-130 ,  Case Was Received
-```
-
-### C# Version
-
-**Abandoned**. Currently can scrape from USCIS website and dump desired data into the SQLite database.
-
-<img src="https://raw.githubusercontent.com/gentlespoon/EAD-AutoQuery/master/CSharp/2018-01-25-14-31-12.jpg" width="480">
-
-I was working on this one until USCIS blocked my IP after about 2,000 queries. Apparently a (or, actually, a few dozens of) proxy server is needed. I am not planning any budget for this small project. Thus, deploying the C# application on VPS is not an option. There are not many free route proxy server either, I do not trust those "free" proxies. So the only truly free solution seems to be those massive PHP hosting services available online. So I moved on to the PHP version.
 
 ### PHP Version
 
-Thought about multi-thread PHP scraper. PHP is not suitable for multi-threading... at least not natively. Use AJAX...? CORS (Cross-Origin Resource Sharing) is going to be a problem. Use a PHP script from the same origin as a proxy to load the real page on different origin. This should satisfy all the requirements.
+My initial thought was a multi-thread PHP scraper. PHP is not suitable for multi-threading... at least not natively. Use AJAX...? Cross-Origin Resource Sharing is going to be a problem. Use a PHP script from the same origin as a proxy to load the real page on different origin. This should satisfy all the requirements.
 
 ### JavaScript + PHP Proxy
 
@@ -73,4 +58,30 @@ Unblocked after 23 hrs.
 
 <img src="https://raw.githubusercontent.com/gentlespoon/EAD-AutoQuery/master/JavaScript/2018-01-28-0-08-28.jpg"> 
 
-Blocked again. Why did I query on weekends... they are not going to update anything...
+They blocked my IP again. Why did I query on weekends... they are not going to update anything...
+
+
+
+
+# Old Versions
+
+### Python Version
+
+**Works**. The Python version is the first thing I come up with. But soon I am tired of comparing the results in command line from different log files. I decide to create one with GUI. For practice purpose, I used Visual C# .NET. 
+
+```
+EAD-AutoQuery> python app.py
+YSC1890008628 ,  I-765 ,  Request for Initial Evidence Was Mailed
+YSC1890010628 ,   ,  Card Was Mailed To Me
+YSC1890012628 ,  I-130 ,  Case Was Received
+```
+
+### C# Version
+
+**Abandoned**. Currently can scrape from USCIS website and dump desired data into the SQLite database.
+
+<img src="https://raw.githubusercontent.com/gentlespoon/EAD-AutoQuery/master/CSharp/2018-01-25-14-31-12.jpg" width="480">
+
+I was working on this one until USCIS blocked my IP after about 2,000 queries. Apparently a (or, actually, a few dozens of) proxy server is needed. I am not planning any budget for this small project. Thus, deploying the C# application on VPS is not an option. There are not many free route proxy server either, I do not trust those "free" proxies. So the only truly free solution seems to be those massive PHP hosting services available online. So I moved on to the PHP version.
+
+And I then decided that I will create a web-based app instead of a desktop app.
