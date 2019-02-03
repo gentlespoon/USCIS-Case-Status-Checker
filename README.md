@@ -11,9 +11,9 @@ You have been warned!
 
 It has been one year since I applied for my OPT. Now I am waiting for my STEM OPT Extension. I think it is time to give this tool a refresh. This time, the refreshed application is created using [Node.js](https://nodejs.org/en/), and integrated GUI with [Electron.js](https://electronjs.org/).
 
-Theoretically, the code should be able to run on all platforms. I am providing [Windows x64 binary](https://github.com/gentlespoon/USCIS-Case-BatchQuery/releases) only.
+Theoretically, the code should be able to run on all platforms. I am providing [x64 binaries for Windows and Linux](https://github.com/gentlespoon/USCIS-Case-BatchQuery/releases).
 
-There are some pre-built binaries for other platform available [here](https://github.com/electron/electron/releases). If you would like to run it on other platform, please take a look at [Electron Documentation](https://electronjs.org/docs/tutorial/application-distribution), they have detailed instructions on how to use their prebuilt binaries.
+If you would like to run it on other platform, please take a look at [Electron Documentation](https://electronjs.org/docs/tutorial/application-distribution), they have detailed instructions on how to use their prebuilt binaries. There are some pre-built binaries for other platform available [here](https://github.com/electron/electron/releases).
 
 Basically everything works just like before. Multi-threaded scraping. Just set up scrape controlling conditions and hit the Start button. The program will spawn several threads and start to check those USCIS Receipt Numbers. 
 
