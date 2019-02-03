@@ -25,9 +25,15 @@ You will get:
 
 Removed database related functions because they are simply ... worthless for this app.
 
+![alt text](https://raw.githubusercontent.com/gentlespoon/USCIS-Case-BatchQuery/master/2019-02-03-15-36-01.png "Running in Ubuntu")
+
+
+
 ***
 
---- The Old Story
+***
+
+And the Old Story...
 
 ## Unsatisfying USCIS Case Status System
 
