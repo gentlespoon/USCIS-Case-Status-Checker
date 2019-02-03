@@ -56,7 +56,7 @@ app.on('activate', function () {
 
 
 // var uscisAPI = 'https://api.gentlespoon.com/echo.php';
-// var uscisAPI = 'http://api.gentlespoon.com/USCIS_Saved_Page.html';
+// var uscisAPI = 'https://api.gentlespoon.com/USCIS_Saved_Page.html';
 var uscisAPI = 'https://egov.uscis.gov/casestatus/mycasestatus.do';
 
 
@@ -152,7 +152,6 @@ var analyzeHTML = (data) => {
   if (data.indexOf("It was reported to us that your IP address or internet gateway") != -1) {
     msg = 'Your IP address has been blocked by USCIS.\n\nAs stated before, the author is not responsible for any consequences of using this software.\n\nYou may try again in 24 hours.';
     dialog.showErrorBox('Your IP is blocked by USCIS', msg);
-    mainWindow.send('gotCaseStatus', JSON.stringify({ok: 0, data: msg}));
     return;
   }
 
