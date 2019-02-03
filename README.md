@@ -2,7 +2,7 @@
 
 #### This may be considered as a Denial of Service attack to USCIS system!
 #### You are responsible for all consequences of using this tool.
-If you do not know what DoS means, or you do not fully understand the risk, just keep away from this tool.
+If you do not know what DoS means, or if you do not fully understand the risk, just keep away from this tool.
 
 You have been warned!
 
@@ -25,8 +25,9 @@ You will get:
 
 Removed database related functions because they are simply ... worthless for this app.
 
+***
 
-# --- The Old Story
+--- The Old Story
 
 ## Unsatisfying USCIS Case Status System
 
