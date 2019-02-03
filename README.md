@@ -1,11 +1,34 @@
-## USCIS Case Status Auto Query
+# USCIS Case Status Auto Query
 
-#### This may be considered as a DDOS attack to USCIS system!
+#### This may be considered as a Denial of Service attack to USCIS system!
 #### You are responsible for all consequences of using this tool.
-#### You have been warned!
+If you do not know what DoS means, or you do not fully understand the risk, just keep away from this tool.
+
+You have been warned!
 
 
-### Unsatisfying USCIS Case Status System
+### Ver. 2019.02.02 - CrossPlatform Electron build
+
+It has been one year since I applied for my OPT. Now I am waiting for my STEM OPT Extension. I think it is time to give this tool a refresh. This time, the refreshed application is created using [Node.js](https://nodejs.org/en/), and integrated GUI with [Electron.js](https://electronjs.org/).
+
+Theoretically, the code should be able to run on all platforms. I am providing [Windows x64 binary](https://github.com/gentlespoon/USCIS-Case-BatchQuery/releases) only.
+
+There are some pre-built binaries for other platform available [here](https://github.com/electron/electron/releases). If you would like to run it on other platform, please take a look at [Electron Documentation](https://electronjs.org/docs/tutorial/application-distribution), they have detailed instructions on how to use their prebuilt binaries.
+
+Basically everything works just like before. Multi-threaded scraping. Just set up scrape controlling conditions and hit the Start button. The program will spawn several threads and start to check those USCIS Receipt Numbers. 
+
+You will get:
+* Form - Only available if USCIS explicitly says which category the case belongs to
+* Case Status - A summary of current status
+* Detailed Status - The original paragraph on USCIS result page
+* Update Date - Date of last USCIS activity
+
+Removed database related functions because they are simply ... worthless for this app.
+
+
+# --- The Old Story
+
+## Unsatisfying USCIS Case Status System
 
 Students under the F-1 visa usually apply for Optional Practical Training (OPT) to get work authorization from US Citizenship and Immigration Services (USCIS). When one application is received by the USCIS, they issue a receipt number. Using this receipt number to check one’s progress (at https://egov.uscis.gov/casestatus/mycasestatus.do) is highly unsatisfying. The application usually takes up to 4 months to process. Until the work authorization is approved, students will only get a somewhat useless paragraph like this:
 
@@ -23,65 +46,3 @@ Fortunately, USCIS issues receipt numbers in *chronological order*, and they pro
 However, doing so manually at https://egov.uscis.gov/casestatus/mycasestatus.do is a slow and tiring process. Instead, I can write a script to check the website for the 50,000 or so cases before and after my own number.
 
 
-### PHP Version
-
-My initial thought was a multi-thread PHP scraper. PHP is not suitable for multi-threading... at least not natively. Use AJAX...? Cross-Origin Resource Sharing is going to be a problem. Use a PHP script from the same origin as a proxy to load the real page on different origin. This should satisfy all the requirements.
-
-### JavaScript + PHP Proxy
-
-Sweet combination.
-
-So I have finished this part at 8:45 PM, 1/25/2018. Looks like everything is working properly.
-
-<img src="https://raw.githubusercontent.com/gentlespoon/EAD-AutoQuery/master/JavaScript/2018-01-25-20-51-44.jpg">
-
-After setting up scrape controlling conditions, JavaScript will initialize several AJAX threads. When one AJAX query finishes, in its `always` call back, it starts a new AJAX to query the next case id in queue.
-
-When a query is done, JS will extract interested information, i.e.,
-* Form - which form did the case submit
-* Title - a summary of current status
-* ActivityDate - date of last USCIS activity
-* Content - The full paragraph
-* QueryDate - current timestamp
-
-Then use another AJAX to store them in my remote database. I used an API on my personal server. This will cause CORS error though. But I dont care. The data will be send to whatever server it is, regardless the origin. CORS protection only kicks in when AJAX tries to receive data. But I do not even intended to get any result. Data is sent to my server, and that's all I want. 
-
-Tested with 60,000 case IDs with 500 threads. Took almost three minutes to finish the scrape.
-
-IP was blocked at 97,000 queries. Will edit when IP was unblocked.
-
-17 hours has passed and is still blocked:
-
-> It was reported to us that your IP address or internet gateway has been locked out for a select period of time. This is due to an unusually high rate of use. In order to avoid this issue, please create a Customer account (single applicant) or a Representative account (representing many individuals).
-
-Unblocked after 23 hrs.
-
-<img src="https://raw.githubusercontent.com/gentlespoon/EAD-AutoQuery/master/JavaScript/2018-01-28-0-08-28.jpg"> 
-
-They blocked my IP again. Why did I query on weekends... they are not going to update anything...
-
-
-
-
-# Old Versions
-
-### Python Version
-
-**Works**. The Python version is the first thing I come up with. But soon I am tired of comparing the results in command line from different log files. I decide to create one with GUI. For practice purpose, I used Visual C# .NET. 
-
-```
-EAD-AutoQuery> python app.py
-YSC1890008628 ,  I-765 ,  Request for Initial Evidence Was Mailed
-YSC1890010628 ,   ,  Card Was Mailed To Me
-YSC1890012628 ,  I-130 ,  Case Was Received
-```
-
-### C# Version
-
-**Abandoned**. Currently can scrape from USCIS website and dump desired data into the SQLite database.
-
-<img src="https://raw.githubusercontent.com/gentlespoon/EAD-AutoQuery/master/CSharp/2018-01-25-14-31-12.jpg" width="480">
-
-I was working on this one until USCIS blocked my IP after about 2,000 queries. Apparently a (or, actually, a few dozens of) proxy server is needed. I am not planning any budget for this small project. Thus, deploying the C# application on VPS is not an option. There are not many free route proxy server either, I do not trust those "free" proxies. So the only truly free solution seems to be those massive PHP hosting services available online. So I moved on to the PHP version.
-
-And I then decided that I will create a web-based app instead of a desktop app.
