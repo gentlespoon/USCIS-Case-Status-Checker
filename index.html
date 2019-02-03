@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Gs-USCIS-Case-BatchQuery</title>
+  <link rel="stylesheet" href="bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+
+
+  <div id="canvas">
+    <div id="sideBar">
+      <div class="form-group">
+        <label for="tb_caseId">Case ID</label>
+        <input type="text" class="form-control" id="tb_caseId" value="YSC1890026000" title="Your Case ID, or I-797C Application Receipt Number.&#013;Example: YSC1890026000">
+      </div>
+      <div class="form-group">
+        <label for="tb_prevCases">Previous Cases</label>
+        <input type="number" class="form-control" id="tb_prevCases" value="2000" title="Search of (x) cases widiv smaller case ID">
+      </div>
+      <div class="form-group">
+        <label for="tb_nextCases">Next Cases</label>
+        <input type="number" class="form-control" id="tb_nextCases" value="2000" title="Search of (x) cases widiv greater case ID">
+      </div>
+      <div class="form-group">
+        <label for="tb_step">Step width</label>
+        <input type="number" class="form-control" id="tb_step" value="100" title="It is recommended to use a step width of 200 or 500">
+      </div>
+      <div class="form-group">
+        <label for="tb_divreads">Threads</label>
+        <input type="number" class="form-control" id="tb_threads" value="10" title="dive software will spawn (x) divreads to check case status.">
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary form-control" id="btn_run">Execute</button>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-danger form-control" id="btn_stop" disabled>Stop</button>
+      </div>
+    </div>
+
+    <div id="dataGridContainer">
+      <table id="dataGrid" class="table table-bordered table-hover table-sm">
+        <thead id="dataGridTitle">
+          <tr>
+            <th class="td_caseId">Case ID</th>
+            <th class="td_form">Form</th>
+            <th class="td_status">Queue</th>
+            <th class="td_title col">Case Status</th>
+            <th class="td_date">Update Date</th>
+            <th class="td_raw">Original Response</th>
+          </tr>
+        </thead>
+        <tbody id="dataGridBody" class="">
+
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <script src="jquery-3.3.1.js"></script>
+  <script>var $ = jQuery = require("jquery");</script>
+  <script src="bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+
+</body>
+</html>

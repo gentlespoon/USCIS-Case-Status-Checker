@@ -1,0 +1,30 @@
+{
+  "name": "uscis-case-batch-query",
+  "version": "0.0.1",
+  "description": ".",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gentlespoon/USCIS-Case-Auto-Batch-Query.git"
+  },
+  "keywords": [
+    "USCIS",
+    "Case"
+  ],
+  "author": "GentleSpoon",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^4.0.3"
+  },
+  "bugs": {
+    "url": "https://github.com/gentlespoon/USCIS-Case-Auto-Batch-Query/issues"
+  },
+  "homepage": "https://github.com/gentlespoon/USCIS-Case-Auto-Batch-Query#readme",
+  "dependencies": {
+    "jquery": "^3.3.1",
+    "node-fetch": "^2.3.0"
+  }
+}
