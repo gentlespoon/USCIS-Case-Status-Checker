@@ -6,8 +6,12 @@ If you do not know what DoS means, or if you do not fully understand the risk, j
 
 You have been warned!
 
+***
+### C#, Python, PHP+JS versions are still available in the v2018 branch
 
-### Ver. 2019.02.02 - CrossPlatform Electron build
+***
+
+## Ver. 2019.02.02 - CrossPlatform Electron build
 
 It has been one year since I applied for my OPT. Now I am waiting for my STEM OPT Extension. I think it is time to give this tool a refresh. This time, the refreshed application is created using [Node.js](https://nodejs.org/en/), and integrated GUI with [Electron.js](https://electronjs.org/).
 
@@ -29,7 +33,6 @@ Removed database related functions because they are simply ... worthless for thi
 
 
 
-***
 
 ***
 
