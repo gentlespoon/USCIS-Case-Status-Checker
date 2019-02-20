@@ -1,4 +1,4 @@
-# USCIS Case Status Auto Query
+# USCIS Case Status BatchQuery
 
 #### This may be considered as a Denial of Service attack to USCIS system!
 #### You are responsible for all consequences of using this tool.
