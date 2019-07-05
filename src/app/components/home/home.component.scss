@@ -1,0 +1,43 @@
+.sidePanel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200px;
+  height: 100vh;
+  background-color: #eeeeee;
+  border-right: 1px solid #bbbbbb;
+}
+
+.mainPanel {
+  position: absolute;
+  top: 0;
+  left: 201px;
+  width: calc(100% - 201px);
+  height: 100vh;
+  background-color: #eeeeee;
+}
+
+.actionBar {
+  border-bottom: 1px solid #bbbbbb;
+  height: 30px;
+}
+
+.actionBar > .btn {
+  height: 30px;
+  line-height: 30px;
+}
+
+.btn {
+  height: 30px;
+  line-height: 100%;
+  padding: 0 1em;
+  cursor: pointer;
+}
+.btn:hover {
+  background-color: #00000011;
+}
+
+
+.btn-session {
+  float: right;
+}
