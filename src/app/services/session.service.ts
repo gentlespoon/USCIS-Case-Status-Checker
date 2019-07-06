@@ -77,7 +77,7 @@ export class SessionService {
 
 
   private killSession() {
-    localStorage.clear();
+    localStorage.removeItem('token');
     this._email = '';
     this._expire = '';
     this._token = '';
@@ -121,7 +121,10 @@ export class SessionService {
 
   signInStatusInterval = null;
 
-  public signIn(): void {
+
+
+
+  public signIn(callback: Function): void {
     localStorage.setItem('pendingRedirectUrl', this.router.url);
     var authId = uuid();
     var signInUrl = `${environment.identityProvider}/signin?forApp=${environment.appName}&redirect=false&authId=${authId}`;
@@ -137,11 +140,12 @@ export class SessionService {
       try {
         this.gsApiService.get('/20190605.account/checkAuthId?authId=' + authId)
         .subscribe(response => {
-          console.log(response);
+          // console.log(response);
           if (response.success) {
             this.setToken(response.data);
             clearInterval(this.signInStatusInterval);
             this.signInStatusInterval = null;
+            callback();
           } else {
           }
         });

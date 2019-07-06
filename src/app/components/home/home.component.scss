@@ -6,6 +6,8 @@
   height: 100vh;
   background-color: #eeeeee;
   border-right: 1px solid #bbbbbb;
+  padding: 1em;
+  user-select: none;
 }
 
 .mainPanel {
@@ -14,12 +16,16 @@
   left: 201px;
   width: calc(100% - 201px);
   height: 100vh;
-  background-color: #eeeeee;
 }
 
 .actionBar {
+  background-color: #eeeeee;
   border-bottom: 1px solid #bbbbbb;
   height: 30px;
+  position: fixed;
+  top: 0;
+  width: calc(100% - 200px);
+  z-index: 5;
 }
 
 .actionBar > .btn {
@@ -28,6 +34,8 @@
 }
 
 .btn {
+  border: none;
+  background-color: transparent;
   display: inline-block;
   height: 30px;
   line-height: 100%;
@@ -44,7 +52,102 @@
 }
 
 
-.btn.disabled {
-  color: gray;
+.btn.disabled,
+.btn:disabled {
+  color: gray !important;
   cursor: not-allowed;
+  background-color: transparent !important;
+}
+
+.field-group {
+  margin: .5em 0;
+  border-bottom: 1px solid lightgray;
+}
+
+.field-group label {
+  margin: .5em 0;
+}
+
+.field-group input {
+  height: 30px;
+  width: 100%;
+  // border-radius: 5px;
+  border: 1px solid lightgray;
+  padding: 0 5px;
+  text-transform: uppercase;
+}
+
+input:invalid {
+  background-color: #ff000033;
+}
+
+.field-group small {
+  display: block;
+  color: darkgray;
+  font-size: 11px;
+  margin: 5px 0;
+}
+
+
+.field-group .btn {
+  color: white;
+  display: inline-block;
+}
+
+
+.btn-start {
+  width: 50%;
+  background-color: #117AFF;
+}
+.btn-start:hover,
+.btn-start:focus {
+  background-color: #005AdF;
+}
+.btn-start:active {
+  background-color: #003AbF;
+}
+
+.btn-resume {
+  width: 50%;
+  background-color: #11994a;
+}
+.btn-resume:hover,
+.btn-resume:focus {
+  background-color: #00792a;
+}
+.btn-resume:active {
+  background-color: #00590a;
+}
+
+.btn-pause {
+  width: 50%;
+  background-color: #aa6644;
+}
+.btn-pause:hover,
+.btn-pause:focus {
+  background-color: #8a4624;
+}
+.btn-pause:active {
+  background-color: #6a2604;
+}
+
+.btn-stop {
+  width: 50%;
+  background-color: #aa0000;
+}
+.btn-stop:hover,
+.btn-stop:focus {
+  background-color: #8a0000;
+}
+.btn-stop:active {
+  background-color: #6a0000;
+}
+
+
+table.dataTable {
+  width: 100%;
+  height: 100px;
+  padding-top: 30px;
+  background-color: #eeeeee;
+  overflow: auto;
 }

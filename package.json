@@ -1,18 +1,14 @@
 {
-  "name": "angular-electron",
-  "version": "6.0.1",
-  "description": "Angular 8 with Electron (Typescript + SASS + Hot Reload)",
-  "homepage": "https://github.com/maximegris/angular-electron",
+  "name": "Gs-USCIS-Case-BatchQuery",
+  "version": "19.07.05",
+  "description": "A tool for tracking USCIS case status in batch.",
+  "homepage": "https://github.com/gentlespoon/USCIS-Case-BatchQuery",
   "author": {
-    "name": "Maxime GRIS",
-    "email": "maxime.gris@gmail.com"
+    "name": "GentleSpoon",
+    "email": "github@gentlespoon.com"
   },
   "keywords": [
-    "angular",
-    "angular 8",
-    "electron",
-    "typescript",
-    "sass"
+    "USCIS Case"
   ],
   "main": "main.js",
   "private": true,
