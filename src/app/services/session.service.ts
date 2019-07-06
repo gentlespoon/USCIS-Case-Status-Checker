@@ -5,6 +5,8 @@ import * as moment from 'moment';
 import { environment } from '../../environments/environment';
 import { ElectronService } from './electron.service';
 import * as path from 'path';
+import * as uuid from 'uuidv4';
+import { GsapiService } from './gsapi.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +17,7 @@ export class SessionService {
 
   constructor(
     private electronService: ElectronService,
+    private gsApiService: GsapiService,
     private router: Router
   ) {
 
@@ -113,64 +116,45 @@ export class SessionService {
 
 
   public userProfile(): void {
-
+    this.electronService.remote.shell.openExternal(`${environment.identityProvider}/landing.php?from-application=${environment.appName}&redirect=/profile&token=${this.token}`);
   }
 
   signInStatusInterval = null;
 
   public signIn(): void {
     localStorage.setItem('pendingRedirectUrl', this.router.url);
-    var signInUrl = `https://account.gentlespoon.com/signin?forApp=${environment.appName}&redirect=false`;
-
-    // window.location.href = signInUrl;
+    var authId = uuid();
+    var signInUrl = `${environment.identityProvider}/signin?forApp=${environment.appName}&redirect=false&authId=${authId}`;
 
     console.log('[Session.Service] signIn(): Open sign in window');
 
-    var signInWindow = new this.electronService.remote.BrowserWindow({
-      alwaysOnTop: true,
-      minWidth: 600,
-      minHeight: 680,
-    });
-    signInWindow.on('close', () => {
-      signInWindow = null;
-      clearInterval(this.signInStatusInterval);
-    });
-    signInWindow.setMenu(null);
-    signInWindow.loadURL(signInUrl);
-    signInWindow.show();
+    this.electronService.remote.shell.openExternal(signInUrl);
 
+    if (this.signInStatusInterval !== null) {
+      clearInterval(this.signInStatusInterval);
+    } 
     this.signInStatusInterval = setInterval(() => {
       try {
-        var apiResponse = signInWindow.getTitle();
-        var apiParsed = JSON.parse(apiResponse);
-        if (apiParsed.success) {
-          this.setToken(apiParsed.data);
-          signInWindow.close();
-        }
+        this.gsApiService.get('/20190605.account/checkAuthId?authId=' + authId)
+        .subscribe(response => {
+          console.log(response);
+          if (response.success) {
+            this.setToken(response.data);
+            clearInterval(this.signInStatusInterval);
+            this.signInStatusInterval = null;
+          } else {
+          }
+        });
+
       } catch (ex) {
-        // do nothing if not finished sign in
       }
-    }, 500);
+    }, 1000);
 
 
   }
 
   public signOut(): void {
     this.killSession();
-    localStorage.setItem('pendingRedirectUrl', this.router.url);
-    var signOutUrl = `https://account.gentlespoon.com/signout?forApp=${environment.appName}&redirect=false`;
-    var signOutWindow = new this.electronService.remote.BrowserWindow({
-      alwaysOnTop: true,
-      width: 0,
-      height: 0,
-    });
-    signOutWindow.hide();
-    signOutWindow.on('close', function () { signOutWindow = null });
-    signOutWindow.setMenu(null);
-    signOutWindow.loadURL(signOutUrl);
-    signOutWindow.webContents.once('dom-ready', () => {
-      signOutWindow.close();
-    })
   }
 
 }

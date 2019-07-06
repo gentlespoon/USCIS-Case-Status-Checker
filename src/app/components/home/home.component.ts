@@ -8,8 +8,6 @@ import { SessionService } from '../../services/session.service';
 })
 export class HomeComponent implements OnInit {
 
-  USCIS_API_URL: string = 'https://egov.uscis.gov/casestatus/mycasestatus.do';
-
   constructor(
     public sessionService: SessionService
   ) { }

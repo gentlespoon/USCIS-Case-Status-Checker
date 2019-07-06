@@ -23,8 +23,6 @@ export class GsapiService {
 
     private DEV = false;
 
-    private baseUrl = 'https://api.gentlespoon.com/20190605.account/';
-
     constructor(
         private router: Router,
         private http: HttpClient,
@@ -53,7 +51,7 @@ export class GsapiService {
         }
 
         var req : RequestOptions = {
-            url: this.baseUrl + url,
+            url: environment.gsApiUrl + url,
             httpOptions: {
                 headers: httpHeaders
             },

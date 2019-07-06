@@ -84,6 +84,7 @@
     "node": ">=10.9.0"
   },
   "dependencies": {
-    "moment": "^2.24.0"
+    "moment": "^2.24.0",
+    "uuidv4": "^4.0.0"
   }
 }
