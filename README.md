@@ -1,6 +1,6 @@
 # USCIS Case Status BatchQuery
 
-## Version 3 is still work in progress. Please use version 19.02 from the release tab.
+## Version 19.07 is still work in progress. Please use version 19.02 from the release tab.
 
 
 #### This may be considered as a Denial of Service attack to USCIS system!
