@@ -20,9 +20,11 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
 
     this.loadConfig();
+    this.loadResultFromLocalStorage();
   }
 
   public Object = Object;
+  public alert = alert;
 
   public saveConfig() {
     if (this.sessionService.token) {
@@ -39,7 +41,29 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  private saveResultToLocalStorage() {
+    return;
+    if (this.sessionService.token) {
+      console.dir(this.caseList);
+      var json = JSON.stringify(this.caseList);
+      localStorage.setItem('caseList', json);
+    }
+  }
 
+  
+  private loadResultFromLocalStorage() {
+    return;
+    if (this.sessionService.token) {
+      var json = localStorage.getItem('caseList');
+      if (json) {
+        var parsedCaseList = JSON.parse(json);
+        for (let caseId of Object.keys(parsedCaseList)) {
+          console.dir(parsedCaseList[caseId]);
+          this.caseList[caseId] = new UscisCase(parsedCaseList[caseId]);
+        }
+      }
+    }
+  }
 
 
   public config = {
@@ -58,13 +82,13 @@ export class HomeComponent implements OnInit {
   }
 
   public state = 'stopped';
-
-
+  public time = '';
+  public semaphore = 0;
 
   public start(): void {
 
-    
-    var time = moment().format('YYYY-MM-DDTHH:mm');
+    this.time = moment().format('MM/DD/YYYY HH:mm');
+    var time = this.time;
     if (this.activityTimes.indexOf(time) !== -1) {
       alert('Wait for a minute before starting the new query');
       return;
@@ -104,6 +128,7 @@ Confirm?
     this.activityTimes.push(time);
 
     // start threads
+    this.semaphore = this.config.semaphore;
     for(let threadCount = this.config.semaphore; threadCount>0; threadCount--) {
       this.startNextQuery(time);
     }
@@ -113,9 +138,6 @@ Confirm?
 
   // TODO: move these logic to service.
 
-  private buildList(): void {
-    
-  }
 
   queryQueue = [];
 
@@ -127,9 +149,10 @@ Confirm?
         if (!this.caseList[caseId]) {
           this.caseList[caseId] = new UscisCase();
         }
+        this.semaphore--;
         this.queryCase(caseId, time);
       } else {
-        this.state = 'stopped';
+        this.stop();
       }
     }
   }
@@ -145,6 +168,7 @@ Confirm?
           this.caseList[caseId].activity[time].status = error;
         },
         () => {
+          this.semaphore++;
           this.startNextQuery(time);
         }
       );
@@ -168,7 +192,7 @@ You may try again in 24 hours.
         `);
         this.disclaimerForIpBanShown = true;
       }
-      this.state = 'stopped';
+      this.stop();
       return;
     }
 
@@ -196,7 +220,10 @@ You may try again in 24 hours.
     if (regexResult) {
       status = regexResult[1];
       if (status) {
-        if (status.indexOf('My Case Status does not recognize the receipt number entered')!== -1) {
+        if (
+          status.indexOf('My Case Status does not recognize the receipt number entered') !== -1 ||
+          status.indexOf('The application receipt number entered is invalid') !== -1
+        ) {
           status = 'Invalid receipt number';
         }
       }
@@ -206,14 +233,28 @@ You may try again in 24 hours.
       if (regexResult) {
         status = regexResult[1];
       }
+      // get detail
       regexResult = /<p>(.*?)<\/p>/g.exec(response);
       if (regexResult) {
         this.caseList[caseId].activity[time].detail = regexResult[1];
+        // extract date if exists
+        var dateRegexResult = /On\s(.*?),\s(.*?),\s/g.exec(this.caseList[caseId].activity[time].detail);
+        // console.log(dateRegexResult);
+        if (dateRegexResult) {
+          this.caseList[caseId].activity[time].date = moment(dateRegexResult[1] + ', ' + dateRegexResult[2]).format('MM/DD/YYYY'); 
+        }
+        // extract form if exists
+        var formRegexResult = /Form\s(.*?),/g.exec(this.caseList[caseId].activity[time].detail);
+        // console.log(formRegexResult);
+        if (formRegexResult) {
+          this.caseList[caseId].type = formRegexResult[1]; 
+        }
+
       }
     }
     this.caseList[caseId].activity[time].status = status;
     this.caseList[caseId].activity[time].original = response;
-    console.log(this.caseList[caseId]);
+    // console.log(this.caseList[caseId]);
   }
 
   public pause(): void {
@@ -222,11 +263,12 @@ You may try again in 24 hours.
 
   public resume(): void {
     this.state = 'running';
+    this.startNextQuery(this.time);
   }
 
   public stop(): void {
     this.state = 'stopped';
-
+    this.saveResultToLocalStorage();
   }
 
 

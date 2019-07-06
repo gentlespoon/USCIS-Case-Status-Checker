@@ -71,13 +71,22 @@
       </tr>
     </thead>
     <tbody>
+
       <tr *ngFor="let caseId of Object.keys(caseList)">
+
         <td>{{ caseId }}</td>
+
         <td>{{ caseList[caseId]['type'] }}</td>
+
         <td *ngFor="let time of activityTimes">
-          <span *ngIf="caseList[caseId].activity[time]">{{ caseList[caseId].activity[time]['status'] }}</span>
+          <span style="cursor: pointer;" *ngIf="caseList[caseId].activity[time]" title="{{ caseList[caseId].activity[time]['date'] }}" (click)="alert(caseList[caseId].activity[time]['detail'])">
+            {{ caseList[caseId].activity[time]['status'] }}
+          </span>
         </td>
+
       </tr>
+
+
     </tbody>
   </table>
 
