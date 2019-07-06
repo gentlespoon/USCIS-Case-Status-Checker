@@ -1,5 +1,8 @@
 # USCIS Case Status BatchQuery
 
+## Version 3 is still work in progress. Please use version 2 from the release tab.
+
+
 #### This may be considered as a Denial of Service attack to USCIS system!
 #### You are responsible for all consequences of using this tool.
 If you do not know what DoS means, or if you do not fully understand the risk, just keep away from this tool.
