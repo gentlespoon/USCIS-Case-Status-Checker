@@ -2,15 +2,30 @@
 
 ## Version 19.07 is still work in progress. Please use version 19.02 from the release tab.
 
+## Ver. 2019.07 - Angular + Electron
+
+Added pause/resume
+
+Optimized analyze algorithm
+
+Allow save query configuration
+
+Allow save results in localStorage
+
+Planned export to CSV
+
+Built for Windows, macOS, and Linux.
+
+
+![alt text](https://raw.githubusercontent.com/gentlespoon/USCIS-Case-BatchQuery/master/20190706-32744.png "Running in Windows")
+
+***
 
 #### This may be considered as a Denial of Service attack to USCIS system!
 #### You are responsible for all consequences of using this tool.
 If you do not know what DoS means, or if you do not fully understand the risk, just keep away from this tool.
 
 You have been warned!
-
-***
-#### C#, Python, PHP+JS versions are still available in the v2018 branch
 
 ***
 
@@ -32,10 +47,11 @@ You will get:
 
 Removed database related functions because they are simply ... worthless for this app.
 
-![alt text](https://raw.githubusercontent.com/gentlespoon/USCIS-Case-BatchQuery/master/2019-02-03-15-36-01.png "Running in Ubuntu")
+![alt text](https://raw.githubusercontent.com/gentlespoon/USCIS-Case-BatchQuery/v2019.02/2019-02-03-15-36-01.png "Running in Ubuntu")
 
 
-
+***
+#### C#, Python, PHP+JS versions are still available in the v2018 branch
 
 ***
 
