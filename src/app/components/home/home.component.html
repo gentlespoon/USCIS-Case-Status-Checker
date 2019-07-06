@@ -1,13 +1,16 @@
 <div class="sidePanel">
-
+  <label></label>
 </div>
 <div class="mainPanel">
   <div class="actionBar">
+    <!-- <div class="btn btn-saveToCloud" (click)="saveResultsToCloud()" [class.disabled]="!sessionService.token">Save Results</div> -->
+    <div class="btn btn-saveAsCSV" (click)="saveResultsAsCSV()" [class.disabled]="!sessionService.token">Save as CSV file</div>
 
-    <div class="btn btn-session btn-signIn" *ngIf="!sessionService.token" (click)="sessionService.signIn()">Sign in to save your results</div>
+    <!-- session buttons -->
+    <div class="btn btn-session btn-signIn" *ngIf="!sessionService.token" (click)="sessionService.signIn()">Sign In</div>
 
     <div class="btn btn-session btn-signOut" *ngIf="sessionService.token" (click)="sessionService.signOut()">Sign Out</div>
-    <div class="btn btn-session btn-profile" *ngIf="sessionService.token" (click)="sessionService.userProfile()">{{ sessionService.username }}</div>
+    <div class="btn btn-session btn-profile" *ngIf="sessionService.token" (click)="sessionService.userProfile()">{{ sessionService.username ? sessionService.username : sessionService.email }}</div>
   </div>
 
 </div>

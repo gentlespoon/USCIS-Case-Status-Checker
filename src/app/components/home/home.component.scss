@@ -28,6 +28,7 @@
 }
 
 .btn {
+  display: inline-block;
   height: 30px;
   line-height: 100%;
   padding: 0 1em;
@@ -40,4 +41,10 @@
 
 .btn-session {
   float: right;
+}
+
+
+.btn.disabled {
+  color: gray;
+  cursor: not-allowed;
 }
