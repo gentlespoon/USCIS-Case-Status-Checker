@@ -78,7 +78,7 @@ export class HomeComponent implements OnInit {
   public caseList: object = {};
 
   public saveResultsAsCSV(): void {
-
+    this.alert('Not implemented');
   }
 
   public state = 'stopped';
