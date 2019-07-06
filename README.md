@@ -12,7 +12,7 @@ Allow save query configuration
 
 Allow save results in localStorage
 
-Planned export to CSV
+Planned export to CSV (implementing... estimated - end of July)
 
 Built for Windows, macOS, and Linux.
 
