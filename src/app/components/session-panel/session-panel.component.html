@@ -1,0 +1,8 @@
+<!-- <div class="btn btn-saveToCloud" (click)="saveResultsToCloud()" [class.disabled]="!sessionService.token">Save Results</div> -->
+<button class="btn btn-saveAsCSV" (click)="saveResultsAsCSV()" [class.disabled]="!sessionService.token"><i class="fas fa-download"></i> Save result as CSV file</button>
+
+<!-- session buttons -->
+<button class="btn btn-session btn-signIn" *ngIf="!sessionService.token" (click)="signIn()"><i class="far fa-user-circle"></i> Sign in to save your config and results</button>
+
+<button class="btn btn-session btn-signOut" *ngIf="sessionService.token" (click)="sessionService.signOut()"><i class="far fa-times-circle"></i> Sign out</button>
+<button class="btn btn-session btn-profile" *ngIf="sessionService.token" (click)="sessionService.userProfile()"><i class="fas fa-user-circle"></i> {{ sessionService.username ? sessionService.username : sessionService.email }}</button>

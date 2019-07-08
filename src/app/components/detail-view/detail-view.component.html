@@ -1,0 +1,8 @@
+<div class="dimmingBackground" (click)="uscisService.detail = []" *ngIf="uscisService.detail.length">
+  <div class="detailView">
+    <h5>{{ uscisService.detail[0] }}</h5>
+    <h5>{{ uscisService.detail[1] }}</h5>
+    <p>{{ uscisService.detail[2] }}</p>
+    <button type="button" class="btn" (click)="alert(uscisService.detail[3])">View Original Response</button>
+  </div>
+</div>

@@ -15,10 +15,10 @@ function createWindow() {
         // y: 0,
         // width: size.width,
         // height: size.height,
-        width: 1440,
+        width: 1366,
         height: 720,
-        minWidth: 1280,
-        minHeight: 720,
+        // minWidth: 1024,
+        // minHeight: 720,
         webPreferences: {
             webSecurity: false,
             nodeIntegration: true,

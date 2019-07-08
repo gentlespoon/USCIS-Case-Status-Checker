@@ -1,0 +1,8 @@
+<div class="columnTitle">Activity List</div>
+<ul>
+  <li *ngFor="let activity of uscisService.activityTimes" (click)="caseFilterService.toggle(activity)">
+    <i class="far fa-square" *ngIf="caseFilterService.displayingActivities.indexOf(activity) === -1"></i>
+    <i class="far fa-check-square" *ngIf="caseFilterService.displayingActivities.indexOf(activity) !== -1"></i>
+    {{ activity }}
+  </li>
+</ul>

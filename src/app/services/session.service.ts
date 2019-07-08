@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 
 import * as moment from 'moment';
 import { environment } from '../../environments/environment';
@@ -18,15 +17,14 @@ export class SessionService {
   constructor(
     private electronService: ElectronService,
     private gsApiService: GsapiService,
-    private router: Router
   ) {
 
     // resume session
-    console.log('[Session.Service] constructor(): restoring session');
+    if (this.DEV) console.log('[Session.Service] constructor(): restoring session');
     var savedToken = localStorage.getItem('token');
     if (savedToken) {
       try {
-        console.log('[Session.Service] constructor(): session restored');
+        if (this.DEV) console.log('[Session.Service] constructor(): session restored');
         this.setToken(savedToken);
       } catch (ex) {
       }
@@ -125,7 +123,6 @@ export class SessionService {
 
 
   public signIn(callback: Function): void {
-    localStorage.setItem('pendingRedirectUrl', this.router.url);
     var authId = uuid();
     var signInUrl = `${environment.identityProvider}/signin?forApp=${environment.appName}&redirect=false&authId=${authId}`;
 

@@ -44,7 +44,6 @@
     "@angular/language-service": "8.0.0",
     "@angular/platform-browser": "8.0.0",
     "@angular/platform-browser-dynamic": "8.0.0",
-    "@angular/router": "8.0.0",
     "@ngx-translate/core": "11.0.1",
     "@ngx-translate/http-loader": "4.0.0",
     "@types/jasmine": "2.8.7",
@@ -81,6 +80,7 @@
   },
   "dependencies": {
     "moment": "^2.24.0",
+    "prettysize": "^2.0.0",
     "uuidv4": "^4.0.0"
   }
 }

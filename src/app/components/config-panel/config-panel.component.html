@@ -1,0 +1,34 @@
+<div class="field-group">
+  <label>USCIS Receipt Number</label>
+  <small>Enter your USCIS case receipt number</small>
+  <input type="text" name="baseCaseID" [(ngModel)]="configService.config.baseCaseID" (change)="saveConfig()" pattern="([A-Za-z]{3})(\d{10})" maxlength="13" required>
+  <small>Example: WAC1234567890</small>
+</div>
+
+<div class="field-group">
+  <label>Previous _ Cases</label>
+  <small>Check _ smaller case IDs.</small>
+  <input type="number"  name="previousCases" [(ngModel)]="configService.config.previousCases" (change)="saveConfig()" max="2000000" min="0" required>
+  <small>Range: 0 - 2000000 (50000)</small>
+</div>
+
+<div class="field-group">
+  <label>Next _ Cases</label>
+  <small>Check _ greater case IDs.</small>
+  <input type="number"  name="nextCases" [(ngModel)]="configService.config.nextCases" (change)="saveConfig()" max="500000" min="0" required>
+  <small>Range: 0 - 500000 (10000)</small>
+</div>
+
+<div class="field-group">
+  <label>Step Width</label>
+  <small>Skip _ cases for every query.</small>
+  <input type="number"  name="stepWidth" [(ngModel)]="configService.config.stepWidth" (change)="saveConfig()" max="100000" min="1" required>
+  <small>Range: 1 - 100000 (1000)</small>
+</div>
+
+<div class="field-group">
+  <label>Threads</label>
+  <small>Run in parallel to speed up the progress.</small>
+  <input type="number"  name="semaphore" [(ngModel)]="configService.config.semaphore" (change)="saveConfig()" max="50" min="1" required>
+  <small>Range: 1 - 50 (10)</small>
+</div>

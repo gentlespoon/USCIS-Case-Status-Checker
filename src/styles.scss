@@ -12,3 +12,52 @@ html, body {
   font-size: 12px;
 }
 
+
+
+
+.btn {
+  border: none;
+  background-color: transparent;
+  display: inline-block;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 1em;
+  cursor: pointer;
+  box-shadow: inset 0 0 1px lightgray;
+}
+.btn:hover {
+  background-color: #00000011;
+}
+
+.btn.disabled,
+.btn:disabled {
+  color: gray !important;
+  cursor: not-allowed;
+  background-color: transparent !important;
+}
+
+
+.columnTitle {
+  font-weight: bold;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  border-bottom: solid 1px lightgray;
+}
+
+
+
+
+
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+ 
+::-webkit-scrollbar-track {
+  background: #ddd;
+}
+ 
+::-webkit-scrollbar-thumb {
+  background: #666; 
+}

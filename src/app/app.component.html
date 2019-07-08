@@ -1,1 +1,33 @@
-<router-outlet></router-outlet>
+<div class="sidePanel">
+  <form ngNativeValidate (submit)="start()">
+
+    <app-config-panel></app-config-panel>
+
+    <div class="field-group">
+      <div style="text-align: center; margin: .5em 0;">Status: <strong>{{ uscisService.state }}</strong></div>
+      <button class="btn btn-start" [disabled]="uscisService.state===RunningState.running || uscisService.state===RunningState.paused" >Start</button>
+      <button type="button" class="btn btn-pause" (click)="pause()" [disabled]="uscisService.state===RunningState.paused || uscisService.state===RunningState.stopped">Pause</button>
+      <button type="button" class="btn btn-resume" (click)="resume()" [disabled]="uscisService.state===RunningState.running || uscisService.state===RunningState.stopped">Resume</button>
+      <button type="button" class="btn btn-stop" (click)="stop()" [disabled]="uscisService.state===RunningState.stopped">Stop</button>
+    </div>
+
+  </form>
+</div>
+
+<div class="sessionPanel">
+  <app-session-panel></app-session-panel>
+
+</div>
+
+<div class="activityList">
+  <app-activity-list></app-activity-list>
+</div>
+
+<div class="mainPanel">
+  <app-case-list></app-case-list>
+</div>
+
+
+<div class="detailView">
+  <app-detail-view></app-detail-view>
+</div>
