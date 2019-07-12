@@ -17,7 +17,7 @@ Allow export to CSV.
 Built for Windows, macOS, and Linux.
 
 
-![alt text](https://raw.githubusercontent.com/gentlespoon/USCIS-Case-BatchQuery/master/20190711-223236.png "Running in Windows, v2019.07.11")
+![alt text](https://raw.githubusercontent.com/gentlespoon/USCIS-Case-BatchQuery/master/20190711-224137.png "Running in Windows, v2019.07.11")
 
 ***
 
