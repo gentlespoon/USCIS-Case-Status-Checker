@@ -105,6 +105,17 @@ Confirm?`)) {
   }
 
 
+  pause(): void {
+    this.uscisService.pause();
+  }
+
+  resume(): void {
+    this.uscisService.resume();
+  }
+
+  stop(): void {
+    this.uscisService.stop();
+  }
   
   
 
