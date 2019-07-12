@@ -29,6 +29,8 @@ Your IP may be blocked by USCIS if you send a lot of queries without using any p
 
 > It was reported to us that your IP address or internet gateway has been locked out for a select period of time. This is due to an unusually high rate of use. In order to avoid this issue, please create a Customer account (single applicant) or a Representative account (representing many individuals).
 
+Exact IP rate limits imposed by USCIS are not known (and may change at any time), but it is likely that both per-minute and longer-term limits are in place. As a rough guide *with no warranty of reliability*, as of mid-2019, 100 requests/minute appears to be acceptable over short time periods. However, sustaining this rate for more than 12 hours (72,000 requests over 12 hours) seems highly likely to trigger an IP ban. Initial IP bans typically last 24 hours, but of course USCIS may have authority to issue longer bans or more serious punishments. Again, **you use this tool at your own risk**.
+
 ***
 
 ## Ver. 2019.02.02 - CrossPlatform Electron build
