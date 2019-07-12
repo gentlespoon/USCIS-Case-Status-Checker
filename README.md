@@ -1,7 +1,5 @@
 # USCIS Case Status BatchQuery
 
-## Version 19.07 is still work in progress. Please use version 19.02 from the release tab.
-
 ## Ver. 2019.07 - Angular + Electron
 
 Added pause/resume.
