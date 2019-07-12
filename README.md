@@ -25,6 +25,10 @@ If you do not know what DoS means, or if you do not fully understand the risk, j
 
 You have been warned!
 
+Your IP may be blocked by USCIS if you send a lot of queries without using any proxy server.
+
+> It was reported to us that your IP address or internet gateway has been locked out for a select period of time. This is due to an unusually high rate of use. In order to avoid this issue, please create a Customer account (single applicant) or a Representative account (representing many individuals).
+
 ***
 
 ## Ver. 2019.02.02 - CrossPlatform Electron build
