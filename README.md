@@ -4,20 +4,20 @@
 
 ## Ver. 2019.07 - Angular + Electron
 
-Added pause/resume
+Added pause/resume.
 
-Optimized analyze algorithm
+Optimized analyze algorithm.
 
-Allow save query configuration
+Allow save query configuration.
 
-Allow save results in localStorage
+Allow save results in localStorage.
 
-Planned export to CSV (implementing... estimated - end of July)
+Allow export to CSV.
 
 Built for Windows, macOS, and Linux.
 
 
-![alt text](https://raw.githubusercontent.com/gentlespoon/USCIS-Case-BatchQuery/master/20190706-32744.png "Running in Windows")
+![alt text](https://raw.githubusercontent.com/gentlespoon/USCIS-Case-BatchQuery/master/20190711-223236.png "Running in Windows, v2019.07.11")
 
 ***
 
