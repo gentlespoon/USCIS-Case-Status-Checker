@@ -1,3 +1,7 @@
+export class ActivityList {
+  static activityList: string[] = [];
+}
+
 export class UscisCase {
   // id: string;
   type: string = '';
@@ -9,7 +13,10 @@ export class UscisCase {
       this.activity = {};
       if (obj['activity']) {
         for (let activityTime of Object.keys(obj['activity'])) {
-          this.activity[activityTime] = obj['activity'][activityTime];
+          if (ActivityList.activityList.indexOf(activityTime) === -1) {
+            ActivityList.activityList.push(activityTime);
+          }
+          this.activity[activityTime] = new CaseActivity(obj['activity'][activityTime]);
         }
       }
     }

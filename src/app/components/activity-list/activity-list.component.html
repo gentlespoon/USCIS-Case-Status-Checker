@@ -1,4 +1,7 @@
 <div class="columnTitle">Activity List</div>
+<button class="btn selectAll" (click)="selectAll()">Select All</button>
+<button class="btn deselectAll" (click)="deselectAll()">Deselect All</button>
+
 <ul>
   <li *ngFor="let activity of uscisService.activityTimes" (click)="caseFilterService.toggle(activity)">
     <i class="far fa-square" *ngIf="caseFilterService.displayingActivities.indexOf(activity) === -1"></i>
@@ -6,3 +9,5 @@
     {{ activity }}
   </li>
 </ul>
+
+<button class="btn removeAll" (click)="removeAll()">Remove All</button>

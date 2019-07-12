@@ -17,4 +17,20 @@ export class ActivityListComponent implements OnInit {
   ngOnInit() {
   }
 
+  selectAll() {
+    this.caseFilterService.displayingActivities = this.uscisService.activityTimes;
+  }
+  deselectAll() {
+    this.caseFilterService.displayingActivities = [];
+  }
+
+  removeAll() {
+    if (confirm('You are about to remove all the cached results.')) {
+      this.deselectAll();
+      this.uscisService.activityTimes = [];
+      this.uscisService.caseList = {};
+      this.uscisService.saveResultToLocalStorage();
+    }
+  }
+
 }

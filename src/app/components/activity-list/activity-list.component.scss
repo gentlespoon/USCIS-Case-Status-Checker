@@ -1,7 +1,32 @@
+.selectAll {
+  height: 30px;
+  width: 100%;
+  border-bottom: 1px solid lightgray;
+  z-index: 5;
+}
+.deselectAll {
+  height: 30px;
+  width: 100%;
+  border-bottom: 1px solid lightgray;
+  z-index: 5;
+}
+.removeAll {
+  z-index: 5;
+  position: absolute;
+  height: 30px;
+  width: 100%;
+  border-top: 1px solid lightgray;
+  bottom: 0;
+  background-color: #ffdddd;
+}
+.removeAll:hover {
+  background-color: #ffcccc;
+}
+
 ul {
   width: 100%;
-  height: 100%;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
   border: none;
   display: block;
   list-style-type: none;

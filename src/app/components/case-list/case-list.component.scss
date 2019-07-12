@@ -37,6 +37,7 @@
   top: 30px;
   left: 200px;
   white-space: nowrap;
+  display: flex;
 }
 
 
@@ -94,6 +95,9 @@
 .activity {
   width: 250px;
   text-overflow: ellipsis;
+}
+
+.activityColumn > div {
   cursor: pointer;
 }
 

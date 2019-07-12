@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { UscisCase, CaseActivity } from '../classes/uscisCase.class';
+import { UscisCase, CaseActivity, ActivityList } from '../classes/uscisCase.class';
 import { SessionService } from './session.service';
 import { environment } from '../../environments/environment';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
@@ -30,7 +30,7 @@ export class UscisService {
 
 
   public saveResultToLocalStorage() {
-    return;
+    // return;
     if (this.sessionService.token) {
       console.dir(this.caseList);
       var json = JSON.stringify(this.caseList);
@@ -40,7 +40,7 @@ export class UscisService {
 
   
   public loadResultFromLocalStorage() {
-    return;
+    // return;
     if (this.sessionService.token) {
       var json = localStorage.getItem('caseList');
       if (json) {
@@ -49,6 +49,7 @@ export class UscisService {
           console.dir(parsedCaseList[caseId]);
           this.caseList[caseId] = new UscisCase(parsedCaseList[caseId]);
         }
+        this.activityTimes = ActivityList.activityList.sort();
       }
     }
   }
