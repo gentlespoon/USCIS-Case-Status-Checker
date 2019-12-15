@@ -91,12 +91,16 @@ In no event shall the developer be liable for any consequences relating to the u
     
     this.uscisService.queryQueue = [];
     for (var currentCaseId = startCaseId; currentCaseId <= endCaseId; currentCaseId += this.configService.config.stepWidth) {
-      this.uscisService.queryQueue.push(prefix + currentCaseId);
+      var str_caseId = prefix + currentCaseId.toString().padStart(10, '0');
+      if (str_caseId.length != 13) {
+        throw 'Invalid case ID';
+      }
+      this.uscisService.queryQueue.push(str_caseId);
     }
     
     if (confirm(`You are trying to check ${this.uscisService.queryQueue.length} case${this.uscisService.queryQueue.length > 1 ? 's' : ''}.
 
-Since aach case query will consume about 150 KB data, the operation will consume a total of ${prettysize(1024 * 150 * this.uscisService.queryQueue.length).toUpperCase()} data.
+Since each case query will consume about 150 KB data, the operation will consume a total of ${prettysize(1024 * 150 * this.uscisService.queryQueue.length).toUpperCase()} data.
 
 Confirm?`)) {
   this.uscisService.start();

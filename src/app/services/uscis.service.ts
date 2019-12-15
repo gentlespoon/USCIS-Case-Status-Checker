@@ -58,7 +58,9 @@ export class UscisService {
 
   
 
-  queryQueue = [];
+  public queryQueue = [];
+
+
 
   private startNextQuery(): void {
     // pop first in queue;
