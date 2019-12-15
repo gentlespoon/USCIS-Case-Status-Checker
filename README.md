@@ -1,5 +1,24 @@
 # USCIS Case Status BatchQuery
 
+For DEVs
+
+Start the application in debugging mode
+```
+$ npm start
+```
+
+Build
+```
+Windows
+$ npm run electron:windows
+
+Linux
+$ npm run electron:linux
+
+macOS - You will need a macOS computer to build for mac.
+$ npm run electron:mac
+```
+
 ## Ver. 2019.07 - Angular + Electron
 
 Added pause/resume.
