@@ -2,14 +2,14 @@ import { app, BrowserWindow, screen } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 
-let win, serve;
-const args = process.argv.slice(1);
-serve = args.some(val => val === '--serve');
+let win: BrowserWindow = null;
+const args = process.argv.slice(1),
+    serve = args.some(val => val === '--serve');
 
-function createWindow() {
+function createWindow(): BrowserWindow {
 
-  // const electronScreen = screen;
-  // const size = electronScreen.getPrimaryDisplay().workAreaSize;
+  const electronScreen = screen;
+  const size = electronScreen.getPrimaryDisplay().workAreaSize;
 
   // Create the browser window.
   win = new BrowserWindow({
@@ -18,13 +18,14 @@ function createWindow() {
     // width: size.width,
     // height: size.height,
     width: 1366,
-    height: 720,
+    height: 1440,
+    
     minWidth: 1024,
     minHeight: 720,
+    
     webPreferences: {
-      webSecurity: false,
       nodeIntegration: true,
-      webviewTag: true,
+      allowRunningInsecureContent: (serve) ? true : false,
     },
   });
 
@@ -53,8 +54,7 @@ function createWindow() {
     win = null;
   });
 
-  win.setMenu(null);
-
+  return win;
 }
 
 try {

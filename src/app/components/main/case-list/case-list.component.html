@@ -1,0 +1,21 @@
+<div class="panel-title">Case List</div>
+
+<div class="list-manipulation">
+  <button class="btn btn-danger full-width" (click)="newList()">Create a New List</button>
+  <button class="btn btn-primary" (click)="buildList()">Build a List</button>
+  <button class="btn btn-primary" (click)="addCase()">Add a Case</button>
+  <button class="btn btn-success" (click)="importList()">Import List</button>
+  <button class="btn btn-success" disabled>Export List</button>
+</div>
+
+
+<div class="case-list">
+
+  <ul multiple>
+    <li *ngFor="let caseId of Object.keys(caseListSvc.caseIdList)">
+      {{ caseId }}
+    </li>
+  </ul>
+
+</div>
+

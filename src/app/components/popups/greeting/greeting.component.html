@@ -1,0 +1,25 @@
+<div class="container-tour">
+  <div class="head">Case List</div>
+  <div class="body">
+    <p>To check case status in batch, you will need a list of case IDs.</p>
+    <p>The app will check the status of all cases in the list in parallel.</p>
+
+    <fieldset>
+      <legend>Creating a new list</legend>
+      <div class="horizontal-split">
+        If you are only interested in checking your own case, you may create a list using the list builder.
+        <div class="container-button">
+          <button class="btn btn-primary" (click)="showListBuilder()">Create a new list with List Builder</button>
+        </div>
+      </div>
+
+      <div class="horizontal-split">
+        If you have your own list, you may create an empty list and import your own list.
+        <div class="container-button">
+          <button class="btn btn-primary" (click)="close()">Create an empty list</button>
+        </div>
+      </div>
+    </fieldset>
+  
+  </div>
+</div>

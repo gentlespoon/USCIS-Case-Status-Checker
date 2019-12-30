@@ -3,12 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var electron_1 = require("electron");
 var path = require("path");
 var url = require("url");
-var win, serve;
-var args = process.argv.slice(1);
-serve = args.some(function (val) { return val === '--serve'; });
+var win = null;
+var args = process.argv.slice(1), serve = args.some(function (val) { return val === '--serve'; });
 function createWindow() {
-    // const electronScreen = screen;
-    // const size = electronScreen.getPrimaryDisplay().workAreaSize;
+    var electronScreen = electron_1.screen;
+    var size = electronScreen.getPrimaryDisplay().workAreaSize;
     // Create the browser window.
     win = new electron_1.BrowserWindow({
         // x: 0,
@@ -16,13 +15,12 @@ function createWindow() {
         // width: size.width,
         // height: size.height,
         width: 1366,
-        height: 720,
+        height: 1440,
         minWidth: 1024,
         minHeight: 720,
         webPreferences: {
-            webSecurity: false,
             nodeIntegration: true,
-            webviewTag: true,
+            allowRunningInsecureContent: (serve) ? true : false,
         },
     });
     if (serve) {
@@ -48,7 +46,7 @@ function createWindow() {
         // when you should delete the corresponding element.
         win = null;
     });
-    win.setMenu(null);
+    return win;
 }
 try {
     // This method will be called when Electron has finished

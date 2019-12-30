@@ -1,0 +1,47 @@
+.container-add-case {
+  position: fixed;
+  z-index: 9998;
+  background-color: white;
+  font-size: 1.2em;
+  padding: 3em;
+  box-shadow: 0 0 0 calc(50vw + 50vh) rgba(0,0,0,0.5);
+  border-radius: 5px;
+  margin: auto;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  width: 300px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+
+
+div.head {
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+div.body {
+  padding: 2em 0;
+}
+
+div.foot {
+  text-align: center;
+}
+div.foot > * {
+  margin: .5em;
+}
+
+
+
+
+input {
+  padding: 5px;
+  text-transform: uppercase;
+  font-family: monospace;
+  width: 100%;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+}

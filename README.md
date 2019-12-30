@@ -1,100 +1,107 @@
-# USCIS Case Status BatchQuery
+[![Angular Logo](https://www.vectorlogo.zone/logos/angular/angular-icon.svg)](https://angular.io/) [![Electron Logo](https://www.vectorlogo.zone/logos/electronjs/electronjs-icon.svg)](https://electronjs.org/)
 
-For DEVs
+![Maintained][maintained-badge]
+[![Travis Build Status][build-badge]][build]
+[![Make a pull request][prs-badge]][prs]
+[![License](http://img.shields.io/badge/Licence-MIT-brightgreen.svg)](LICENSE.md)
 
-Start the application in debugging mode
+[![Watch on GitHub][github-watch-badge]][github-watch]
+[![Star on GitHub][github-star-badge]][github-star]
+[![Tweet][twitter-badge]][twitter]
+
+# Introduction
+
+Bootstrap and package your project with Angular 8 and Electron (Typescript + SASS + Hot Reload) for creating Desktop applications.
+
+Currently runs with:
+
+- Angular v8.2.14
+- Electron v7.1.7
+- Electron Builder v21.2.0
+
+With this sample, you can :
+
+- Run your app in a local development environment with Electron & Hot reload
+- Run your app in a production environment
+- Package your app into an executable file for Linux, Windows & Mac
+
+/!\ Angular 8.x CLI needs Node 10.9 or later to works correctly.
+
+## Getting Started
+
+Clone this repository locally :
+
+``` bash
+git clone https://github.com/maximegris/angular-electron.git
 ```
-$ npm start
+
+Install dependencies with npm :
+
+``` bash
+npm install
 ```
 
-Build
-```
-Windows
-$ npm run electron:windows
+There is an issue with `yarn` and `node_modules` when the application is built by the packager. Please use `npm` as dependencies manager.
 
-Linux
-$ npm run electron:linux
 
-macOS - You will need a macOS computer to build for mac.
-$ npm run electron:mac
+If you want to generate Angular components with Angular-cli , you **MUST** install `@angular/cli` in npm global context.
+Please follow [Angular-cli documentation](https://github.com/angular/angular-cli) if you had installed a previous version of `angular-cli`.
+
+``` bash
+npm install -g @angular/cli
 ```
 
-## Ver. 2019.07 - Angular + Electron
+## To build for development
 
-Added pause/resume.
+- **in a terminal window** -> npm start
 
-Optimized analyze algorithm.
+Voila! You can use your Angular + Electron app in a local development environment with hot reload !
 
-Allow save query configuration.
+The application code is managed by `main.ts`. In this sample, the app runs with a simple Angular App (http://localhost:4200) and an Electron window.
+The Angular component contains an example of Electron and NodeJS native lib import.
+You can disable "Developer Tools" by commenting `win.webContents.openDevTools();` in `main.ts`.
 
-Allow save results in localStorage.
+## Included Commands
 
-Allow export to CSV.
+|Command|Description|
+|--|--|
+|`npm run ng:serve:web`| Execute the app in the browser |
+|`npm run build`| Build the app. Your built files are in the /dist folder. |
+|`npm run build:prod`| Build the app with Angular aot. Your built files are in the /dist folder. |
+|`npm run electron:local`| Builds your application and start electron
+|`npm run electron:linux`| Builds your application and creates an app consumable on linux system |
+|`npm run electron:windows`| On a Windows OS, builds your application and creates an app consumable in windows 32/64 bit systems |
+|`npm run electron:mac`|  On a MAC OS, builds your application and generates a `.app` file of your application that can be run on Mac |
 
-Built for Windows, macOS, and Linux.
+**Your application is optimised. Only /dist folder and node dependencies are included in the executable.**
 
+## You want to use a specific lib (like rxjs) in electron main thread ?
 
-![alt text](https://raw.githubusercontent.com/gentlespoon/USCIS-Case-BatchQuery/master/20190711-224137.png "Running in Windows, v2019.07.11")
+YES! You can do it! Just by importing your library in npm dependencies section (not **devDependencies**) with `npm install --save`. It will be loaded by electron during build phase and added to your final package. Then use your library by importing it in `main.ts` file. Quite simple, isn't it ?
 
-***
+## Browser mode
 
-#### This may be considered as a Denial of Service attack to USCIS system!
-#### You are responsible for all consequences of using this tool.
-If you do not know what DoS means, or if you do not fully understand the risk, just keep away from this tool.
+Maybe you want to execute the application in the browser with hot reload ? Just run `npm run ng:serve:web`.
+**Note that you can't use Electron or NodeJS native libraries in this case.** Please check `providers/electron.service.ts` to watch how conditional import of electron/Native libraries is done.
 
-You have been warned!
+## Branch & Packages version
 
-Your IP may be blocked by USCIS if you send a lot of queries without using any proxy server.
+- Angular 4 & Electron 1 : Branch [angular4](https://github.com/maximegris/angular-electron/tree/angular4)
+- Angular 5 & Electron 1 : Branch [angular5](https://github.com/maximegris/angular-electron/tree/angular5)
+- Angular 6 & Electron 3 : Branch [angular6](https://github.com/maximegris/angular-electron/tree/angular6)
+- Angular 7 & Electron 3 : Branch [angular7](https://github.com/maximegris/angular-electron/tree/angular7)
+- Angular 8 & Electron 7 : (master)
 
-> It was reported to us that your IP address or internet gateway has been locked out for a select period of time. This is due to an unusually high rate of use. In order to avoid this issue, please create a Customer account (single applicant) or a Representative account (representing many individuals).
-
-Exact IP rate limits imposed by USCIS are not known (and may change at any time), but it is likely that both per-minute and longer-term limits are in place. As a rough guide *with no warranty of reliability*, as of mid-2019, 100 requests/minute appears to be acceptable over short time periods. However, sustaining this rate for more than 12 hours (72,000 requests over 12 hours) seems highly likely to trigger an IP ban. Initial IP bans typically last 24 hours, but of course USCIS may have authority to issue longer bans or more serious punishments. Again, **you use this tool at your own risk**.
-
-***
-
-## Ver. 2019.02.02 - CrossPlatform Electron build
-
-It has been one year since I applied for my OPT. Now I am waiting for my STEM OPT Extension. I think it is time to give this tool a refresh. This time, the refreshed application is created using [Node.js](https://nodejs.org/en/), and integrated GUI with [Electron.js](https://electronjs.org/).
-
-Theoretically, the code should be able to run on all platforms. I am providing [x64 binaries for Windows and Linux](https://github.com/gentlespoon/USCIS-Case-BatchQuery/releases).
-
-If you would like to run it on other platform, please take a look at [Electron Documentation](https://electronjs.org/docs/tutorial/application-distribution), they have detailed instructions on how to use their prebuilt binaries. There are some pre-built binaries for other platform available [here](https://github.com/electron/electron/releases).
-
-Basically everything works just like before. Multi-threaded scraping. Just set up scrape controlling conditions and hit the Start button. The program will spawn several threads and start to check those USCIS Receipt Numbers. 
-
-You will get:
-* Form - Only available if USCIS explicitly says which category the case belongs to
-* Case Status - A summary of current status
-* Detailed Status - The original paragraph on USCIS result page
-* Update Date - Date of last USCIS activity
-
-Removed database related functions because they are simply ... worthless for this app.
-
-![alt text](https://raw.githubusercontent.com/gentlespoon/USCIS-Case-BatchQuery/v2019.02/2019-02-03-15-36-01.png "Running in Ubuntu")
-
-
-***
-#### C#, Python, PHP+JS versions are still available in the v2018 branch
-
-***
-
-And the Old Story...
-
-## Unsatisfying USCIS Case Status System
-
-Students under the F-1 visa usually apply for Optional Practical Training (OPT) to get work authorization from US Citizenship and Immigration Services (USCIS). When one application is received by the USCIS, they issue a receipt number. Using this receipt number to check one’s progress (at https://egov.uscis.gov/casestatus/mycasestatus.do) is highly unsatisfying. The application usually takes up to 4 months to process. Until the work authorization is approved, students will only get a somewhat useless paragraph like this:
-
-> On November 16, 2017, we received your Form I-765, Application for Employment Authorization , Receipt Number YSC1890044628, and sent you the receipt notice that describes how we will process your case. Please follow the instructions in the notice. If you do not receive your receipt notice by December 16, 2017, please call Customer Service at 1-800-375-5283. If you move, go to www.uscis.gov/addresschange to give us your new mailing address.
-
-And nothing more. No estimate time. No queue information. No current status. USCIS does a really bad job of keeping one updated on the progress of a case and in general how far along they are going with the entire year’s batch of students.
-
-### Predicting decision time
-
-Fortunately, USCIS issues receipt numbers in *chronological order*, and they process their cases in a *first-come-first serve* order. That means if we check other people's case status, *we will be able to get an estimate time of case decision*:
-
-* If a huge proportion of people before (and possibly after) me have their OPTs approved, I should have mine processed soon.
-* However, if the people who submitted around my date are stil waiting for their approval, I can expect to wait a long time.
-
-However, doing so manually at https://egov.uscis.gov/casestatus/mycasestatus.do is a slow and tiring process. Instead, I can write a script to check the website for the 50,000 or so cases before and after my own number.
-
-
+[build-badge]: https://travis-ci.org/maximegris/angular-electron.svg?branch=master&style=style=flat-square
+[build]: https://travis-ci.org/maximegris/angular-electron
+[license-badge]: https://img.shields.io/badge/license-Apache2-blue.svg?style=style=flat-square
+[license]: https://github.com/maximegris/angular-electron/blob/master/LICENSE.md
+[prs-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
+[prs]: http://makeapullrequest.com
+[github-watch-badge]: https://img.shields.io/github/watchers/maximegris/angular-electron.svg?style=social
+[github-watch]: https://github.com/maximegris/angular-electron/watchers
+[github-star-badge]: https://img.shields.io/github/stars/maximegris/angular-electron.svg?style=social
+[github-star]: https://github.com/maximegris/angular-electron/stargazers
+[twitter]: https://twitter.com/intent/tweet?text=Check%20out%20angular-electron!%20https://github.com/maximegris/angular-electron%20%F0%9F%91%8D
+[twitter-badge]: https://img.shields.io/twitter/url/https/github.com/maximegris/angular-electron.svg?style=social
+[maintained-badge]: https://img.shields.io/badge/maintained-yes-brightgreen

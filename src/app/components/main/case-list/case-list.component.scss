@@ -1,0 +1,41 @@
+.list-manipulation {
+  border-bottom: 1px solid lightgray;
+  padding: 2px;
+}
+.list-manipulation > button {
+  display: inline-block;
+  width: calc(50% - 2px);
+  margin: 1px;
+}
+
+button.full-width {
+  width: calc(100% - 2px) !important;
+}
+
+ul {
+  font-family: monospace;
+  font-weight: bold;
+  font-size: 1.1em;
+  margin: 0;
+  height: 100%;
+  
+  list-style-type: none;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  padding-inline-start: 0;
+}
+
+li {
+  padding: 5px 1em;
+}
+
+
+div.case-list {
+  top: 130px;
+  width: 100%;
+  height: calc(100% - 130px);
+  overflow-x: hidden;
+  overflow-y: auto;
+}

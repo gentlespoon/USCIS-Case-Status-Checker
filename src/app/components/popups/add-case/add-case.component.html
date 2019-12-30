@@ -1,0 +1,19 @@
+<div class="container-add-case">
+    
+  <div class="head">Add Case</div>
+
+
+  <div class="body">
+    <label for="tb_caseId">Case ID</label>
+    <input type="text" class="form-control" id="tb_caseId" [(ngModel)]="data" autofocus >
+    <small class="form-text text-muted">Case ID is your Receipt number.<br>Example: YSC1234567890</small>
+  </div>
+
+  <div class="foot">
+    <button class="btn btn-primary" (click)="add()" [disabled]="disableAddButton">Add</button>
+    <button class="btn btn-danger" (click)="close()">Cancel</button>
+  </div>
+  
+
+</div>
+

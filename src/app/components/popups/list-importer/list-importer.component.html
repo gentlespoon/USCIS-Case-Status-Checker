@@ -1,0 +1,48 @@
+<div class="container-list-importer">
+    
+  <div class="head">Import List</div>
+
+
+  <div class="body">
+    <div><strong>Data Type</strong></div>
+    <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="dataType">
+      
+      <label ngbButtonLabel class="btn-light">
+        <input ngbButton type="radio" value="txt"> TXT
+      </label>
+      
+      <label ngbButtonLabel class="btn-light">
+        <input ngbButton type="radio" value="json"> JSON
+      </label>
+      
+      <label ngbButtonLabel class="btn-light">
+        <input ngbButton type="radio" value="csv"> CSV 
+      </label>
+      
+      <label ngbButtonLabel class="btn-light">
+        <input ngbButton type="radio" value="csvq"> CSV (with quotation marks)
+      </label>
+
+      <label ngbButtonLabel class="btn-light">
+        <input ngbButton type="radio" value="xml" disabled> XML
+      </label>
+      
+    </div>
+
+    <div><strong>Data Content</strong></div>
+    <textarea placeholder="
+    Paste your data here...
+
+    {{ instructions }}
+    " [(ngModel)]="data" autofocus></textarea>
+    
+  </div>
+
+  <div class="foot">
+    <button class="btn btn-primary" (click)="import()" [disabled]="disableImportButton">Import</button>
+    <button class="btn btn-danger" (click)="close()">Cancel</button>
+  </div>
+  
+
+</div>
+
