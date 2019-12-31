@@ -14,7 +14,7 @@ export class CaseListService {
 
   public caseIdList: object = {};
 
-  private tryToAddToList(caseId: string) {
+  private tryToAddToList(caseId: string): void {
     this.parseCaseId(caseId);
     var targetId = caseId.toUpperCase();
     if (null != this.caseIdList[targetId]) {
@@ -23,13 +23,22 @@ export class CaseListService {
     this.caseIdList[targetId] = false;
   }
 
-  public addCaseId(caseId: string) {
+  private sortList(): void {
+    var ordered = {};
+    Object.keys(this.caseIdList).sort().forEach(function(key) {
+      ordered[key] = this.caseIdList[key];
+    });
+    this.caseIdList = ordered;
+  }
+
+  public addCaseId(caseId: string): void {
     if (this.DEV) console.log(`Adding caseId: ${caseId}`);
     this.tryToAddToList(caseId);
+    this.sortList();
     this.saveListToLocalStorage();
   }
 
-  public addCaseIds(caseIds: string[]) {
+  public addCaseIds(caseIds: string[]): void {
     var currentCaseId = '';
     try {
       for (var caseId of caseIds) {
@@ -39,11 +48,12 @@ export class CaseListService {
     } catch (ex) {
       throw `Failed to add case "${currentCaseId}":\n\n${ex}`;
     }
+    this.sortList();
     this.saveListToLocalStorage();
   }
 
 
-  public clearCaseIdList() {
+  public clearCaseIdList(): void {
     if (this.DEV) console.log('Clearing caseIdList');
     this.caseIdList = [];
   }
@@ -61,13 +71,13 @@ export class CaseListService {
   }
 
 
-  public saveListToLocalStorage() {
+  public saveListToLocalStorage(): void {
     if (this.DEV) console.log('Saving cached list');
     localStorage.setItem('cachedCaseIdList', JSON.stringify(Object.keys(this.caseIdList)));
     if (this.DEV) console.log('Saved cached list');
   }
 
-  public loadListFromLocalStorage() {
+  public loadListFromLocalStorage(): void {
     if (this.DEV) console.log('Loading cached list');
     var loadedListString = localStorage.getItem('cachedCaseIdList');
     if (loadedListString) {
