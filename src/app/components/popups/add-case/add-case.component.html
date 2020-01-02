@@ -9,7 +9,9 @@
     <small class="form-text text-muted">Case ID is your Receipt number.<br>Example: YSC1234567890</small>
   </div>
 
+  <div class="error-message" *ngIf="errorMessage" wrap="true" [innerHTML]="errorMessage"></div>
   <div class="foot">
+
     <button class="btn btn-primary" (click)="add()" [disabled]="disableAddButton">Add</button>
     <button class="btn btn-danger" (click)="close()">Cancel</button>
   </div>

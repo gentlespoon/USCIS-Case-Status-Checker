@@ -20,19 +20,37 @@ export class ListImporterComponent {
   public get instructions(): string {
     switch (this.dataType) {
       case 'txt':
-        return 'Each line contains one case ID';
+        return `
+  Each line contains one case ID
+  
+  ABC1234123412
+  WAC4312432143
+  LIN6789678967`;
         break;
       case 'json':
-        return 'JavaScript Object Notation';
+        return `
+  JavaScript Object Notation
+  
+  [
+    "ABC1234123412",
+    "WAC4321432143",
+    "LIN6789678967"
+  ]`;
         break;
       case 'xml':
         return 'Extensible Markup Language';
         break;
       case 'csv':
-        return 'Comma Splitted Values';
+        return `
+  Comma Splitted Values
+  
+  ABC1234123412,WAC4321432143,LIN6789678967`;
         break;
       case 'csvq':
-        return 'Comma Splitted Values with Quotation Marks';
+        return `
+  Comma Splitted Values with Quotation Marks
+  
+  "ABC1234123412","WAC4321432143","LIN6789678967"`;
         break;
       default:
         return 'Unsupported data type';
@@ -40,26 +58,32 @@ export class ListImporterComponent {
     }
   }
 
-  public disableImportButton = false;
+  public disableImportButton: boolean = false;
+
+  public errorMessage: string = '';
 
   public import() {
-    this.disableImportButton = true;
-    this.data = this.data.trim();
-    if (this.data) {
     
-      try {
+    this.errorMessage = '';
+    this.disableImportButton = true;
+    setTimeout(() => this.runImport(), 100);
+
+  }
+
+  public runImport() {
+    try {
+      this.data = this.data.trim();
+      if (this.data) {  
         var parsedData: string[] = this.parseData();
         // console.log(parsedData);
         this.caseListSvc.addCaseIds(parsedData);
         this.close();
-      } catch (ex) {
-        alert(`Failed to import case list.\n\n${ex}`);
       }
-      
+    } catch (ex) {
+      this.errorMessage = `Failed to import case list.<br>${ex}`;
     }
     this.disableImportButton = false;
   }
-
 
   private parseData(): string[] {
     switch (this.dataType) {
@@ -73,10 +97,12 @@ export class ListImporterComponent {
         throw ('Not Implemented');
         break;
       case 'csv':
-        return this.data.split(',');
+        var tmp = this.data.split('\n').join();
+        return tmp.split(',');
         break;
       case 'csvq':
-        return this.data.replace(/\"/g, '').split(',');
+        var tmp = this.data.split('\n').join();
+        return tmp.replace(/\"/g, '').split(',');
         break;
     }
   }

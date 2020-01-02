@@ -25,7 +25,7 @@ export class CaseListService {
 
   private sortList(): void {
     var ordered = {};
-    Object.keys(this.caseIdList).sort().forEach(function(key) {
+    Object.keys(this.caseIdList).sort().forEach(key => {
       ordered[key] = this.caseIdList[key];
     });
     this.caseIdList = ordered;

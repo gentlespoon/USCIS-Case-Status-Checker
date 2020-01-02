@@ -30,15 +30,13 @@
     </div>
 
     <div><strong>Data Content</strong></div>
-    <textarea placeholder="
-    Paste your data here...
-
-    {{ instructions }}
-    " [(ngModel)]="data" autofocus></textarea>
+    <textarea placeholder="  Paste your data here... {{ instructions }}" [(ngModel)]="data" autofocus></textarea>
     
   </div>
 
+  <div class="error-message" *ngIf="errorMessage" wrap="true" [innerHTML]="errorMessage"></div>
   <div class="foot">
+
     <button class="btn btn-primary" (click)="import()" [disabled]="disableImportButton">Import</button>
     <button class="btn btn-danger" (click)="close()">Cancel</button>
   </div>

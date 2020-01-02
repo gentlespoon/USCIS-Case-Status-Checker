@@ -14,22 +14,28 @@ export class AddCaseComponent {
     private caseListSvc: CaseListService
   ) { }
 
-  public data: string = "";
+  public data: string = '';
 
-  public disableAddButton = false;
+  public disableAddButton: boolean = false;
 
+  public errorMessage: string = '';
 
   public add() {
-    if (this.data) {
-      this.disableAddButton = true;
-      try {
+    this.errorMessage = '';
+    this.disableAddButton = true;
+    setTimeout(() => this.runAdd(), 100);
+  }
+
+  public runAdd() {
+    try {
+      if (this.data) {
         this.caseListSvc.addCaseId(this.data);
         this.close();
-      } catch (ex) {
-        alert(`Failed to add case.\n\n${ex}`);
       }
-      this.disableAddButton = false;
+    } catch (ex) {
+      this.errorMessage = `Failed to add case.<br>${ex}`;
     }
+    this.disableAddButton = false;
   }
 
   public close() {
