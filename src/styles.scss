@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   height: 100%;
@@ -7,11 +8,9 @@ html, body {
   font-size: 12px;
 }
 
-
 .disable-select {
   user-select: none;
 }
-
 
 .panel-title {
   text-align: center;
@@ -19,4 +18,51 @@ html, body {
   line-height: 30px;
   font-weight: bold;
   border-bottom: 1px solid lightgray;
+}
+
+div.error-message {
+  color: darkred;
+}
+
+fieldset.g_input {
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  padding: 0.5em;
+  margin-bottom: 1em;
+}
+
+fieldset.g_input legend {
+  margin: 0 0.5em;
+  padding: 0 0.5em;
+  width: unset;
+  font-size: unset;
+}
+
+small {
+  font-size: 10px;
+}
+
+div.container-horizontal-split {
+  width: 100%;
+  display: table;
+  border-collapse: collapse;
+}
+
+div.cell-horizontal-split {
+  vertical-align: top;
+  width: 50%;
+  padding: 1em;
+  display: table-cell;
+}
+div.cell-horizontal-split:not(:first-child) {
+  border-left: 1px solid lightgray;
+}
+
+div.cell-horizontal-split.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+textarea {
+  padding: 0.5rem;
 }

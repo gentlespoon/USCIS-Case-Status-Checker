@@ -4,20 +4,18 @@
   background-color: white;
   font-size: 1.2em;
   padding: 3em;
-  box-shadow: 0 0 0 calc(50vw + 50vh) rgba(0,0,0,0.5);
+  box-shadow: 0 0 0 calc(50vw + 50vh) rgba(0, 0, 0, 0.5);
   border-radius: 5px;
   margin: auto;
   top: 50%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
-  width: 80%;
-  max-width: 1000px;
-  max-height: 80%;
+  width: 90%;
+  max-width: 1200px;
+  max-height: 90%;
   overflow-x: hidden;
   overflow-y: auto;
 }
-
-
 
 div.head {
   text-align: center;
@@ -32,11 +30,8 @@ div.foot {
   text-align: center;
 }
 div.foot > * {
-  margin: .5em;
+  margin: 0.5em;
 }
-
-
-
 
 textarea {
   font-family: monospace;
@@ -45,7 +40,6 @@ textarea {
   border: 1px solid lightgray;
   border-radius: 5px;
 }
-
 
 div.error-message {
   color: darkred;

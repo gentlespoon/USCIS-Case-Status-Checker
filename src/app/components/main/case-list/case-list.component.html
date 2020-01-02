@@ -1,20 +1,35 @@
 <div class="panel-title">Case List</div>
 
 <div class="list-manipulation">
-  <button class="btn btn-danger" (click)="newList()">New List</button>
-  <button class="btn btn-primary" (click)="addCase()">Add a Case</button>
-  <button class="btn btn-sm btn-light" (click)="importList()">Import List</button>
-  <button class="btn btn-sm btn-light" [disabled]="!caseListSvc.caseIdList.length">Export List</button>
+  <button
+    class="btn btn-danger btn-sm full-width"
+    (click)="newList()"
+    [disabled]="!Object.keys(caseListSvc.caseIdList).length"
+  >
+    New List
+  </button>
+  <button class="btn btn-primary full-width" (click)="buildList()">
+    Build a List
+  </button>
+  <button class="btn btn-primary btn-lg full-width" (click)="addCase()">
+    Add a Case
+  </button>
+  <button class="btn btn-sm btn-success" (click)="importList()">
+    Import List
+  </button>
+  <button
+    class="btn btn-sm btn-success"
+    (click)="exportList()"
+    [disabled]="!Object.keys(caseListSvc.caseIdList).length"
+  >
+    Export List
+  </button>
 </div>
 
-
 <div class="case-list">
-
   <ul multiple>
     <li *ngFor="let caseId of Object.keys(caseListSvc.caseIdList)">
       {{ caseId }}
     </li>
   </ul>
-
 </div>
-

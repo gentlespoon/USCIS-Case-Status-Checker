@@ -1,20 +1,21 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { FormsModule } from "@angular/forms";
-import { AddCaseComponent } from "./add-case.component";
 
-describe("AddCaseComponent", () => {
-  let component: AddCaseComponent;
-  let fixture: ComponentFixture<AddCaseComponent>;
+import { NewListComponent } from "./new-list.component";
+import { FormsModule } from "@angular/forms";
+
+describe("NewListComponent", () => {
+  let component: NewListComponent;
+  let fixture: ComponentFixture<NewListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [FormsModule],
-      declarations: [AddCaseComponent]
+      declarations: [NewListComponent],
+      imports: [FormsModule]
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddCaseComponent);
+    fixture = TestBed.createComponent(NewListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

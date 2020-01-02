@@ -4,7 +4,7 @@
   background-color: white;
   font-size: 1.2em;
   padding: 3em;
-  box-shadow: 0 0 0 calc(50vw + 50vh) rgba(0,0,0,0.5);
+  box-shadow: 0 0 0 calc(50vw + 50vh) rgba(0, 0, 0, 0.5);
   border-radius: 5px;
   margin: auto;
   top: 50%;
@@ -27,30 +27,7 @@ div.body {
   padding: 2em 0;
 }
 
-
-fieldset {
-  border: 1px solid lightgray;
-  border-radius: 5px;
-}
-
-legend {
-  margin: 0 .5em;
-  padding: 0 .5em;
-  width: unset;
-  font-size: unset;
-}
-
-div.horizontal-split {
-  vertical-align: top;
-  display: inline-block;
-  width: 50%;
-  padding: 1em;
-}
-div.horizontal-split:last-child {
-  border-left: 1px solid lightgray;
-}
-
-div.container-button {
-  margin: 1em 0 0 0;
+.container-button {
+  margin-top: 0.5em;
   text-align: center;
 }

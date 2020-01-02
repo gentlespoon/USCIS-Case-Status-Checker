@@ -1,4 +1,4 @@
-.container-list-builder {
+.container-list-exporter {
   position: fixed;
   z-index: 9998;
   background-color: white;
@@ -11,7 +11,7 @@
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
   width: 90%;
-  max-width: 800px;
+  max-width: 1200px;
   max-height: 90%;
   overflow-x: hidden;
   overflow-y: auto;
@@ -33,10 +33,10 @@ div.foot > * {
   margin: 0.5em;
 }
 
-.label-wide {
-  width: 100px;
-}
-
-.explanation {
-  text-align: center;
+textarea {
+  font-family: monospace;
+  height: 200px;
+  width: 100%;
+  border: 1px solid lightgray;
+  border-radius: 5px;
 }

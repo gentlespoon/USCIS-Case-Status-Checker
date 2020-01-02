@@ -1,19 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class DataCacheService {
+  constructor() {}
 
-  constructor() { }
+  public loadCache() {}
 
-  public loadCache() {
-
-  }
-
-  public saveCache() {
-
-  }
-
-  
+  public saveCache() {}
 }

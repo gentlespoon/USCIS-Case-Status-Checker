@@ -1,16 +1,16 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
+import { UserAgreementComponent } from "./user-agreement.component";
 
-import { UserAgreementComponent } from './user-agreement.component';
-
-describe('UserAgreementComponent', () => {
+describe("UserAgreementComponent", () => {
   let component: UserAgreementComponent;
   let fixture: ComponentFixture<UserAgreementComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserAgreementComponent ]
-    })
-    .compileComponents();
+      imports: [FontAwesomeModule],
+      declarations: [UserAgreementComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +19,7 @@ describe('UserAgreementComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

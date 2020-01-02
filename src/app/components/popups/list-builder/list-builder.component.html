@@ -1,1 +1,98 @@
-<p>list-builder works!</p>
+<div class="container-list-builder">
+  <div class="head">Build a List</div>
+
+  <div class="body">
+    <fieldset class="g_input">
+      <legend>Your USCIS Case ID</legend>
+      <input
+        class="form-control"
+        type="text"
+        [(ngModel)]="baseCaseId"
+        autofocus
+      />
+      <small class="form-text text-muted"
+        >Case ID is your Receipt number. Example: YSC1234567890</small
+      >
+    </fieldset>
+
+    <fieldset class="g_input">
+      <legend>Step Width</legend>
+      <input class="form-control" type="number" [(ngModel)]="stepWidth" />
+      <small class="form-text text-muted"
+        >Check every
+        {{ stepWidth ? (stepWidth > 1 ? stepWidth : "") : "_" }} case{{
+          stepWidth > 1 ? "s" : ""
+        }}</small
+      >
+    </fieldset>
+
+    <div style="text-align: center;"></div>
+
+    <fieldset class="g_input" style="padding: 0;">
+      <legend style="text-align: center;">
+        <div
+          class="btn-group btn-group-toggle"
+          ngbRadioGroup
+          name="radioBasic"
+          [(ngModel)]="mode"
+        >
+          <label ngbButtonLabel class="btn-light label-wide">
+            <input ngbButton type="radio" value="prevNextRange" />
+            <fa-icon [icon]="faChevronLeft"></fa-icon>
+          </label>
+          <label ngbButtonLabel class="btn-light label-wide">
+            <input ngbButton type="radio" value="absoluteRange" />
+            <fa-icon [icon]="faChevronRight"></fa-icon>
+          </label>
+        </div>
+      </legend>
+
+      <div class="container-horizontal-split">
+        <div
+          class="cell-horizontal-split"
+          [class.disabled]="mode != 'prevNextRange'"
+        >
+          <fieldset class="g_input">
+            <legend>Previous _ Cases</legend>
+            <input class="form-control" type="number" [(ngModel)]="prevCases" />
+          </fieldset>
+
+          <fieldset class="g_input">
+            <legend>Next _ Cases</legend>
+            <input class="form-control" type="number" [(ngModel)]="nextCases" />
+          </fieldset>
+        </div>
+
+        <div
+          class="cell-horizontal-split"
+          [class.disabled]="mode != 'absoluteRange'"
+        >
+          <fieldset class="g_input">
+            <legend>Mininum Case ID</legend>
+            <input class="form-control" type="text" [(ngModel)]="minCaseId" />
+          </fieldset>
+
+          <fieldset class="g_input">
+            <legend>Maximum Case ID</legend>
+            <input class="form-control" type="text" [(ngModel)]="maxCaseId" />
+          </fieldset>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+
+  <div class="explanation" wrap="true">
+    {{ explanation }}
+  </div>
+
+  <div class="foot">
+    <button
+      class="btn btn-primary"
+      (click)="import()"
+      [disabled]="disableImportButton"
+    >
+      Import
+    </button>
+    <button class="btn btn-danger" (click)="close()">Cancel</button>
+  </div>
+</div>

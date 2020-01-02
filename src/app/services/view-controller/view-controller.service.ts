@@ -1,16 +1,16 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class ViewControllerService {
-
   public show: object = {
     userAgreement: false,
     greeting: false,
     listBuilder: false,
     listImporter: false,
-    addCaseId: false
+    addCaseId: false,
+    newList: false
   };
 
   get hasPopup(): boolean {
@@ -22,5 +22,4 @@ export class ViewControllerService {
     }
     return false;
   }
-  
 }

@@ -1,11 +1,11 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
 
-import { ViewControllerService } from './view-controller.service';
+import { ViewControllerService } from "./view-controller.service";
 
-describe('ViewControllerService', () => {
+describe("ViewControllerService", () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
-  it('should be created', () => {
+  it("should be created", () => {
     const service: ViewControllerService = TestBed.get(ViewControllerService);
     expect(service).toBeTruthy();
   });
