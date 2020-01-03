@@ -10,22 +10,17 @@ import { CaseListService } from "@app/services/case-list/case-list.service";
 export class AddCaseComponent {
   constructor(
     public viewControllerSvc: ViewControllerService,
-    private caseListSvc: CaseListService
+    public caseListSvc: CaseListService
   ) {}
 
   public data: string = "";
-
   public disableAddButton: boolean = false;
-
   public errorMessage: string = "";
 
+  // unblock the UI in case adding is slow.
   public add() {
     this.errorMessage = "";
     this.disableAddButton = true;
-    setTimeout(() => this.runAdd(), 100);
-  }
-
-  public runAdd() {
     try {
       if (this.data) {
         this.caseListSvc.addCaseId(this.data);

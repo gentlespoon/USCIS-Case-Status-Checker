@@ -6,8 +6,6 @@ import { ViewControllerService } from "@app/services/view-controller/view-contro
   templateUrl: "./popups.component.html",
   styleUrls: ["./popups.component.scss"]
 })
-export class PopupsComponent implements OnInit {
+export class PopupsComponent {
   constructor(public viewControllerSvc: ViewControllerService) {}
-
-  ngOnInit() {}
 }

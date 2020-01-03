@@ -22,4 +22,27 @@ describe("AddCaseComponent", () => {
   it("should create", () => {
     expect(component).toBeTruthy();
   });
+
+  it("should add a case when valid case ID is provided", () => {
+    var validCaseId = "ABC1234567890";
+    component.data = validCaseId;
+    component.add();
+    expect(Object.keys(component.caseListSvc.caseIdList)).toContain(
+      validCaseId
+    );
+  });
+
+  it("should show error message when invalid case ID is provided", () => {
+    var invalidCaseId = "ABCDE";
+    component.data = invalidCaseId;
+    component.add();
+    expect(component.errorMessage).toBeTruthy();
+  });
+
+  it("should hide UI", () => {
+    var uiName = "addCase";
+    component.viewControllerSvc.show[uiName] = true;
+    component.close();
+    expect(component.viewControllerSvc.show[uiName]).toBeFalsy();
+  });
 });

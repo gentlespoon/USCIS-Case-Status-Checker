@@ -20,7 +20,7 @@ export class GreetingComponent implements OnInit {
     this.hideGreeting();
   }
 
-  private hideGreeting(): void {
+  public hideGreeting(): void {
     localStorage.setItem("notFirstUse", "1");
     this.viewControllerSvc.show["greeting"] = false;
   }

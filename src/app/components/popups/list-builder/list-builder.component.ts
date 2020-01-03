@@ -6,6 +6,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { CaseListService } from "@app/services/case-list/case-list.service";
 import { CaseId } from "@app/classes/case-id/case-id";
+import { BuilderMode } from "@app/classes/builder-mode/builder-mode";
 
 @Component({
   selector: "app-list-builder",
@@ -14,21 +15,23 @@ import { CaseId } from "@app/classes/case-id/case-id";
 })
 export class ListBuilderComponent implements OnInit {
   constructor(
-    private viewControllerSvc: ViewControllerService,
-    private caseListSvc: CaseListService
+    public viewControllerSvc: ViewControllerService,
+    public caseListSvc: CaseListService
   ) {}
 
   ngOnInit() {
-    this.mode = "prevNextRange";
+    this.mode = BuilderMode.prevNextRange;
   }
 
   faChevronLeft = faChevronLeft;
   faChevronRight = faChevronRight;
 
-  _mode: string;
+  _mode: BuilderMode;
   public stepWidth: number = 100;
+  public prevCases: number = 10000;
+  public nextCases: number = 1000;
 
-  private _baseCaseId: CaseId = new CaseId("YSC1890044628");
+  private _baseCaseId: CaseId;
 
   get baseCaseId(): string {
     if (!this._baseCaseId) {
@@ -40,30 +43,109 @@ export class ListBuilderComponent implements OnInit {
   set baseCaseId(value: string) {
     try {
       this._baseCaseId = new CaseId(value);
+      this.explanation = "";
     } catch (ex) {
-      this.errorMessage = ex;
+      this.explanation = ex;
     }
   }
 
-  private errorMessage: string = "";
+  public explanation: string = "";
 
-  get explanation(): string {
-    if (this.errorMessage) return this.errorMessage;
-    return `Check every ${
-      this.stepWidth ? (this.stepWidth > 1 ? this.stepWidth : "") : "_"
-    } case${this.stepWidth > 1 ? "s" : ""} starting from ${
-      this.firstCaseId
-    } to ${this.lastCaseId}.`;
+  public caseList: CaseId[] = [];
+
+  public generateList() {
+    this.caseList = [];
+
+    this.explanation = "Generating case ID list...";
+
+    if (!this.baseCaseId) {
+      this.explanation = "Invalid baseCaseId";
+      return;
+    }
+    var baseCaseIdObj: CaseId = new CaseId(this.baseCaseId);
+
+    if (this.stepWidth <= 0) {
+      this.explanation = "Invalid stepWidth";
+      return;
+    }
+
+    var minNumCaseId: number;
+    var maxNumCaseId: number;
+    switch (this.mode) {
+      case BuilderMode.prevNextRange:
+        {
+          if (!this.prevCases || this.prevCases < 1) {
+            this.explanation = "Invalid prevCases";
+            return;
+          }
+          if (!this.prevCases || this.nextCases < 1) {
+            this.explanation = "Invalid nextCases";
+            return;
+          }
+          minNumCaseId = baseCaseIdObj.numCaseId - this.prevCases;
+          maxNumCaseId = baseCaseIdObj.numCaseId + this.nextCases;
+        }
+
+        break;
+
+      case BuilderMode.absoluteRange:
+        {
+          if (!this.minCaseId || this.minCaseId >= this.baseCaseId) {
+            this.explanation = "Invalid minCaseId";
+            return;
+          }
+          if (!this.maxCaseId || this.maxCaseId <= this.baseCaseId) {
+            this.explanation = "Invalid maxCaseId";
+            return;
+          }
+          minNumCaseId = new CaseId(this.minCaseId).numCaseId;
+          maxNumCaseId = new CaseId(this.maxCaseId).numCaseId;
+        }
+        break;
+
+      default:
+        return (this.explanation = "Invalid mode");
+    }
+
+    var leftPart: CaseId[] = [];
+    var rightPart: CaseId[] = [];
+
+    // generate left part
+    for (
+      var currentNumCaseId = baseCaseIdObj.numCaseId - this.stepWidth;
+      currentNumCaseId >= minNumCaseId;
+      currentNumCaseId -= this.stepWidth
+    ) {
+      leftPart.push(new CaseId(baseCaseIdObj.prefix, currentNumCaseId));
+    }
+
+    // generate right part
+    for (
+      var currentNumCaseId = baseCaseIdObj.numCaseId + this.stepWidth;
+      currentNumCaseId <= maxNumCaseId;
+      currentNumCaseId += this.stepWidth
+    ) {
+      rightPart.push(new CaseId(baseCaseIdObj.prefix, currentNumCaseId));
+    }
+
+    // merge two parts
+    this.caseList = leftPart.reverse();
+    this.caseList.push(baseCaseIdObj);
+    this.caseList = this.caseList.concat(rightPart);
+
+    // generate messages
+    this.explanation = `Check every ${
+      this.stepWidth > 1 ? this.stepWidth : ""
+    } case${
+      this.stepWidth > 1 ? "s" : ""
+    } starting from ${this.caseList[0].toString()} to ${this.caseList[
+      this.caseList.length - 1
+    ].toString()}. (${this.caseList.length} cases)<br>
+    
+    `;
+
+    return;
   }
-
-  public firstCaseId: string = "";
-  public lastCaseId: string = "";
-  public calculateRange() {
-    throw "Not implemented";
-  }
-
-  public prevCases: number = 10000;
-  public nextCases: number = 1000;
 
   private _minCaseId: CaseId;
   get minCaseId(): string {
@@ -83,8 +165,9 @@ export class ListBuilderComponent implements OnInit {
         throw `must be smaller than base ID`;
       }
       this._minCaseId = caseId;
+      this.explanation = "";
     } catch (ex) {
-      this.errorMessage = `Invalid mininum Case ID: ${ex}`;
+      this.explanation = `Invalid mininum Case ID: ${ex}`;
     }
   }
 
@@ -102,28 +185,41 @@ export class ListBuilderComponent implements OnInit {
       if (caseId.prefix !== this._baseCaseId.prefix) {
         throw `case prefix mismatch`;
       }
-      if (caseId.numCaseId >= this._baseCaseId.numCaseId) {
+      if (caseId.numCaseId <= this._baseCaseId.numCaseId) {
         throw `must be greater than base ID`;
       }
       this._maxCaseId = caseId;
+      this.explanation = "";
     } catch (ex) {
-      this.errorMessage = `Invalid maximum Case ID: ${ex}`;
+      this.explanation = `Invalid maximum Case ID: ${ex}`;
     }
   }
+
+  public BuilderMode = BuilderMode;
 
   get mode() {
     return this._mode;
   }
-  set mode(value: string) {
-    switch (value) {
-      case "prevNextRange":
-        break;
-      case "absoluteRange":
-        break;
-      default:
-        return;
+  set mode(value: BuilderMode) {
+    if (
+      value !== BuilderMode.prevNextRange &&
+      value !== BuilderMode.absoluteRange
+    ) {
+      this.explanation = "Invalid mode";
     }
     this._mode = value;
+  }
+
+  public importList() {
+    if (!this.caseList.length) {
+      return;
+    }
+    try {
+      this.caseListSvc.addCaseIdsObjArray(this.caseList);
+      this.close();
+    } catch (ex) {
+      this.explanation = ex;
+    }
   }
 
   public close() {

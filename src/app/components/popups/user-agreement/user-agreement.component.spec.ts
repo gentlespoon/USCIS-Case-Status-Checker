@@ -22,4 +22,11 @@ describe("UserAgreementComponent", () => {
   it("should create", () => {
     expect(component).toBeTruthy();
   });
+
+  it("should hide UI", () => {
+    var uiName = "userAgreement";
+    component.viewControllerSvc.show[uiName] = true;
+    component.close();
+    expect(component.viewControllerSvc.show[uiName]).toBeFalsy();
+  });
 });

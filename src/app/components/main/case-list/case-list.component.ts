@@ -7,13 +7,11 @@ import { ViewControllerService } from "@app/services/view-controller/view-contro
   templateUrl: "./case-list.component.html",
   styleUrls: ["./case-list.component.scss"]
 })
-export class CaseListComponent implements OnInit {
+export class CaseListComponent {
   constructor(
     public caseListSvc: CaseListService,
     public viewControllerSvc: ViewControllerService
   ) {}
-
-  ngOnInit() {}
 
   public Object = Object;
 

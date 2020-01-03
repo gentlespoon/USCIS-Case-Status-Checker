@@ -8,11 +8,11 @@ import { ViewControllerService } from "../../../services/view-controller/view-co
   styleUrls: ["./user-agreement.component.scss"]
 })
 export class UserAgreementComponent {
-  constructor(private viewControllerSvc: ViewControllerService) {}
+  constructor(public viewControllerSvc: ViewControllerService) {}
 
   faExclamationCircle = faExclamationCircle;
 
-  accept() {
+  close() {
     localStorage.setItem("uaAgreed", "1");
     this.viewControllerSvc.show["userAgreement"] = false;
   }

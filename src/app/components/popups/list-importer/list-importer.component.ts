@@ -10,7 +10,7 @@ import { CaseListService } from "@app/services/case-list/case-list.service";
 export class ListImporterComponent implements OnInit {
   constructor(
     public viewControllerSvc: ViewControllerService,
-    private caseListSvc: CaseListService
+    public caseListSvc: CaseListService
   ) {}
 
   ngOnInit() {
@@ -85,7 +85,7 @@ Unsupported data type`;
       if (this.data) {
         var parsedData: string[] = this.parseData();
         // console.log(parsedData);
-        this.caseListSvc.addCaseIds(parsedData);
+        this.caseListSvc.addCaseIdsStringArray(parsedData);
         this.close();
       }
     } catch (ex) {

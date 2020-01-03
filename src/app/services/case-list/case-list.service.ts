@@ -6,7 +6,7 @@ import { CaseId } from "@app/classes/case-id/case-id";
   providedIn: "root"
 })
 export class CaseListService {
-  private DEV = true;
+  private DEV = false;
 
   constructor(private viewControllerSvc: ViewControllerService) {}
 
@@ -38,8 +38,8 @@ export class CaseListService {
     this.saveListToLocalStorage();
   }
 
-  public addCaseIds(caseIds: string[]): void {
-    var currentCaseId = "";
+  public addCaseIdsStringArray(caseIds: string[]): void {
+    var currentCaseId: string = "";
     try {
       for (var caseId of caseIds) {
         currentCaseId = caseId;
@@ -50,6 +50,14 @@ export class CaseListService {
     }
     this.sortList();
     this.saveListToLocalStorage();
+  }
+
+  public addCaseIdsObjArray(caseIds: CaseId[]): void {
+    var caseIdsStringArray: string[] = [];
+    for (var caseIdObj of caseIds) {
+      caseIdsStringArray.push(caseIdObj.toString());
+    }
+    this.addCaseIdsStringArray(caseIdsStringArray);
   }
 
   public clearCaseIdList(): void {
@@ -72,7 +80,7 @@ export class CaseListService {
     var loadedListString = localStorage.getItem("cachedCaseIdList");
     if (loadedListString) {
       var loadedList = JSON.parse(loadedListString);
-      this.addCaseIds(loadedList);
+      this.addCaseIdsStringArray(loadedList);
       if (!Object.keys(this.caseIdList).length) {
         this.showGreetings();
       }

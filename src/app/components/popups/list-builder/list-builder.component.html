@@ -26,8 +26,6 @@
       >
     </fieldset>
 
-    <div style="text-align: center;"></div>
-
     <fieldset class="g_input" style="padding: 0;">
       <legend style="text-align: center;">
         <div
@@ -37,11 +35,11 @@
           [(ngModel)]="mode"
         >
           <label ngbButtonLabel class="btn-light label-wide">
-            <input ngbButton type="radio" value="prevNextRange" />
+            <input ngbButton type="radio" [value]="BuilderMode.prevNextRange" />
             <fa-icon [icon]="faChevronLeft"></fa-icon>
           </label>
           <label ngbButtonLabel class="btn-light label-wide">
-            <input ngbButton type="radio" value="absoluteRange" />
+            <input ngbButton type="radio" [value]="BuilderMode.absoluteRange" />
             <fa-icon [icon]="faChevronRight"></fa-icon>
           </label>
         </div>
@@ -81,17 +79,19 @@
     </fieldset>
   </div>
 
-  <div class="explanation" wrap="true">
-    {{ explanation }}
-  </div>
+  <div class="explanation" wrap="true" [innerHTML]="explanation"></div>
 
   <div class="foot">
+    <button class="btn btn-primary" (click)="generateList()">
+      Build & Preview
+    </button>
+
     <button
-      class="btn btn-primary"
-      (click)="import()"
-      [disabled]="disableImportButton"
+      class="btn btn-success"
+      (click)="importList()"
+      [disabled]="explanation.indexOf('Check') !== 0"
     >
-      Import
+      Import List
     </button>
     <button class="btn btn-danger" (click)="close()">Cancel</button>
   </div>

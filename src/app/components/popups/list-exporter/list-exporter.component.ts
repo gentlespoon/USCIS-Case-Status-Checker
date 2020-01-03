@@ -9,8 +9,8 @@ import { ViewControllerService } from "@app/services/view-controller/view-contro
 })
 export class ListExporterComponent implements OnInit {
   constructor(
-    private caseListSvc: CaseListService,
-    private viewControllerSvc: ViewControllerService
+    public caseListSvc: CaseListService,
+    public viewControllerSvc: ViewControllerService
   ) {}
 
   ngOnInit() {
