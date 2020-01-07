@@ -39,11 +39,92 @@ describe("ListBuilderComponent", () => {
     expect(component.mode).toEqual(BuilderMode.prevNextRange);
   });
 
-  it("should set baseCaseId", () => {
+  // base case id
+
+  it("should set baseCaseId for valid baseCaseId", () => {
     var validCaseId = "ABC1234567890";
     component.baseCaseId = validCaseId;
     expect(component.baseCaseId).toEqual(validCaseId);
   });
+
+  it("should not set baseCaseId for invalid baseCaseId", () => {
+    var invalidCaseId = "ABC12345";
+    component.baseCaseId = invalidCaseId;
+    expect(component.baseCaseId).toEqual("");
+  });
+
+  it("should remove baseCaseId for empty baseCaseId", () => {
+    var validCaseId = "ABC1234567890";
+    component.baseCaseId = validCaseId;
+    expect(component.baseCaseId).toEqual(validCaseId);
+    var emptyCaseId = "";
+    component.baseCaseId = emptyCaseId;
+    expect(component.baseCaseId).toEqual("");
+    expect(component.minCaseId).toEqual("");
+    expect(component.maxCaseId).toEqual("");
+  });
+
+  // min case id
+
+  it("should set minCaseId for valid minCaseId", () => {
+    component.baseCaseId = "ABC1000000010";
+    var validCaseId = "ABC1000000000";
+    component.minCaseId = validCaseId;
+    expect(component.minCaseId).toEqual(validCaseId);
+  });
+
+  it("should not set minCaseId for invalid minCaseId", () => {
+    component.baseCaseId = "ABC1000000010";
+    // greater case id
+    var invalidCaseId = "ABC1000000011";
+    component.minCaseId = invalidCaseId;
+    expect(component.minCaseId).toEqual("");
+    // mismatch prefix
+    invalidCaseId = "AAA1000000011";
+    component.minCaseId = invalidCaseId;
+    expect(component.minCaseId).toEqual("");
+  });
+
+  it("should remove minCaseId for empty minCaseId", () => {
+    component.baseCaseId = "ABC1000000010";
+    var validCaseId = "ABC1000000009";
+    component.minCaseId = validCaseId;
+    expect(component.minCaseId).toEqual(validCaseId);
+    component.minCaseId = "";
+    expect(component.minCaseId).toEqual("");
+  });
+
+  // max case id
+
+  it("should set maxCaseId for valid maxCaseId", () => {
+    component.baseCaseId = "ABC1000000010";
+    var validCaseId = "ABC1000000011";
+    component.maxCaseId = validCaseId;
+    expect(component.maxCaseId).toEqual(validCaseId);
+  });
+
+  it("should not set maxCaseId for invalid maxCaseId", () => {
+    component.baseCaseId = "ABC1000000010";
+    // smaller case id
+    var invalidCaseId = "ABC1000000009";
+    component.maxCaseId = invalidCaseId;
+    expect(component.maxCaseId).toEqual("");
+    // mismatch prefix
+    invalidCaseId = "AAA1000000009";
+    component.maxCaseId = invalidCaseId;
+    expect(component.maxCaseId).toEqual("");
+  });
+
+  it("should remove maxCaseId for empty maxCaseId", () => {
+    component.baseCaseId = "ABC1000000010";
+    var validCaseId = "ABC1000000011";
+    component.maxCaseId = validCaseId;
+    expect(component.maxCaseId).toEqual(validCaseId);
+    component.maxCaseId = "";
+    expect(component.maxCaseId).toEqual("");
+  });
+
+  // generate list
 
   it("should show error message with invalid params", () => {
     // invalid baseCaseID
@@ -146,5 +227,56 @@ describe("ListBuilderComponent", () => {
     expect(
       component.caseList[component.caseList.length - 1].numCaseId
     ).toBeGreaterThan(validBaseCaseIdObj.numCaseId);
+  });
+
+  it("should not import list when caseList cannot be built", () => {
+    var validCaseIdString = "ABC5000000000";
+    component.baseCaseId = validCaseIdString;
+    component.mode = BuilderMode.absoluteRange;
+    component.minCaseId = "ABC5999950000";
+    component.maxCaseId = "ABC4000050000";
+    component.stepWidth = 1000;
+    component.generateList();
+    component.importList();
+    expect(Object.keys(component.caseListSvc.caseIdList).length).toEqual(0);
+  });
+
+  it("should import list when caseList can be built", () => {
+    var validCaseIdString = "ABC5000000000";
+    component.baseCaseId = validCaseIdString;
+    component.mode = BuilderMode.absoluteRange;
+    component.minCaseId = "ABC4999950000";
+    component.maxCaseId = "ABC5000050000";
+    component.stepWidth = 1000;
+    component.generateList();
+    component.importList();
+    expect(
+      Object.keys(component.caseListSvc.caseIdList).length
+    ).toBeGreaterThan(1);
+  });
+
+  it("should show error message when caseList contains case that is already imported", () => {
+    component.caseListSvc.addCaseId("ABC5000000000");
+    var validCaseIdString = "ABC5000000000";
+    component.baseCaseId = validCaseIdString;
+    component.mode = BuilderMode.absoluteRange;
+    component.minCaseId = "ABC4999950000";
+    component.maxCaseId = "ABC5000050000";
+    component.stepWidth = 1000;
+    component.generateList();
+    component.importList();
+    expect(component.explanation.indexOf("Failed")).toEqual(0);
+  });
+
+  it("should not have '1 cases' for stepWidth=1", () => {
+    var validCaseIdString = "ABC5000000000";
+    component.baseCaseId = validCaseIdString;
+    component.mode = BuilderMode.absoluteRange;
+    component.minCaseId = "ABC4999999995";
+    component.maxCaseId = "ABC5000000005";
+    component.stepWidth = 1;
+    component.generateList();
+    expect(component.explanation.indexOf(" 1 ")).toEqual(-1);
+    expect(component.explanation.indexOf(" cases ")).toEqual(-1);
   });
 });

@@ -1,4 +1,4 @@
-import { TestBed, async } from "@angular/core/testing";
+import { TestBed, async, ComponentFixture } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { AppComponent } from "./app.component";
 import { ElectronService } from "./services/electron/electron.service";
@@ -15,6 +15,9 @@ import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { FormsModule } from "@angular/forms";
 
 describe("AppComponent", () => {
+  var component: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
@@ -34,9 +37,26 @@ describe("AppComponent", () => {
     }).compileComponents();
   }));
 
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.debugElement.componentInstance;
+  });
+
   it("should create the app", async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
+    expect(component).toBeTruthy();
   }));
+
+  it("should show userAgreement if not agreed", () => {
+    localStorage.setItem("uaAgreed", "false");
+    while (localStorage.getItem("uaAgreed") !== "false"); // wait until localStorage is stored.
+    component.ngOnInit();
+    expect(component.viewControllerSvc.show["userAgreement"]).toBeTruthy();
+  });
+
+  it("should not show userAgreement if agreed", () => {
+    localStorage.setItem("uaAgreed", "true");
+    while (localStorage.getItem("uaAgreed") !== "true"); // wait until localStorage is stored.
+    component.ngOnInit();
+    expect(component.viewControllerSvc.show["userAgreement"]).toBeFalsy();
+  });
 });

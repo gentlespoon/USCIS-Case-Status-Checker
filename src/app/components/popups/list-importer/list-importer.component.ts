@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ViewControllerService } from "@app/services/view-controller/view-controller.service";
 import { CaseListService } from "@app/services/case-list/case-list.service";
+import { CaseId } from "@app/classes/case-id/case-id";
 
 @Component({
   selector: "app-list-importer",
@@ -43,9 +44,6 @@ JavaScript Object Notation
   "LIN6789678967"
 ]`;
         break;
-      case "xml":
-        this.instructions = "Extensible Markup Language";
-        break;
       case "csv":
         this.instructions = `
 Comma Splitted Values
@@ -58,10 +56,6 @@ Comma Splitted Values with Quotation Marks
 
 "ABC1234123412","WAC4321432143","LIN6789678967"`;
         break;
-      default:
-        this.instructions = `
-Unsupported data type`;
-        return;
     }
     this._dataType = value;
   }
@@ -76,17 +70,22 @@ Unsupported data type`;
   public import() {
     this.errorMessage = "";
     this.disableImportButton = true;
-    setTimeout(() => this.runImport(), 100);
-  }
-
-  public runImport() {
     try {
       this.data = this.data.trim();
       if (this.data) {
         var parsedData: string[] = this.parseData();
-        // console.log(parsedData);
-        this.caseListSvc.addCaseIdsStringArray(parsedData);
+        var caseIdObjectArray: CaseId[] = [];
+        for (var caseIdString of parsedData) {
+          caseIdString = caseIdString.trim();
+          if (caseIdString === "") {
+            continue;
+          }
+          caseIdObjectArray.push(new CaseId(caseIdString));
+        }
+        this.caseListSvc.addCaseIdsObjArray(caseIdObjectArray);
         this.close();
+      } else {
+        return;
       }
     } catch (ex) {
       this.errorMessage = `Failed to import case list.<br>${ex}`;
@@ -98,21 +97,14 @@ Unsupported data type`;
     switch (this.dataType) {
       case "txt":
         return this.data.split("\n");
-        break;
       case "json":
         return JSON.parse(this.data);
-        break;
-      case "xml":
-        throw "Not Implemented";
-        break;
       case "csv":
-        var tmp = this.data.split("\n").join();
+        var tmp = this.data
+          .split("\n")
+          .join()
+          .replace(/\"/g, "");
         return tmp.split(",");
-        break;
-      case "csvq":
-        var tmp = this.data.split("\n").join();
-        return tmp.replace(/\"/g, "").split(",");
-        break;
     }
   }
 

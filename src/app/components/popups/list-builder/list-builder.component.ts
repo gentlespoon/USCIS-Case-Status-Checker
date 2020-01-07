@@ -28,6 +28,7 @@ export class ListBuilderComponent implements OnInit {
 
   _mode: BuilderMode;
   public stepWidth: number = 100;
+
   public prevCases: number = 10000;
   public nextCases: number = 1000;
 
@@ -41,6 +42,12 @@ export class ListBuilderComponent implements OnInit {
   }
 
   set baseCaseId(value: string) {
+    if (value === "") {
+      this._baseCaseId = null;
+      this._minCaseId = null;
+      this._maxCaseId = null;
+      return;
+    }
     try {
       this._baseCaseId = new CaseId(value);
       this.explanation = "";
@@ -102,9 +109,6 @@ export class ListBuilderComponent implements OnInit {
           maxNumCaseId = new CaseId(this.maxCaseId).numCaseId;
         }
         break;
-
-      default:
-        return (this.explanation = "Invalid mode");
     }
 
     var leftPart: CaseId[] = [];
@@ -135,8 +139,8 @@ export class ListBuilderComponent implements OnInit {
 
     // generate messages
     this.explanation = `Check every ${
-      this.stepWidth > 1 ? this.stepWidth : ""
-    } case${
+      this.stepWidth > 1 ? this.stepWidth + " " : ""
+    }case${
       this.stepWidth > 1 ? "s" : ""
     } starting from ${this.caseList[0].toString()} to ${this.caseList[
       this.caseList.length - 1
@@ -155,7 +159,10 @@ export class ListBuilderComponent implements OnInit {
     return this._minCaseId.toString();
   }
   set minCaseId(value: string) {
-    if (!this._baseCaseId) return;
+    if (!this._baseCaseId || value === "") {
+      this._minCaseId = null;
+      return;
+    }
     try {
       var caseId = new CaseId(value);
       if (caseId.prefix !== this._baseCaseId.prefix) {
@@ -179,7 +186,10 @@ export class ListBuilderComponent implements OnInit {
     return this._maxCaseId.toString();
   }
   set maxCaseId(value: string) {
-    if (!this._baseCaseId) return;
+    if (!this._baseCaseId || value === "") {
+      this._maxCaseId = null;
+      return;
+    }
     try {
       var caseId = new CaseId(value);
       if (caseId.prefix !== this._baseCaseId.prefix) {
@@ -201,12 +211,6 @@ export class ListBuilderComponent implements OnInit {
     return this._mode;
   }
   set mode(value: BuilderMode) {
-    if (
-      value !== BuilderMode.prevNextRange &&
-      value !== BuilderMode.absoluteRange
-    ) {
-      this.explanation = "Invalid mode";
-    }
     this._mode = value;
   }
 

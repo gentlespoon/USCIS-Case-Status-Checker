@@ -15,25 +15,15 @@ export class AppComponent implements OnInit {
 
   constructor(
     public electronSvc: ElectronService,
-    private dataCacheSvc: DataCacheService,
-    private viewControllerSvc: ViewControllerService,
-    private caseListSvc: CaseListService
-  ) {
-    console.log("AppConfig", AppConfig);
-
-    if (electronSvc.isElectron) {
-      console.log(process.env);
-      console.log("Mode electron");
-      console.log("Electron ipcRenderer", electronSvc.ipcRenderer);
-      console.log("NodeJS childProcess", electronSvc.childProcess);
-    } else {
-      console.log("Mode web");
-    }
-  }
+    public dataCacheSvc: DataCacheService,
+    public viewControllerSvc: ViewControllerService,
+    public caseListSvc: CaseListService
+  ) {}
 
   ngOnInit() {
     // see if we need to show disclaimer
-    if (!localStorage.getItem("uaAgreed")) {
+    var uaAgreed = localStorage.getItem("uaAgreed");
+    if (uaAgreed !== "true") {
       this.viewControllerSvc.show["userAgreement"] = true;
     }
 

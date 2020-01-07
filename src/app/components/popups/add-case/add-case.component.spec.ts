@@ -32,9 +32,27 @@ describe("AddCaseComponent", () => {
     );
   });
 
+  it("should not add a case when empty case ID is provided", () => {
+    var originalLength = Object.keys(component.caseListSvc.caseIdList).length;
+    var emptyCaseId = "";
+    component.data = emptyCaseId;
+    component.add();
+    expect(Object.keys(component.caseListSvc.caseIdList).length).toEqual(
+      originalLength
+    );
+  });
+
   it("should show error message when invalid case ID is provided", () => {
     var invalidCaseId = "ABCDE";
     component.data = invalidCaseId;
+    component.add();
+    expect(component.errorMessage).toBeTruthy();
+  });
+
+  it("should show error message when duplicated case ID is provided", () => {
+    var validCaseId = "ABC1234567890";
+    component.data = validCaseId;
+    component.add();
     component.add();
     expect(component.errorMessage).toBeTruthy();
   });

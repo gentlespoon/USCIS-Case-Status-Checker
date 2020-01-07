@@ -20,6 +20,13 @@ describe("ListExporterComponent", () => {
     fixture.detectChanges();
   });
 
+  beforeEach(() => {
+    component.caseListSvc.caseIdList = {
+      ABC0000000001: false,
+      ABC0000000002: false
+    };
+  });
+
   it("should create", () => {
     expect(component).toBeTruthy();
   });
@@ -29,5 +36,27 @@ describe("ListExporterComponent", () => {
     component.viewControllerSvc.show[uiName] = true;
     component.close();
     expect(component.viewControllerSvc.show[uiName]).toBeFalsy();
+  });
+
+  it("should encode TXT", () => {
+    component.dataType = "txt";
+    expect(component.data).toEqual("ABC0000000001\nABC0000000002");
+  });
+
+  it("should encode JSON", () => {
+    component.dataType = "json";
+    expect(component.data).toEqual(
+      '[\n  "ABC0000000001",\n  "ABC0000000002"\n]'
+    );
+  });
+
+  it("should encode csv", () => {
+    component.dataType = "csv";
+    expect(component.data).toEqual("ABC0000000001,ABC0000000002");
+  });
+
+  it("should encode csvq", () => {
+    component.dataType = "csvq";
+    expect(component.data).toEqual('"ABC0000000001","ABC0000000002"');
   });
 });

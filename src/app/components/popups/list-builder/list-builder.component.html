@@ -35,11 +35,21 @@
           [(ngModel)]="mode"
         >
           <label ngbButtonLabel class="btn-light label-wide">
-            <input ngbButton type="radio" [value]="BuilderMode.prevNextRange" />
+            <input
+              ngbButton
+              type="radio"
+              [value]="BuilderMode.prevNextRange"
+              [disabled]="!baseCaseId"
+            />
             <fa-icon [icon]="faChevronLeft"></fa-icon>
           </label>
           <label ngbButtonLabel class="btn-light label-wide">
-            <input ngbButton type="radio" [value]="BuilderMode.absoluteRange" />
+            <input
+              ngbButton
+              type="radio"
+              [value]="BuilderMode.absoluteRange"
+              [disabled]="!baseCaseId"
+            />
             <fa-icon [icon]="faChevronRight"></fa-icon>
           </label>
         </div>
@@ -48,31 +58,55 @@
       <div class="container-horizontal-split">
         <div
           class="cell-horizontal-split"
-          [class.disabled]="mode != 'prevNextRange'"
+          [class.disabled]="mode != 'prevNextRange' || !baseCaseId"
         >
           <fieldset class="g_input">
             <legend>Previous _ Cases</legend>
-            <input class="form-control" type="number" [(ngModel)]="prevCases" />
+            <input
+              class="form-control"
+              type="number"
+              [(ngModel)]="prevCases"
+              [disabled]="mode != 'prevNextRange' || !baseCaseId"
+              min="1"
+            />
           </fieldset>
 
           <fieldset class="g_input">
             <legend>Next _ Cases</legend>
-            <input class="form-control" type="number" [(ngModel)]="nextCases" />
+            <input
+              class="form-control"
+              type="number"
+              [(ngModel)]="nextCases"
+              [disabled]="mode != 'prevNextRange' || !baseCaseId"
+              min="1"
+            />
           </fieldset>
         </div>
 
+        <!-- Horizontal Split -->
+
         <div
           class="cell-horizontal-split"
-          [class.disabled]="mode != 'absoluteRange'"
+          [class.disabled]="mode != 'absoluteRange' || !baseCaseId"
         >
           <fieldset class="g_input">
             <legend>Mininum Case ID</legend>
-            <input class="form-control" type="text" [(ngModel)]="minCaseId" />
+            <input
+              class="form-control"
+              type="text"
+              [(ngModel)]="minCaseId"
+              [disabled]="mode != 'absoluteRange' || !baseCaseId"
+            />
           </fieldset>
 
           <fieldset class="g_input">
             <legend>Maximum Case ID</legend>
-            <input class="form-control" type="text" [(ngModel)]="maxCaseId" />
+            <input
+              class="form-control"
+              type="text"
+              [(ngModel)]="maxCaseId"
+              [disabled]="mode != 'absoluteRange' || !baseCaseId"
+            />
           </fieldset>
         </div>
       </div>

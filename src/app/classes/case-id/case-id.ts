@@ -28,9 +28,6 @@ export class CaseId {
   public numCaseId: number;
 
   public toString(): string {
-    if (!this.prefix || (!this.numCaseId && this.numCaseId !== 0)) {
-      return "";
-    }
     return `${this.prefix.toUpperCase()}${this.numCaseId
       .toString()
       .padStart(10, "0")}`;

@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { IDataProvider } from "../../interfaces/i-data-provider";
 
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
+import { Observable } from "rxjs";
 
 @Injectable({
   providedIn: "root"
@@ -11,12 +12,9 @@ export class UscisWebPageService implements IDataProvider {
 
   private USCIS_API_URL: "https://egov.uscis.gov/casestatus/mycasestatus.do?appReceiptNum=";
 
-  public getCaseInfo(caseId: string, callback: Function): void {
-    this.httpClient
-      .get(this.USCIS_API_URL + caseId, { responseType: "text" })
-      .subscribe(
-        response => callback(true, response),
-        error => callback(false, error)
-      );
+  public getCaseInfo(caseId: string): Observable<string> {
+    return this.httpClient.get(this.USCIS_API_URL + caseId, {
+      responseType: "text"
+    });
   }
 }

@@ -10,7 +10,7 @@ import { CaseListService } from "@app/services/case-list/case-list.service";
 export class NewListComponent {
   constructor(
     public viewControllerSvc: ViewControllerService,
-    private caseListSvc: CaseListService
+    public caseListSvc: CaseListService
   ) {}
 
   public clear() {

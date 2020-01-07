@@ -13,7 +13,7 @@ export class UserAgreementComponent {
   faExclamationCircle = faExclamationCircle;
 
   close() {
-    localStorage.setItem("uaAgreed", "1");
+    localStorage.setItem("uaAgreed", "true");
     this.viewControllerSvc.show["userAgreement"] = false;
   }
 }

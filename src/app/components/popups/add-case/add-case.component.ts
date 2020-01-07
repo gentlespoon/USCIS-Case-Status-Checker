@@ -25,6 +25,8 @@ export class AddCaseComponent {
       if (this.data) {
         this.caseListSvc.addCaseId(this.data);
         this.close();
+      } else {
+        return;
       }
     } catch (ex) {
       this.errorMessage = `Failed to add case.<br>${ex}`;

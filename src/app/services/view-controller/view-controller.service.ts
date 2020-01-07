@@ -10,11 +10,11 @@ export class ViewControllerService {
     listBuilder: false,
     listImporter: false,
     addCaseId: false,
-    newList: false
+    newList: false,
+    addCase: false
   };
 
   get hasPopup(): boolean {
-    // console.log(this.show);
     for (var key of Object.keys(this.show)) {
       if (this.show[key]) {
         return true;

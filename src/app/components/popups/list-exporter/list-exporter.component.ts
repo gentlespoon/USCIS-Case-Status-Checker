@@ -33,9 +33,6 @@ export class ListExporterComponent implements OnInit {
       case "json":
         this.data = JSON.stringify(data, null, 2);
         break;
-      case "xml":
-        throw "Not Implemented";
-        break;
       case "csv":
         this.data = data.join(",");
         break;
@@ -43,8 +40,6 @@ export class ListExporterComponent implements OnInit {
         this.data = data.join('","');
         this.data = `"${this.data}"`;
         break;
-      default:
-        return;
     }
     this._dataType = value;
   }

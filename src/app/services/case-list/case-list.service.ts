@@ -6,9 +6,7 @@ import { CaseId } from "@app/classes/case-id/case-id";
   providedIn: "root"
 })
 export class CaseListService {
-  private DEV = false;
-
-  constructor(private viewControllerSvc: ViewControllerService) {}
+  constructor(public viewControllerSvc: ViewControllerService) {}
 
   public caseIdList: object = {};
 
@@ -32,7 +30,6 @@ export class CaseListService {
   }
 
   public addCaseId(caseId: string): void {
-    if (this.DEV) console.log(`Adding caseId: ${caseId}`);
     this.tryToAddToList(caseId);
     this.sortList();
     this.saveListToLocalStorage();
@@ -61,22 +58,18 @@ export class CaseListService {
   }
 
   public clearCaseIdList(): void {
-    if (this.DEV) console.log("Clearing caseIdList");
     this.caseIdList = {};
     this.saveListToLocalStorage();
   }
 
   public saveListToLocalStorage(): void {
-    if (this.DEV) console.log("Saving cached list");
     localStorage.setItem(
       "cachedCaseIdList",
       JSON.stringify(Object.keys(this.caseIdList))
     );
-    if (this.DEV) console.log("Saved cached list");
   }
 
   public loadListFromLocalStorage(): void {
-    if (this.DEV) console.log("Loading cached list");
     var loadedListString = localStorage.getItem("cachedCaseIdList");
     if (loadedListString) {
       var loadedList = JSON.parse(loadedListString);
@@ -87,10 +80,6 @@ export class CaseListService {
     } else {
       this.showGreetings();
     }
-    if (this.DEV)
-      console.log(
-        `Finished loading cached list: ${Object.keys(this.caseIdList).length}`
-      );
   }
 
   public showGreetings() {
