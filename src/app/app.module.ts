@@ -26,6 +26,11 @@ import { ListImporterComponent } from "./components/popups/list-importer/list-im
 import { PopupsComponent } from "./components/main/popups/popups.component";
 import { NewListComponent } from "./components/popups/new-list/new-list.component";
 import { ListExporterComponent } from "./components/popups/list-exporter/list-exporter.component";
+import { ActivityListComponent } from "./components/main/activity-list/activity-list.component";
+import { ViewControllerService } from "./services/view-controller/view-controller.service";
+import { QueryControllerService } from "./services/query-controller/query-controller.service";
+import { DataProviderProviderService } from "./services/data-providers/data-provider-provider.service";
+import { UscisWebPageService } from "./services/data-providers/uscis-web-page/uscis-web-page.service";
 
 @NgModule({
   declarations: [
@@ -38,7 +43,8 @@ import { ListExporterComponent } from "./components/popups/list-exporter/list-ex
     ListImporterComponent,
     PopupsComponent,
     NewListComponent,
-    ListExporterComponent
+    ListExporterComponent,
+    ActivityListComponent
   ],
   imports: [
     NgbModule,
@@ -47,7 +53,14 @@ import { ListExporterComponent } from "./components/popups/list-exporter/list-ex
     HttpClientModule,
     FontAwesomeModule
   ],
-  providers: [ElectronService, DataCacheService],
+  providers: [
+    ElectronService,
+    DataCacheService,
+    ViewControllerService,
+    QueryControllerService,
+    DataProviderProviderService,
+    UscisWebPageService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

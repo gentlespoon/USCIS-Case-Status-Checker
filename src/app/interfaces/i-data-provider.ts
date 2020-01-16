@@ -1,3 +1,5 @@
+import { Observable } from "rxjs";
+
 export interface IDataProvider {
-  getCaseInfo: (caseId: string, callback: Function) => void;
+  getCaseInfo(caseId: string): Observable<string>;
 }

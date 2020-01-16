@@ -1,11 +1,16 @@
 <div class="container-root disable-select">
-  <div class="container-popups" *ngIf="viewControllerSvc.hasPopup">
+  <div
+    class="hide-overflow container-popups"
+    *ngIf="viewControllerSvc.hasPopup"
+  >
     <app-popups></app-popups>
   </div>
 
-  <div class="container-case-list">
+  <div class="hide-overflow container-case-list">
     <app-case-list></app-case-list>
   </div>
 
-  <div class="container-activity-list"></div>
+  <div class="hide-overflow container-activity-list">
+    <app-activity-list></app-activity-list>
+  </div>
 </div>

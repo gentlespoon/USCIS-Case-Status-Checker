@@ -5,4 +5,6 @@ import { Injectable } from "@angular/core";
 })
 export class DataCacheService {
   constructor() {}
+
+  public loadCache() {}
 }
