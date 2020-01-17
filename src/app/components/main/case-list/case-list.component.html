@@ -6,15 +6,19 @@
     (click)="newList()"
     [disabled]="!Object.keys(caseListSvc.caseIdList).length"
   >
+    <fa-icon [icon]="fa.plusSquare"></fa-icon>
     New List
   </button>
   <button class="btn btn-primary full-width" (click)="buildList()">
+    <fa-icon [icon]="fa.tools"></fa-icon>
     Build a List
   </button>
   <button class="btn btn-primary btn-lg full-width" (click)="addCase()">
+    <fa-icon [icon]="fa.plus"></fa-icon>
     Add a Case
   </button>
   <button class="btn btn-sm btn-success" (click)="importList()">
+    <fa-icon [icon]="fa.fileImport"></fa-icon>
     Import List
   </button>
   <button
@@ -22,6 +26,7 @@
     (click)="exportList()"
     [disabled]="!Object.keys(caseListSvc.caseIdList).length"
   >
+    <fa-icon [icon]="fa.fileExport"></fa-icon>
     Export List
   </button>
 </div>
@@ -29,6 +34,7 @@
 <div class="case-list">
   <ul multiple>
     <li *ngFor="let caseId of Object.keys(caseListSvc.caseIdList)">
+      <fa-icon [icon]="fa.times" (click)="removeCase(caseId)"></fa-icon>
       {{ caseId }}
     </li>
   </ul>

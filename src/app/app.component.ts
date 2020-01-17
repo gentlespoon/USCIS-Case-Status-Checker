@@ -26,9 +26,5 @@ export class AppComponent implements OnInit {
     if (uaAgreed !== "true") {
       this.viewControllerSvc.show["userAgreement"] = true;
     }
-
-    this.caseListSvc.loadListFromLocalStorage();
-
-    this.dataCacheSvc.loadCache();
   }
 }

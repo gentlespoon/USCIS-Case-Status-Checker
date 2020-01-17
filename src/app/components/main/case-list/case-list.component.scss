@@ -12,6 +12,14 @@ button.full-width {
   width: calc(100% - 2px) !important;
 }
 
+div.case-list {
+  top: 130px;
+  width: 100%;
+  height: calc(100% - 154px);
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
 ul {
   font-family: monospace;
   font-weight: bold;
@@ -31,10 +39,16 @@ li {
   padding: 5px 1em;
 }
 
-div.case-list {
-  top: 130px;
-  width: 100%;
-  height: calc(100% - 154px);
-  overflow-x: hidden;
-  overflow-y: auto;
+li fa-icon {
+  color: transparent;
+  cursor: pointer;
+}
+li:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+li:hover fa-icon {
+  color: black;
+}
+li:hover fa-icon:hover {
+  color: red;
 }

@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, OnInit } from "@angular/core";
 import { ViewControllerService } from "@app/services/view-controller/view-controller.service";
 import { CaseId } from "@app/classes/case-id/case-id";
 
@@ -6,7 +6,9 @@ import { CaseId } from "@app/classes/case-id/case-id";
   providedIn: "root"
 })
 export class CaseListService {
-  constructor(public viewControllerSvc: ViewControllerService) {}
+  constructor(public viewControllerSvc: ViewControllerService) {
+    this.loadListFromLocalStorage();
+  }
 
   public caseIdList: object = {};
 
@@ -33,6 +35,13 @@ export class CaseListService {
     this.tryToAddToList(caseId);
     this.sortList();
     this.saveListToLocalStorage();
+  }
+
+  public removeCaseId(caseId: string): void {
+    if (this.caseIdList[caseId] !== null) {
+      delete this.caseIdList[caseId];
+      this.saveListToLocalStorage();
+    }
   }
 
   public addCaseIdsStringArray(caseIds: string[]): void {

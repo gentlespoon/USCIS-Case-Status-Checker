@@ -19,6 +19,7 @@ function createWindow() {
         minWidth: 1024,
         minHeight: 720,
         webPreferences: {
+            webSecurity: false,
             nodeIntegration: true,
             allowRunningInsecureContent: serve ? true : false
         }

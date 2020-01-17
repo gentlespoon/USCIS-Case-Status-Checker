@@ -3,6 +3,7 @@ import { CaseListService } from "../case-list/case-list.service";
 import { DataProviderProviderService } from "../data-providers/data-provider-provider.service";
 import { IDataProvider } from "@app/interfaces/i-data-provider";
 import { DataCacheService } from "../data-cache/data-cache.service";
+import * as moment from "moment";
 
 @Injectable({
   providedIn: "root"
@@ -102,6 +103,8 @@ export class QueryControllerService {
     if (caseIds.length < 1) {
       this.stop();
     }
+
+    this.dataCacheSvc.createActivity();
     for (var caseId of caseIds) {
       this.dataProviderSvc.getCaseInfo(caseId).subscribe(
         response => {
