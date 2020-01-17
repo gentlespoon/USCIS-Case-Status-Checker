@@ -4,6 +4,7 @@ import { DataProviderProviderService } from "../data-providers/data-provider-pro
 import { IDataProvider } from "@app/interfaces/i-data-provider";
 import { DataCacheService } from "../data-cache/data-cache.service";
 import * as moment from "moment";
+import { CaseStatus } from "@app/classes/case-status/case-status";
 
 @Injectable({
   providedIn: "root"
@@ -11,6 +12,16 @@ import * as moment from "moment";
 export class QueryControllerService {
   private dataProviderSvc: IDataProvider;
   public threads: number = 10;
+  private _runningThreads: number = 0;
+  private running: boolean = false;
+  private paused: boolean = false;
+  private activity: string = "";
+  private caseIds: string[] = [];
+  private currentCaseIdIndex: number = 0;
+
+  public get runningThreads(): number {
+    return this._runningThreads;
+  }
 
   constructor(
     private caseListSvc: CaseListService,
@@ -37,9 +48,6 @@ export class QueryControllerService {
     }
   }
 
-  private running: boolean = false;
-  private paused: boolean = false;
-
   public get state(): string {
     if (this.running) {
       if (this.paused) {
@@ -62,7 +70,8 @@ export class QueryControllerService {
     }
     this.running = true;
     this.paused = false;
-    this.initiateActivity();
+    this.activity = moment().toISOString();
+    this.initiateActivity(this.activity);
   }
 
   public pause(): void {
@@ -98,25 +107,41 @@ export class QueryControllerService {
   //
   // Internal Control
   //
-  private initiateActivity(): void {
-    var caseIds: string[] = Object.keys(this.caseListSvc.caseIdList);
-    if (caseIds.length < 1) {
+  private initiateActivity(activity: string): void {
+    this.caseIds = Object.keys(this.caseListSvc.caseIdList);
+    this.currentCaseIdIndex = 0;
+    if (this.caseIds.length < 1) {
       this.stop();
     }
 
-    this.dataCacheSvc.createActivity();
-    for (var caseId of caseIds) {
-      this.dataProviderSvc.getCaseInfo(caseId).subscribe(
-        response => {
-          console.log(response);
-        },
-        error => {
-          console.error(error);
-        },
-        () => {}
-      );
-    }
+    this.dataCacheSvc.createActivity(activity, () => {
+      while (this._runningThreads < this.threads) {
+        this.startNextQuery();
+      }
+    });
   }
 
-  private getCaseInfoCallback(): void {}
+  private startNextQuery() {
+    if (this.currentCaseIdIndex >= this.caseIds.length) {
+      this.stop();
+      return;
+    }
+
+    var caseId = this.caseIds[this.currentCaseIdIndex];
+
+    var caseStatus: CaseStatus = new CaseStatus();
+    caseStatus.rawText = "12345";
+    caseStatus.text = "123";
+    caseStatus.title = "1";
+    this.dataCacheSvc.updateActivityCase(this.activity, caseId, caseStatus);
+    // this.dataProviderSvc.getCaseInfo(caseId).subscribe(
+    //   response => {
+    //     console.log(response);
+    //   },
+    //   error => {
+    //     console.error(error);
+    //   },
+    //   () => {}
+    // );
+  }
 }

@@ -9,6 +9,7 @@ import {
   faPlusSquare,
   faTools
 } from "@fortawesome/free-solid-svg-icons";
+import { QueryControllerService } from "@app/services/query-controller/query-controller.service";
 
 @Component({
   selector: "app-case-list",
@@ -17,6 +18,7 @@ import {
 })
 export class CaseListComponent {
   constructor(
+    public queryControllerSvc: QueryControllerService,
     public caseListSvc: CaseListService,
     public viewControllerSvc: ViewControllerService
   ) {}

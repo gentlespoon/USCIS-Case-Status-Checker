@@ -1,6 +1,9 @@
 <div class="panel-title">Case List</div>
 
-<div class="list-manipulation">
+<div
+  class="list-manipulation"
+  [class.disabled]="!queryControllerSvc.can('start')"
+>
   <button
     class="btn btn-danger btn-sm full-width"
     (click)="newList()"
@@ -31,7 +34,7 @@
   </button>
 </div>
 
-<div class="case-list">
+<div class="case-list" [class.disabled]="!queryControllerSvc.can('start')">
   <ul multiple>
     <li *ngFor="let caseId of Object.keys(caseListSvc.caseIdList)">
       <fa-icon [icon]="fa.times" (click)="removeCase(caseId)"></fa-icon>
