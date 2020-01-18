@@ -8,78 +8,59 @@ import Dexie from "dexie";
 export class DataCacheService {
   constructor() {
     this.initializeIndexDB();
-    var db = new Dexie("helloDB");
-    db.version(1).stores({
-      activities: "++id, date, description, done"
-    });
+    // db.version(2).stores({
+    //   activities: "++id, date, description, done"
+    // });
+    // or make a new one
+    // db.activities.add({
+    //   name: "Camilla",
+    //   age: 25
+    // });
   }
 
   private DB_NAME = "cachedCaseStatus";
-  public db: IDBDatabase;
+  public db: any;
 
   initializeIndexDB() {
     console.log("Opening IndexedDB");
-    var dBOpenRequest = window.indexedDB.open(this.DB_NAME);
-
-    dBOpenRequest.onerror = event => {
-      console.error(event);
-    };
-
-    dBOpenRequest.onsuccess = event => {
-      console.log("IndexedDB initialized.");
-      this.db = dBOpenRequest.result;
-    };
+    // var dBOpenRequest = window.indexedDB.open(this.DB_NAME);
+    // var ver = dBOpenRequest.result.version;
+    // dBOpenRequest.result.close();
+    this.db = new Dexie(this.DB_NAME);
+    this.db.version(2).stores({
+      caseStatus: "[caseId+activity]",
+      activities: "time"
+    });
+    this.db.version(1).stores({
+      caseStatus: "[caseId+activity]"
+    });
   }
 
   public removeActivity(activity: string): void {
-    var newVersion = this.db.version + 1;
-    this.db.close();
-    var dbUpgradeRequest = window.indexedDB.open(this.DB_NAME, newVersion);
-    dbUpgradeRequest.onupgradeneeded = event => {
-      dbUpgradeRequest.result.deleteObjectStore(activity);
-    };
-    dbUpgradeRequest.onsuccess = event => {
-      this.db = dbUpgradeRequest.result;
-    };
+    this.db.activities
+      .where("time")
+      .equals(activity)
+      .delete();
+    this.db.caseStatus
+      .where("activity")
+      .equals(activity)
+      .delete();
   }
 
-  public createActivity(activity: string, callback: Function): void {
-    var newVersion = this.db.version + 1;
-    this.db.close();
-    var dbUpgradeRequest = window.indexedDB.open(this.DB_NAME, newVersion);
-    dbUpgradeRequest.onupgradeneeded = event => {
-      var objectStore = dbUpgradeRequest.result.createObjectStore(activity, {
-        keyPath: "caseId"
-      });
-    };
-    dbUpgradeRequest.onsuccess = event => {
-      this.db = dbUpgradeRequest.result;
-      callback();
-    };
+  public createActivity(activity: string): void {
+    this.db.activities.add({ time: activity });
   }
 
-  public updateActivityCase(
-    activity: string,
-    caseId: string,
-    caseStatus: CaseStatus
-  ) {
+  public async updateActivityCase(caseStatus: CaseStatus) {
     console.log("updating Activity Case");
-    var transaction = this.db.transaction([activity], "readwrite");
-    transaction.oncomplete = event => {
-      console.log("All done!");
-    };
-
-    transaction.onerror = event => {
-      console.error(event);
-    };
-
-    var objectStore = transaction.objectStore(activity);
-    var request = objectStore.put(caseStatus, caseId);
-    request.onsuccess = event => {
-      console.log("success");
-    };
-    request.onerror = event => {
-      console.error(event);
-    };
+    this.db.caseStatus.add(caseStatus);
+    console.log(
+      (
+        await this.db.activities
+          .where("time")
+          .notEqual(caseStatus.activity)
+          .toArray()
+      ).map(x => x.time)
+    );
   }
 }

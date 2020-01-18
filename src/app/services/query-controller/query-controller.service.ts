@@ -114,11 +114,10 @@ export class QueryControllerService {
       this.stop();
     }
 
-    this.dataCacheSvc.createActivity(activity, () => {
-      while (this._runningThreads < this.threads) {
-        this.startNextQuery();
-      }
-    });
+    this.dataCacheSvc.createActivity(activity);
+    while (this._runningThreads < this.threads && this.running) {
+      this.startNextQuery();
+    }
   }
 
   private startNextQuery() {
@@ -133,7 +132,9 @@ export class QueryControllerService {
     caseStatus.rawText = "12345";
     caseStatus.text = "123";
     caseStatus.title = "1";
-    this.dataCacheSvc.updateActivityCase(this.activity, caseId, caseStatus);
+    caseStatus.caseId = "ABC1234567890";
+    caseStatus.activity = this.activity;
+    this.dataCacheSvc.updateActivityCase(caseStatus);
     // this.dataProviderSvc.getCaseInfo(caseId).subscribe(
     //   response => {
     //     console.log(response);
@@ -143,5 +144,6 @@ export class QueryControllerService {
     //   },
     //   () => {}
     // );
+    this.currentCaseIdIndex++;
   }
 }
