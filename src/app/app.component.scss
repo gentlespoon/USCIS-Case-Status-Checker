@@ -29,3 +29,13 @@
   width: calc(100vw - 200px);
   height: 100vh;
 }
+
+.container-toast {
+  position: fixed;
+  top: 0;
+  right: 0;
+  padding: 20px;
+  width: 300px;
+  height: 100vh;
+  z-index: 9999;
+}

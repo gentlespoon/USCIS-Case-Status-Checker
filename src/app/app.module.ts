@@ -31,6 +31,8 @@ import { ViewControllerService } from "./services/view-controller/view-controlle
 import { QueryControllerService } from "./services/query-controller/query-controller.service";
 import { DataProviderProviderService } from "./services/data-providers/data-provider-provider.service";
 import { UscisWebPageService } from "./services/data-providers/uscis-web-page/uscis-web-page.service";
+import { ToastComponent } from "./components/main/toast/toast.component";
+import { ToastService } from "./services/toast/toast.service";
 
 @NgModule({
   declarations: [
@@ -44,7 +46,8 @@ import { UscisWebPageService } from "./services/data-providers/uscis-web-page/us
     PopupsComponent,
     NewListComponent,
     ListExporterComponent,
-    ActivityListComponent
+    ActivityListComponent,
+    ToastComponent
   ],
   imports: [
     NgbModule,
@@ -59,7 +62,8 @@ import { UscisWebPageService } from "./services/data-providers/uscis-web-page/us
     ViewControllerService,
     QueryControllerService,
     DataProviderProviderService,
-    UscisWebPageService
+    UscisWebPageService,
+    ToastService
   ],
   bootstrap: [AppComponent]
 })

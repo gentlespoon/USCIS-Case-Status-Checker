@@ -5,6 +5,7 @@ import { IDataProvider } from "@app/interfaces/i-data-provider";
 import { DataCacheService } from "../data-cache/data-cache.service";
 import * as moment from "moment";
 import { CaseStatus } from "@app/classes/case-status/case-status";
+import { ToastService } from "../toast/toast.service";
 
 @Injectable({
   providedIn: "root"
@@ -18,6 +19,7 @@ export class QueryControllerService {
   private activity: string = "";
   private caseIds: string[] = [];
   private currentCaseIdIndex: number = 0;
+  private dispatchControllerInterval: any = null;
 
   public get runningThreads(): number {
     return this._runningThreads;
@@ -26,7 +28,8 @@ export class QueryControllerService {
   constructor(
     private caseListSvc: CaseListService,
     private dataProviderProviderSvc: DataProviderProviderService,
-    private dataCacheSvc: DataCacheService
+    private dataCacheSvc: DataCacheService,
+    private toastSvc: ToastService
   ) {
     this.dataProviderSvc = dataProviderProviderSvc.service;
   }
@@ -100,6 +103,7 @@ export class QueryControllerService {
     ) {
       return;
     }
+    clearInterval(this.dispatchControllerInterval);
     this.running = false;
     this.paused = false;
   }
@@ -114,34 +118,30 @@ export class QueryControllerService {
       this.stop();
     }
 
-    this.dataCacheSvc.createActivity(activity, () => {
-      while (this._runningThreads < this.threads) {
-        this.startNextQuery();
-      }
-    });
+    this.dispatchControllerInterval = setInterval(
+      () => this.dispatchController(),
+      100
+    );
   }
 
-  private startNextQuery() {
+  private dispatchController() {
+    if (this.paused) return;
     if (this.currentCaseIdIndex >= this.caseIds.length) {
       this.stop();
       return;
     }
+    if (this._runningThreads < this.threads) {
+      this.startNextQuery();
+      this.currentCaseIdIndex++;
+    }
+  }
 
+  private startNextQuery() {
     var caseId = this.caseIds[this.currentCaseIdIndex];
-
-    var caseStatus: CaseStatus = new CaseStatus();
-    caseStatus.rawText = "12345";
-    caseStatus.text = "123";
-    caseStatus.title = "1";
-    this.dataCacheSvc.updateActivityCase(this.activity, caseId, caseStatus);
-    // this.dataProviderSvc.getCaseInfo(caseId).subscribe(
-    //   response => {
-    //     console.log(response);
-    //   },
-    //   error => {
-    //     console.error(error);
-    //   },
-    //   () => {}
-    // );
+    this.currentCaseIdIndex++;
+    this.dataProviderSvc.getCaseInfo(caseId, caseStatus => {
+      this.dataCacheSvc.updateActivityCase(this.activity, caseId, caseStatus);
+    });
+    this._runningThreads--;
   }
 }

@@ -1,3 +1,5 @@
+import { Constants } from "../constants/constants";
+
 export class CaseId {
   constructor(caseIdOrPrefix: string, numCaseId?: number) {
     if (!caseIdOrPrefix) {
@@ -10,7 +12,7 @@ export class CaseId {
       if (!caseIdParseResult) {
         throw "Invalid case ID";
       }
-      this.prefix = caseIdParseResult[1].toUpperCase();
+      this.prefix = caseIdParseResult[1];
       this.numCaseId = parseInt(caseIdParseResult[2]);
     } else {
       if (caseIdOrPrefix.length !== 3) {
@@ -21,6 +23,11 @@ export class CaseId {
       }
       this.prefix = caseIdOrPrefix;
       this.numCaseId = numCaseId;
+    }
+
+    this.prefix = this.prefix.toUpperCase();
+    if (Constants.ReceiptPrefixList.indexOf(this.prefix) === -1) {
+      throw "Unrecognized case ID prefix";
     }
   }
 

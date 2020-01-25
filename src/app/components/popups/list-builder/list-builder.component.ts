@@ -27,10 +27,32 @@ export class ListBuilderComponent implements OnInit {
   faChevronRight = faChevronRight;
 
   _mode: BuilderMode;
-  public stepWidth: number = 100;
+  private _stepWidth: number = 100;
+  public get stepWidth(): number {
+    return this._stepWidth;
+  }
+  public set stepWidth(n: number) {
+    this._stepWidth = n;
+    this.previewList();
+  }
 
-  public prevCases: number = 10000;
-  public nextCases: number = 1000;
+  private _prevCases: number = 10000;
+  public get prevCases(): number {
+    return this._prevCases;
+  }
+  public set prevCases(n: number) {
+    this._prevCases = n;
+    this.previewList();
+  }
+
+  private _nextCases: number = 1000;
+  public get nextCases(): number {
+    return this._nextCases;
+  }
+  public set nextCases(n: number) {
+    this._nextCases = n;
+    this.previewList();
+  }
 
   private _baseCaseId: CaseId;
 
@@ -51,6 +73,7 @@ export class ListBuilderComponent implements OnInit {
     try {
       this._baseCaseId = new CaseId(value);
       this.explanation = "";
+      this.previewList();
     } catch (ex) {
       this.explanation = ex;
     }
@@ -60,32 +83,26 @@ export class ListBuilderComponent implements OnInit {
 
   public caseList: CaseId[] = [];
 
-  public generateList() {
-    this.caseList = [];
-
-    this.explanation = "Generating case ID list...";
-
+  public previewList(): [number, number, number] {
     if (!this.baseCaseId) {
       this.explanation = "Invalid baseCaseId";
       return;
     }
-    var baseCaseIdObj: CaseId = new CaseId(this.baseCaseId);
-
     if (this.stepWidth <= 0) {
       this.explanation = "Invalid stepWidth";
       return;
     }
-
     var minNumCaseId: number;
     var maxNumCaseId: number;
+    var baseCaseIdObj: CaseId = new CaseId(this.baseCaseId);
     switch (this.mode) {
       case BuilderMode.prevNextRange:
         {
-          if (!this.prevCases || this.prevCases < 1) {
+          if (!this.prevCases || this.prevCases < 0) {
             this.explanation = "Invalid prevCases";
             return;
           }
-          if (!this.prevCases || this.nextCases < 1) {
+          if (!this.prevCases || this.nextCases < 0) {
             this.explanation = "Invalid nextCases";
             return;
           }
@@ -111,6 +128,51 @@ export class ListBuilderComponent implements OnInit {
         break;
     }
 
+    if (minNumCaseId < 0 || maxNumCaseId > 9999999999) {
+      this.explanation = `Invalid case range`;
+      return null;
+    }
+
+    var totalCases =
+      1 + Math.floor((maxNumCaseId - minNumCaseId) / this.stepWidth);
+
+    // generate messages
+    this.explanation = `Check every ${
+      this.stepWidth > 1 ? this.stepWidth + " " : ""
+    }case${this.stepWidth > 1 ? "s" : ""} starting from ${baseCaseIdObj.prefix +
+      minNumCaseId} to ${baseCaseIdObj.prefix +
+      maxNumCaseId}. (${totalCases} cases)`;
+
+    if (totalCases > 500) {
+      this.explanation += `
+      <p><strong>You are generating a list with more than 500 cases.</strong></p>`;
+    }
+
+    return [minNumCaseId, maxNumCaseId, totalCases];
+  }
+
+  public generateList() {
+    this.caseList = [];
+    this.explanation = "Generating case ID list...";
+    if (!this.baseCaseId) {
+      this.explanation = "Invalid baseCaseId";
+      return;
+    }
+    if (this.stepWidth <= 0) {
+      this.explanation = "Invalid stepWidth";
+      return;
+    }
+
+    var minNumCaseId: number;
+    var maxNumCaseId: number;
+    var preview = this.previewList();
+    if (!preview) {
+      return;
+    }
+    minNumCaseId = preview[0];
+    maxNumCaseId = preview[1];
+
+    var baseCaseIdObj: CaseId = new CaseId(this.baseCaseId);
     var leftPart: CaseId[] = [];
     var rightPart: CaseId[] = [];
 
@@ -137,18 +199,13 @@ export class ListBuilderComponent implements OnInit {
     this.caseList.push(baseCaseIdObj);
     this.caseList = this.caseList.concat(rightPart);
 
-    // generate messages
-    this.explanation = `Check every ${
-      this.stepWidth > 1 ? this.stepWidth + " " : ""
-    }case${
-      this.stepWidth > 1 ? "s" : ""
-    } starting from ${this.caseList[0].toString()} to ${this.caseList[
-      this.caseList.length - 1
-    ].toString()}. (${this.caseList.length} cases)<br>
-    
-    `;
-
-    return;
+    // import list
+    try {
+      this.caseListSvc.addCaseIdsObjArray(this.caseList);
+      this.close();
+    } catch (ex) {
+      this.explanation = ex;
+    }
   }
 
   private _minCaseId: CaseId;
@@ -173,6 +230,7 @@ export class ListBuilderComponent implements OnInit {
       }
       this._minCaseId = caseId;
       this.explanation = "";
+      this.previewList();
     } catch (ex) {
       this.explanation = `Invalid mininum Case ID: ${ex}`;
     }
@@ -200,6 +258,7 @@ export class ListBuilderComponent implements OnInit {
       }
       this._maxCaseId = caseId;
       this.explanation = "";
+      this.previewList();
     } catch (ex) {
       this.explanation = `Invalid maximum Case ID: ${ex}`;
     }
@@ -212,18 +271,6 @@ export class ListBuilderComponent implements OnInit {
   }
   set mode(value: BuilderMode) {
     this._mode = value;
-  }
-
-  public importList() {
-    if (!this.caseList.length) {
-      return;
-    }
-    try {
-      this.caseListSvc.addCaseIdsObjArray(this.caseList);
-      this.close();
-    } catch (ex) {
-      this.explanation = ex;
-    }
   }
 
   public close() {

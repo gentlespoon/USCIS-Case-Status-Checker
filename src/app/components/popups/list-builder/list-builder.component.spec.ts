@@ -237,7 +237,6 @@ describe("ListBuilderComponent", () => {
     component.maxCaseId = "ABC4000050000";
     component.stepWidth = 1000;
     component.generateList();
-    component.importList();
     expect(Object.keys(component.caseListSvc.caseIdList).length).toEqual(0);
   });
 
@@ -249,7 +248,6 @@ describe("ListBuilderComponent", () => {
     component.maxCaseId = "ABC5000050000";
     component.stepWidth = 1000;
     component.generateList();
-    component.importList();
     expect(
       Object.keys(component.caseListSvc.caseIdList).length
     ).toBeGreaterThan(1);
@@ -264,7 +262,6 @@ describe("ListBuilderComponent", () => {
     component.maxCaseId = "ABC5000050000";
     component.stepWidth = 1000;
     component.generateList();
-    component.importList();
     expect(component.explanation.indexOf("Failed")).toEqual(0);
   });
 

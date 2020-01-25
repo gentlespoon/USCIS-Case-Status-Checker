@@ -18,11 +18,12 @@ describe("UscisWebPageService", () => {
     expect(service).toBeTruthy();
   });
 
-  it("should return a webpage when HTTP response is valid", inject(
-    [HttpClientTestingModule, UscisWebPageService],
-    (
-      httpMock: HttpTestingController,
-      uscisWebPageService: UscisWebPageService
-    ) => {}
-  ));
+  fit("should extract error message", () => {
+    const service: UscisWebPageService = TestBed.get(UscisWebPageService);
+    var result = service.analyzeResult(
+      `asdf<div id="formErrorMessages">abcd<\/div>asdf`
+    );
+    console.log(result);
+    expect(result).toBeTruthy();
+  });
 });

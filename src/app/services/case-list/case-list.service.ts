@@ -1,12 +1,16 @@
 import { Injectable, OnInit } from "@angular/core";
 import { ViewControllerService } from "@app/services/view-controller/view-controller.service";
 import { CaseId } from "@app/classes/case-id/case-id";
+import { ToastService } from "../toast/toast.service";
 
 @Injectable({
   providedIn: "root"
 })
 export class CaseListService {
-  constructor(public viewControllerSvc: ViewControllerService) {
+  constructor(
+    public viewControllerSvc: ViewControllerService,
+    private toastSvc: ToastService
+  ) {
     this.loadListFromLocalStorage();
   }
 
@@ -52,7 +56,11 @@ export class CaseListService {
         this.tryToAddToList(caseId);
       }
     } catch (ex) {
-      throw `Failed to add case "${currentCaseId}":\n\n${ex}`;
+      this.toastSvc.show(`Failed to add case "${currentCaseId}":\n\n${ex}`, {
+        classname: "bg-danger",
+        autohide: false
+      });
+      console.error();
     }
     this.sortList();
     this.saveListToLocalStorage();
@@ -82,7 +90,11 @@ export class CaseListService {
     var loadedListString = localStorage.getItem("cachedCaseIdList");
     if (loadedListString) {
       var loadedList = JSON.parse(loadedListString);
-      this.addCaseIdsStringArray(loadedList);
+      try {
+        this.addCaseIdsStringArray(loadedList);
+      } catch (ex) {
+        console.error(ex);
+      }
       if (!Object.keys(this.caseIdList).length) {
         this.showGreetings();
       }

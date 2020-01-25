@@ -119,16 +119,12 @@
   <div class="explanation" wrap="true" [innerHTML]="explanation"></div>
 
   <div class="foot">
-    <button class="btn btn-primary" (click)="generateList()">
-      Build & Preview
-    </button>
-
     <button
-      class="btn btn-success"
-      (click)="importList()"
+      class="btn btn-primary"
+      (click)="generateList()"
       [disabled]="explanation.indexOf('Check') !== 0"
     >
-      Import List
+      Build and Import
     </button>
     <button class="btn btn-danger" (click)="close()">Cancel</button>
   </div>

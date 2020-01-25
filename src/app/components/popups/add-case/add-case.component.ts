@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ViewControllerService } from "@app/services/view-controller/view-controller.service";
 import { CaseListService } from "@app/services/case-list/case-list.service";
+import { ToastService } from "@app/services/toast/toast.service";
 
 @Component({
   selector: "app-add-case",
@@ -10,16 +11,16 @@ import { CaseListService } from "@app/services/case-list/case-list.service";
 export class AddCaseComponent {
   constructor(
     public viewControllerSvc: ViewControllerService,
-    public caseListSvc: CaseListService
+    public caseListSvc: CaseListService,
+    private toastSvc: ToastService
   ) {}
 
   public data: string = "";
   public disableAddButton: boolean = false;
-  public errorMessage: string = "";
+  public errorMessage = "";
 
   // unblock the UI in case adding is slow.
   public add() {
-    this.errorMessage = "";
     this.disableAddButton = true;
     try {
       if (this.data) {
@@ -29,7 +30,12 @@ export class AddCaseComponent {
         return;
       }
     } catch (ex) {
-      this.errorMessage = `Failed to add case.<br>${ex}`;
+      this.errorMessage = `Failed to add case: ${ex}`;
+      this.toastSvc.show(this.errorMessage, {
+        classname: "bg-danger text-light",
+        autohide: true,
+        delay: 5000
+      });
     }
     this.disableAddButton = false;
   }
