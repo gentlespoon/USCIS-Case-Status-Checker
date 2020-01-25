@@ -8,6 +8,11 @@ import Dexie from "dexie";
 export class DataCacheService {
   private db: any;
 
+  private _cache: object[] = [];
+  public get cache() {
+    return this._cache;
+  }
+
   constructor() {
     this.db = new Dexie("caseStatusCache");
     this.db.version(2).stores({
@@ -18,15 +23,19 @@ export class DataCacheService {
     });
   }
 
-  public updateActivityCase(
+  public loadCacheFromDatabase() {}
+
+  public logCaseStatus(
     activity: string,
     caseId: string,
     caseStatus: CaseStatus
   ) {
-    this.db.activities.add({
+    let obj = {
       activity: activity,
       caseId: caseId,
       caseStatus: caseStatus
-    });
+    };
+    this._cache.push(obj);
+    this.db.activities.add(obj);
   }
 }

@@ -140,7 +140,7 @@ export class QueryControllerService {
     var caseId = this.caseIds[this.currentCaseIdIndex];
     this.currentCaseIdIndex++;
     this.dataProviderSvc.getCaseInfo(caseId, caseStatus => {
-      this.dataCacheSvc.updateActivityCase(this.activity, caseId, caseStatus);
+      this.dataCacheSvc.logCaseStatus(this.activity, caseId, caseStatus);
     });
     this._runningThreads--;
   }

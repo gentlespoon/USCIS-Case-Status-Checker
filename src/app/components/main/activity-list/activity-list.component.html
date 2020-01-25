@@ -34,3 +34,9 @@
     <fa-icon [icon]="faStop"></fa-icon> Stop
   </button>
 </div>
+
+<div class="container-records">
+  <div *ngFor="let caseId of Object.keys(caseListSvc.caseIdList)">
+    {{ caseId }}
+  </div>
+</div>

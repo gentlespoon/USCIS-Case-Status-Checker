@@ -17,3 +17,11 @@
 .panel-title .input-threads {
   width: 80px;
 }
+
+.container-records {
+  position: fixed;
+  width: 100%;
+  height: calc(100vh - 30px);
+  overflow-x: scroll;
+  overflow-y: scroll;
+}
