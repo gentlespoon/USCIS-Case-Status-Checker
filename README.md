@@ -18,6 +18,11 @@ $ npm run electron:linux
 macOS - You will need a macOS computer to build for mac.
 $ npm run electron:mac
 ```
+## Ver. 2020.01 - Angular + Electron
+
+Allow importing custom Case ID list
+
+![alt text](https://raw.githubusercontent.com/gentlespoon/USCIS-Case-Status-Checker/v2020.01.01/20200129-044214.jpg "Running in Windows, v2020.01.29")
 
 ## Ver. 2019.07 - Angular + Electron
 
