@@ -3,6 +3,7 @@ import { QueryControllerService } from "@app/services/query-controller/query-con
 import { DataCacheService } from "@app/services/data-cache/data-cache.service";
 import { CaseListService } from "@app/services/case-list/case-list.service";
 import { faPlay, faPause, faStop } from "@fortawesome/free-solid-svg-icons";
+import { faSave } from "@fortawesome/free-regular-svg-icons";
 import * as moment from "moment";
 import { CaseStatus } from "@app/classes/case-status/case-status";
 
@@ -18,9 +19,13 @@ export class StatusListComponent implements OnInit {
     public caseListSvc: CaseListService
   ) {}
 
-  public faPlay = faPlay;
-  public faPause = faPause;
-  public faStop = faStop;
+  public fa = {
+    sPlay: faPlay,
+    sPause: faPause,
+    sStop: faStop,
+    rSave: faSave
+  };
+
   public Object = Object;
   public moment = moment;
 

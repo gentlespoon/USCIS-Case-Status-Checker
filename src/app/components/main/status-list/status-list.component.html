@@ -1,37 +1,45 @@
 <div class="panel-title form-inline">
+  <button class="btn btn-primary btn-sm" [disabled]="!visibleActivities.length">
+    <fa-icon [icon]="fa.rSave"></fa-icon> Save
+  </button>
+
   <button class="btn btn-sm btn-freeWidth">Threads</button>
   <input
     type="number"
     class="form-control form-control-sm input-threads"
     [(ngModel)]="queryControllerSvc.threads"
   />
+
   <button
     class="btn btn-success btn-sm"
     [disabled]="!queryControllerSvc.can('start')"
     (click)="queryControllerSvc.start()"
   >
-    <fa-icon [icon]="faPlay"></fa-icon> Start
+    <fa-icon [icon]="fa.sPlay"></fa-icon> Start
   </button>
+
   <button
     class="btn btn-success btn-sm"
     [disabled]="!queryControllerSvc.can('resume')"
     (click)="queryControllerSvc.resume()"
   >
-    <fa-icon [icon]="faPlay"></fa-icon> Resume
+    <fa-icon [icon]="fa.sPlay"></fa-icon> Resume
   </button>
+
   <button
     class="btn btn-warning btn-sm"
     [disabled]="!queryControllerSvc.can('pause')"
     (click)="queryControllerSvc.pause()"
   >
-    <fa-icon [icon]="faPause"></fa-icon> Pause
+    <fa-icon [icon]="fa.sPause"></fa-icon> Pause
   </button>
+
   <button
     class="btn btn-danger btn-sm"
     [disabled]="!queryControllerSvc.can('stop')"
     (click)="queryControllerSvc.stop()"
   >
-    <fa-icon [icon]="faStop"></fa-icon> Stop
+    <fa-icon [icon]="fa.sStop"></fa-icon> Stop
   </button>
 </div>
 
