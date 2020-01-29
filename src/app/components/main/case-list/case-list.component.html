@@ -5,29 +5,29 @@
   [class.disabled]="!queryControllerSvc.can('start')"
 >
   <button
-    class="btn btn-danger btn-sm full-width"
+    class="btn btn-danger btn-sm"
     (click)="newList()"
     [disabled]="!Object.keys(caseListSvc.caseIdList).length"
   >
     <fa-icon [icon]="fa.plusSquare"></fa-icon>
     New List
   </button>
-  <button class="btn btn-primary full-width" (click)="buildList()">
+  <button class="btn btn-primary" (click)="buildList()">
     <fa-icon [icon]="fa.tools"></fa-icon>
     Build a List
   </button>
-  <button class="btn btn-primary btn-lg full-width" (click)="addCase()">
+  <button class="btn btn-primary btn-lg" (click)="addCase()">
     <fa-icon [icon]="fa.plus"></fa-icon>
     Add a Case
   </button>
-  <button class="btn btn-sm btn-success" (click)="importList()">
+  <button class="btn btn-sm btn-success half-width" (click)="importList()">
     <fa-icon [icon]="fa.fileImport"></fa-icon>
     Import List
   </button>
   <button
-    class="btn btn-sm btn-success"
+    class="btn btn-sm btn-success half-width"
     (click)="exportList()"
-    [disabled]="!Object.keys(caseListSvc.caseIdList).length"
+    [disabled]="!caseListSvc.caseIdList.length"
   >
     <fa-icon [icon]="fa.fileExport"></fa-icon>
     Export List
@@ -35,8 +35,8 @@
 </div>
 
 <div class="case-list" [class.disabled]="!queryControllerSvc.can('start')">
-  <ul multiple>
-    <li *ngFor="let caseId of Object.keys(caseListSvc.caseIdList)">
+  <ul>
+    <li *ngFor="let caseId of caseIdList">
       <fa-icon [icon]="fa.times" (click)="removeCase(caseId)"></fa-icon>
       {{ caseId }}
     </li>

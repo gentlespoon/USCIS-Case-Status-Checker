@@ -34,6 +34,10 @@ export class CaseListComponent {
     tools: faTools
   };
 
+  public get caseIdList() {
+    return Object.keys(this.caseListSvc.caseIdList);
+  }
+
   newList() {
     this.viewControllerSvc.show["newList"] = true;
   }

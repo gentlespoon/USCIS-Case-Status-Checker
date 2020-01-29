@@ -117,15 +117,22 @@ export class QueryControllerService {
     if (this.caseIds.length < 1) {
       this.stop();
     }
+    console.log(this.caseIds);
 
     this.dispatchControllerInterval = setInterval(
       () => this.dispatchController(),
-      100
+      200
     );
   }
 
   private dispatchController() {
     if (this.paused) return;
+    // console.log(
+    //   this.currentCaseIdIndex,
+    //   this.caseIds.length,
+    //   this.runningThreads,
+    //   this.threads
+    // );
     if (this.currentCaseIdIndex >= this.caseIds.length) {
       this.stop();
       return;
@@ -137,11 +144,41 @@ export class QueryControllerService {
   }
 
   private startNextQuery() {
+    this._runningThreads++;
     var caseId = this.caseIds[this.currentCaseIdIndex];
-    this.currentCaseIdIndex++;
-    this.dataProviderSvc.getCaseInfo(caseId, caseStatus => {
-      this.dataCacheSvc.logCaseStatus(this.activity, caseId, caseStatus);
-    });
-    this._runningThreads--;
+    console.log(`Sending ${caseId}`);
+    this.dataProviderSvc.getCaseInfo(caseId).subscribe(
+      caseStatus => {
+        caseStatus.caseId = caseId;
+        caseStatus.activity = this.activity;
+        this.dataCacheSvc.logCaseStatus(caseStatus);
+      },
+      error => {
+        console.error(error);
+        var errorMsg = "";
+        if (error.status >= 500) {
+          errorMsg = "USCIS server error";
+        } else if (error.status === 404) {
+          errorMsg =
+            "Data provider API changed: USCIS-Web-Page. Please submit an issue on GitHub so the author can update the data provider settings.";
+        } else if (error.status === 403) {
+          errorMsg = "USCIS access denied";
+        } else if (error.status === 401) {
+          errorMsg = "USCIS unauthorized";
+        } else if (error.status === 0) {
+          errorMsg = "Network failure";
+        } else {
+          errorMsg = "Unknown error, see console for detail";
+        }
+        this.toastSvc.show(`${errorMsg}`, {
+          classname: "bg-danger text-light",
+          header: `Failed: ${caseId}`,
+          delay: 0
+        });
+      },
+      () => {
+        this._runningThreads--;
+      }
+    );
   }
 }

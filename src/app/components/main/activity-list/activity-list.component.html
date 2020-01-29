@@ -1,42 +1,46 @@
-<div class="panel-title form-inline">
-  <button class="btn btn-sm btn-freeWidth">Threads</button>
-  <input
-    type="number"
-    class="form-control form-control-sm input-threads"
-    [(ngModel)]="queryControllerSvc.threads"
-  />
+<div class="panel-title">
+  History
+</div>
+
+<div
+  class="list-manipulation"
+  [class.disabled]="!queryControllerSvc.can('start')"
+>
   <button
-    class="btn btn-success btn-sm"
-    [disabled]="!queryControllerSvc.can('start')"
-    (click)="queryControllerSvc.start()"
+    class="btn btn-danger btn-sm full-width"
+    (click)="newList()"
+    [disabled]="!Object.keys(dataCacheSvc.activities).length"
   >
-    <fa-icon [icon]="faPlay"></fa-icon> Start
-  </button>
-  <button
-    class="btn btn-success btn-sm"
-    [disabled]="!queryControllerSvc.can('resume')"
-    (click)="queryControllerSvc.resume()"
-  >
-    <fa-icon [icon]="faPlay"></fa-icon> Resume
-  </button>
-  <button
-    class="btn btn-warning btn-sm"
-    [disabled]="!queryControllerSvc.can('pause')"
-    (click)="queryControllerSvc.pause()"
-  >
-    <fa-icon [icon]="faPause"></fa-icon> Pause
-  </button>
-  <button
-    class="btn btn-danger btn-sm"
-    [disabled]="!queryControllerSvc.can('stop')"
-    (click)="queryControllerSvc.stop()"
-  >
-    <fa-icon [icon]="faStop"></fa-icon> Stop
+    <fa-icon [icon]="fa.times"></fa-icon>
+    Clear History
   </button>
 </div>
 
 <div class="container-records">
-  <div *ngFor="let caseId of Object.keys(caseListSvc.caseIdList)">
-    {{ caseId }}
-  </div>
+  <ul>
+    <li
+      *ngFor="let activity of Object.keys(dataCacheSvc.activities)"
+      [title]="activity"
+      [class.visible]="dataCacheSvc.activities[activity]"
+    >
+      <fa-icon
+        [icon]="fa.times"
+        class="remove"
+        (click)="removeActivity(activity)"
+      ></fa-icon>
+      <fa-icon
+        *ngIf="dataCacheSvc.activities[activity]"
+        [icon]="fa.eye"
+        class="visible"
+        (click)="dataCacheSvc.toggleActivity(activity, false)"
+      ></fa-icon>
+      <fa-icon
+        *ngIf="!dataCacheSvc.activities[activity]"
+        [icon]="fa.eyeSlashRegular"
+        class="visible"
+        (click)="dataCacheSvc.toggleActivity(activity, true)"
+      ></fa-icon>
+      {{ moment(activity).calendar() }}
+    </li>
+  </ul>
 </div>

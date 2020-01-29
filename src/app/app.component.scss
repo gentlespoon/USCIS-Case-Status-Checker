@@ -26,8 +26,17 @@
   position: fixed;
   top: 0;
   left: 200px;
-  width: calc(100vw - 200px);
+  width: 200px;
   height: 100vh;
+  border-right: 1px solid lightgray;
+}
+
+.container-status-list {
+  position: fixed;
+  top: 0;
+  left: 400px;
+  height: 100vh;
+  width: calc(100% - 400px);
 }
 
 .container-toast {

@@ -2,10 +2,10 @@ import { Injectable } from "@angular/core";
 import { IDataProvider } from "../../../interfaces/i-data-provider";
 
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { Observable, Observer } from "rxjs";
+import { catchError, map, tap } from "rxjs/operators";
 import { CaseStatus } from "@app/classes/case-status/case-status";
 import { ToastService } from "@app/services/toast/toast.service";
-
 @Injectable({
   providedIn: "root"
 })
@@ -15,25 +15,18 @@ export class UscisWebPageService implements IDataProvider {
   private USCIS_API_URL: string =
     "https://egov.uscis.gov/casestatus/mycasestatus.do?appReceiptNum=";
 
-  public getCaseInfo(caseId: string, callback: Function) {
-    this.httpClient
-      .get(this.USCIS_API_URL + caseId, {
-        responseType: "text"
-      })
-      .subscribe(
-        response => {
-          var caseStatus = this.analyzeResult(response);
-          callback(caseStatus);
-        },
-        error => {
-          console.error(error);
-          this.toastSvc.show(error.message, {
-            header: "Network Error",
-            classname: "bg-warning",
-            delay: 10000
-          });
-        }
-      );
+  public getCaseInfo(caseId: string): Observable<CaseStatus> {
+    return Observable.create((observer: Observer<CaseStatus>) => {
+      this.httpClient
+        .get(this.USCIS_API_URL + caseId, { responseType: "text" })
+        .subscribe(
+          res => {
+            observer.next(this.analyzeResult(res));
+            observer.complete();
+          },
+          err => observer.error(err)
+        );
+    });
   }
 
   public analyzeResult(html: string): CaseStatus {

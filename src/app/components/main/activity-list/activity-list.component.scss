@@ -1,27 +1,62 @@
-.panel-title {
-  text-align: left;
-  padding: 0 2px;
+.list-manipulation {
+  border-bottom: 1px solid lightgray;
+  padding: 2px;
 }
-.panel-title > * {
-  margin: 2px;
-}
-
-.panel-title button:not(.btn-freeWidth) {
-  width: 80px;
+.list-manipulation > button {
+  display: inline-block;
+  width: calc(100% - 2px);
+  margin: 1px;
 }
 
-.panel-title button:disabled {
-  opacity: 0.3;
-}
-
-.panel-title .input-threads {
-  width: 80px;
+button.half-width {
+  width: calc(50% - 2px) !important;
 }
 
 .container-records {
-  position: fixed;
-  width: 100%;
-  height: calc(100vh - 30px);
-  overflow-x: scroll;
-  overflow-y: scroll;
+  height: calc(100vh - 60px);
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+ul {
+  margin: 0;
+  height: 100%;
+
+  list-style-type: none;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  padding-inline-start: 0;
+}
+
+li {
+  overflow: hidden;
+  padding: 5px 1em;
+  color: gray;
+}
+
+li.visible {
+  color: black;
+  font-weight: bold;
+}
+
+li fa-icon {
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+li fa-icon.remove {
+  color: transparent;
+}
+
+li:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 0 1px black;
+}
+li:hover fa-icon {
+  color: black;
+}
+li:hover fa-icon:hover {
+  color: red;
 }

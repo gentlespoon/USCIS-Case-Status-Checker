@@ -33,6 +33,7 @@ import { DataProviderProviderService } from "./services/data-providers/data-prov
 import { UscisWebPageService } from "./services/data-providers/uscis-web-page/uscis-web-page.service";
 import { ToastComponent } from "./components/main/toast/toast.component";
 import { ToastService } from "./services/toast/toast.service";
+import { StatusListComponent } from './components/main/status-list/status-list.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { ToastService } from "./services/toast/toast.service";
     NewListComponent,
     ListExporterComponent,
     ActivityListComponent,
-    ToastComponent
+    ToastComponent,
+    StatusListComponent
   ],
   imports: [
     NgbModule,
