@@ -55,4 +55,10 @@ export class StatusListComponent implements OnInit {
       return new CaseStatus();
     }
   }
+
+  public export() {
+    if (!this.visibleActivities.length) {
+      return;
+    }
+  }
 }

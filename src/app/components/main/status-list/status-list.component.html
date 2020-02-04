@@ -1,5 +1,9 @@
 <div class="panel-title form-inline">
-  <button class="btn btn-primary btn-sm" [disabled]="!visibleActivities.length">
+  <button
+    class="btn btn-primary btn-sm"
+    [disabled]="true || !visibleActivities.length"
+    (click)="export()"
+  >
     <fa-icon [icon]="fa.rSave"></fa-icon> Save
   </button>
 
@@ -44,7 +48,7 @@
 </div>
 
 <div class="container-records">
-  <table class="table table-striped table-bordered">
+  <table class="table table-striped table-bordered allow-select">
     <thead>
       <tr>
         <th scope="col" class="caseId">

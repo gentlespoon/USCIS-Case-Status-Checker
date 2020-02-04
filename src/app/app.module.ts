@@ -17,15 +17,15 @@ import { AppComponent } from "./app.component";
 
 import { ElectronService } from "./services/electron/electron.service";
 import { CaseListComponent } from "./components/main/case-list/case-list.component";
-import { ListBuilderComponent } from "./components/popups/list-builder/list-builder.component";
+import { ListBuilderComponent } from "./components/popups/case-list-builder/list-builder.component";
 import { UserAgreementComponent } from "./components/popups/user-agreement/user-agreement.component";
 import { DataCacheService } from "./services/data-cache/data-cache.service";
 import { AddCaseComponent } from "./components/popups/add-case/add-case.component";
 import { GreetingComponent } from "./components/popups/greeting/greeting.component";
-import { ListImporterComponent } from "./components/popups/list-importer/list-importer.component";
+import { ListImporterComponent } from "./components/popups/case-list-importer/list-importer.component";
 import { PopupsComponent } from "./components/main/popups/popups.component";
 import { NewListComponent } from "./components/popups/new-list/new-list.component";
-import { ListExporterComponent } from "./components/popups/list-exporter/list-exporter.component";
+import { ListExporterComponent } from "./components/popups/case-list-exporter/list-exporter.component";
 import { ActivityListComponent } from "./components/main/activity-list/activity-list.component";
 import { ViewControllerService } from "./services/view-controller/view-controller.service";
 import { QueryControllerService } from "./services/query-controller/query-controller.service";
@@ -33,7 +33,7 @@ import { DataProviderProviderService } from "./services/data-providers/data-prov
 import { UscisWebPageService } from "./services/data-providers/uscis-web-page/uscis-web-page.service";
 import { ToastComponent } from "./components/main/toast/toast.component";
 import { ToastService } from "./services/toast/toast.service";
-import { StatusListComponent } from './components/main/status-list/status-list.component';
+import { StatusListComponent } from "./components/main/status-list/status-list.component";
 
 @NgModule({
   declarations: [

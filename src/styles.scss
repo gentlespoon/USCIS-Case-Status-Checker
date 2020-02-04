@@ -12,6 +12,10 @@ body {
   user-select: none;
 }
 
+.allow-select {
+  user-select: text;
+}
+
 .panel-title {
   text-align: center;
   height: 30px;
