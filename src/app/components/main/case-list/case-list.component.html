@@ -1,0 +1,44 @@
+<div class="panel-title">Case List</div>
+
+<div
+  class="list-manipulation"
+  [class.disabled]="!queryControllerSvc.can('start')"
+>
+  <button
+    class="btn btn-danger btn-sm"
+    (click)="newList()"
+    [disabled]="!Object.keys(caseListSvc.caseIdList).length"
+  >
+    <fa-icon [icon]="fa.plusSquare"></fa-icon>
+    New List
+  </button>
+  <button class="btn btn-primary" (click)="buildList()">
+    <fa-icon [icon]="fa.tools"></fa-icon>
+    Build a List
+  </button>
+  <button class="btn btn-primary btn-lg" (click)="addCase()">
+    <fa-icon [icon]="fa.plus"></fa-icon>
+    Add a Case
+  </button>
+  <button class="btn btn-sm btn-success half-width" (click)="importList()">
+    <fa-icon [icon]="fa.fileImport"></fa-icon>
+    Import List
+  </button>
+  <button
+    class="btn btn-sm btn-success half-width"
+    (click)="exportList()"
+    [disabled]="!caseListSvc.caseIdList.length"
+  >
+    <fa-icon [icon]="fa.fileExport"></fa-icon>
+    Export List
+  </button>
+</div>
+
+<div class="case-list" [class.disabled]="!queryControllerSvc.can('start')">
+  <ul>
+    <li *ngFor="let caseId of caseIdList">
+      <fa-icon [icon]="fa.times" (click)="removeCase(caseId)"></fa-icon>
+      {{ caseId }}
+    </li>
+  </ul>
+</div>

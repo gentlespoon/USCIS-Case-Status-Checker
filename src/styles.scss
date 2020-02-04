@@ -1,63 +1,81 @@
-html, body {
+/* You can add global styles to this file, and also import other style files */
+html,
+body {
   margin: 0;
   padding: 0;
   height: 100%;
-}
-
-
-* {
-  transition: all .2s ease;
-  font-family: sans-serif;
-  box-sizing: border-box;
+  font-family: Helvetica, "Segoe UI", Arial, sans-serif;
   font-size: 12px;
 }
 
-
-
-
-.btn {
-  border: none;
-  background-color: transparent;
-  display: inline-block;
-  height: 30px;
-  line-height: 30px;
-  padding: 0 1em;
-  cursor: pointer;
-  box-shadow: inset 0 0 1px lightgray;
-}
-.btn:hover {
-  background-color: #00000011;
+.disable-select {
+  user-select: none;
 }
 
-.btn.disabled,
-.btn:disabled {
-  color: gray !important;
-  cursor: not-allowed;
-  background-color: transparent !important;
+.allow-select {
+  user-select: text;
 }
 
-
-.columnTitle {
-  font-weight: bold;
-  height: 30px;
-  line-height: 30px;
+.panel-title {
   text-align: center;
-  border-bottom: solid 1px lightgray;
+  height: 30px;
+  line-height: 30px;
+  font-weight: bold;
+  border-bottom: 1px solid lightgray;
 }
 
-
-
-
-
-
-::-webkit-scrollbar {
-  width: 5px;
+div.error-message {
+  color: darkred;
 }
- 
-::-webkit-scrollbar-track {
-  background: #ddd;
+
+fieldset.g_input {
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  padding: 0.5em;
+  margin-bottom: 1em;
 }
- 
-::-webkit-scrollbar-thumb {
-  background: #666; 
+
+fieldset.g_input legend {
+  margin: 0 0.5em;
+  padding: 0 0.5em;
+  width: unset;
+  font-size: unset;
+}
+
+small {
+  font-size: 10px;
+}
+
+div.container-horizontal-split {
+  width: 100%;
+  display: table;
+  border-collapse: collapse;
+}
+
+div.cell-horizontal-split {
+  vertical-align: top;
+  width: 50%;
+  padding: 1em;
+  display: table-cell;
+}
+div.cell-horizontal-split:not(:first-child) {
+  border-left: 1px solid lightgray;
+}
+
+div.cell-horizontal-split.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+textarea {
+  padding: 0.5rem;
+}
+
+.hide-overflow {
+  overflow: hidden;
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.5;
 }

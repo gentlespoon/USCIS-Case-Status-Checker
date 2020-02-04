@@ -1,0 +1,15 @@
+<app-user-agreement
+  *ngIf="viewControllerSvc.show['userAgreement']"
+></app-user-agreement>
+<app-greeting *ngIf="viewControllerSvc.show['greeting']"></app-greeting>
+<app-list-importer
+  *ngIf="viewControllerSvc.show['listImporter']"
+></app-list-importer>
+<app-list-exporter
+  *ngIf="viewControllerSvc.show['listExporter']"
+></app-list-exporter>
+<app-list-builder
+  *ngIf="viewControllerSvc.show['listBuilder']"
+></app-list-builder>
+<app-add-case *ngIf="viewControllerSvc.show['addCase']"></app-add-case>
+<app-new-list *ngIf="viewControllerSvc.show['newList']"></app-new-list>

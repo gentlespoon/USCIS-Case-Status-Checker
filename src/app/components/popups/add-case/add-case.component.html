@@ -1,0 +1,37 @@
+<div class="container-add-case">
+  <div class="head">Add Case</div>
+
+  <div class="body">
+    <fieldset class="g_input">
+      <legend>Case ID</legend>
+      <input
+        type="text"
+        class="form-control"
+        id="tb_caseId"
+        [(ngModel)]="data"
+        maxlength="13"
+        autofocus
+      />
+      <small class="form-text text-muted"
+        >Case ID is your Receipt number.<br />Example: YSC1234567890</small
+      >
+    </fieldset>
+  </div>
+
+  <div
+    class="error-message"
+    *ngIf="errorMessage"
+    wrap="true"
+    [innerHTML]="errorMessage"
+  ></div>
+  <div class="foot">
+    <button
+      class="btn btn-primary"
+      (click)="add()"
+      [disabled]="disableAddButton"
+    >
+      Add
+    </button>
+    <button class="btn btn-danger" (click)="close()">Cancel</button>
+  </div>
+</div>

@@ -1,0 +1,131 @@
+<div class="container-list-builder">
+  <div class="head">Build a List</div>
+
+  <div class="body">
+    <fieldset class="g_input">
+      <legend>Your USCIS Case ID</legend>
+      <input
+        class="form-control"
+        type="text"
+        [(ngModel)]="baseCaseId"
+        maxlength="13"
+        autofocus
+      />
+      <small class="form-text text-muted"
+        >Case ID is your Receipt number. Example: YSC1234567890</small
+      >
+    </fieldset>
+
+    <fieldset class="g_input">
+      <legend>Step Width</legend>
+      <input class="form-control" type="number" [(ngModel)]="stepWidth" />
+      <small class="form-text text-muted"
+        >Check every
+        {{ stepWidth ? (stepWidth > 1 ? stepWidth : "") : "_" }} case{{
+          stepWidth > 1 ? "s" : ""
+        }}</small
+      >
+    </fieldset>
+
+    <fieldset class="g_input" style="padding: 0;">
+      <legend style="text-align: center;">
+        <div
+          class="btn-group btn-group-toggle"
+          ngbRadioGroup
+          name="radioBasic"
+          [(ngModel)]="mode"
+        >
+          <label ngbButtonLabel class="btn-light label-wide">
+            <input
+              ngbButton
+              type="radio"
+              [value]="BuilderMode.prevNextRange"
+              [disabled]="!baseCaseId"
+            />
+            <fa-icon [icon]="faChevronLeft"></fa-icon>
+          </label>
+          <label ngbButtonLabel class="btn-light label-wide">
+            <input
+              ngbButton
+              type="radio"
+              [value]="BuilderMode.absoluteRange"
+              [disabled]="!baseCaseId"
+            />
+            <fa-icon [icon]="faChevronRight"></fa-icon>
+          </label>
+        </div>
+      </legend>
+
+      <div class="container-horizontal-split">
+        <div
+          class="cell-horizontal-split"
+          [class.disabled]="mode != 'prevNextRange' || !baseCaseId"
+        >
+          <fieldset class="g_input">
+            <legend>Previous _ Cases</legend>
+            <input
+              class="form-control"
+              type="number"
+              [(ngModel)]="prevCases"
+              [disabled]="mode != 'prevNextRange' || !baseCaseId"
+              min="1"
+            />
+          </fieldset>
+
+          <fieldset class="g_input">
+            <legend>Next _ Cases</legend>
+            <input
+              class="form-control"
+              type="number"
+              [(ngModel)]="nextCases"
+              [disabled]="mode != 'prevNextRange' || !baseCaseId"
+              min="1"
+            />
+          </fieldset>
+        </div>
+
+        <!-- Horizontal Split -->
+
+        <div
+          class="cell-horizontal-split"
+          [class.disabled]="mode != 'absoluteRange' || !baseCaseId"
+        >
+          <fieldset class="g_input">
+            <legend>Mininum Case ID</legend>
+            <input
+              class="form-control"
+              type="text"
+              [(ngModel)]="minCaseId"
+              maxlength="13"
+              [disabled]="mode != 'absoluteRange' || !baseCaseId"
+            />
+          </fieldset>
+
+          <fieldset class="g_input">
+            <legend>Maximum Case ID</legend>
+            <input
+              class="form-control"
+              type="text"
+              [(ngModel)]="maxCaseId"
+              maxlength="13"
+              [disabled]="mode != 'absoluteRange' || !baseCaseId"
+            />
+          </fieldset>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+
+  <div class="explanation" wrap="true" [innerHTML]="explanation"></div>
+
+  <div class="foot">
+    <button
+      class="btn btn-primary"
+      (click)="generateList()"
+      [disabled]="explanation.indexOf('Check') !== 0"
+    >
+      Build and Import
+    </button>
+    <button class="btn btn-danger" (click)="close()">Cancel</button>
+  </div>
+</div>

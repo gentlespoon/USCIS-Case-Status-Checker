@@ -1,0 +1,46 @@
+.container-list-builder {
+  position: fixed;
+  z-index: 9998;
+  background-color: white;
+  font-size: 1.2em;
+  padding: 3em;
+  box-shadow: 0 0 0 calc(500vw + 500vh) rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  margin: auto;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  width: 90%;
+  max-width: 800px;
+  max-height: 90%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+div.head {
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+div.body {
+}
+
+div.foot {
+  text-align: center;
+}
+div.foot > * {
+  margin: 0.5em;
+}
+
+.label-wide {
+  width: 100px;
+}
+
+.explanation {
+  text-align: center;
+}
+
+input[type="text"] {
+  text-transform: uppercase;
+}

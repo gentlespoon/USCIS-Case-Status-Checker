@@ -1,0 +1,71 @@
+<div class="panel-title form-inline">
+  <button
+    class="btn btn-primary btn-sm"
+    [disabled]="true || !visibleActivities.length"
+    (click)="export()"
+  >
+    <fa-icon [icon]="fa.rSave"></fa-icon> Save
+  </button>
+
+  <button class="btn btn-sm btn-freeWidth">Threads</button>
+  <input
+    type="number"
+    class="form-control form-control-sm input-threads"
+    [(ngModel)]="queryControllerSvc.threads"
+  />
+
+  <button
+    class="btn btn-success btn-sm"
+    [disabled]="!queryControllerSvc.can('start')"
+    (click)="queryControllerSvc.start()"
+  >
+    <fa-icon [icon]="fa.sPlay"></fa-icon> Start
+  </button>
+
+  <button
+    class="btn btn-success btn-sm"
+    [disabled]="!queryControllerSvc.can('resume')"
+    (click)="queryControllerSvc.resume()"
+  >
+    <fa-icon [icon]="fa.sPlay"></fa-icon> Resume
+  </button>
+
+  <button
+    class="btn btn-warning btn-sm"
+    [disabled]="!queryControllerSvc.can('pause')"
+    (click)="queryControllerSvc.pause()"
+  >
+    <fa-icon [icon]="fa.sPause"></fa-icon> Pause
+  </button>
+
+  <button
+    class="btn btn-danger btn-sm"
+    [disabled]="!queryControllerSvc.can('stop')"
+    (click)="queryControllerSvc.stop()"
+  >
+    <fa-icon [icon]="fa.sStop"></fa-icon> Stop
+  </button>
+</div>
+
+<div class="container-records">
+  <table class="table table-striped table-bordered allow-select">
+    <thead>
+      <tr>
+        <th scope="col" class="caseId">
+          Case ID
+        </th>
+        <th scope="col" *ngFor="let activity of visibleActivities">
+          {{ moment(activity).calendar() }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let caseId of caseIdList">
+        <th scope="row">{{ caseId }}</th>
+        <td *ngFor="let activity of visibleActivities">
+          {{ getCaseStatus(caseId, activity).title }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

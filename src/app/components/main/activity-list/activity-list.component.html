@@ -1,0 +1,46 @@
+<div class="panel-title">
+  History
+</div>
+
+<div
+  class="list-manipulation"
+  [class.disabled]="!queryControllerSvc.can('start')"
+>
+  <button
+    class="btn btn-danger btn-sm full-width"
+    (click)="newList()"
+    [disabled]="!Object.keys(dataCacheSvc.activities).length"
+  >
+    <fa-icon [icon]="fa.times"></fa-icon>
+    Clear History
+  </button>
+</div>
+
+<div class="container-records">
+  <ul>
+    <li
+      *ngFor="let activity of Object.keys(dataCacheSvc.activities)"
+      [title]="activity"
+      [class.visible]="dataCacheSvc.activities[activity]"
+    >
+      <fa-icon
+        [icon]="fa.times"
+        class="remove"
+        (click)="removeActivity(activity)"
+      ></fa-icon>
+      <fa-icon
+        *ngIf="dataCacheSvc.activities[activity]"
+        [icon]="fa.eye"
+        class="visible"
+        (click)="dataCacheSvc.toggleActivity(activity, false)"
+      ></fa-icon>
+      <fa-icon
+        *ngIf="!dataCacheSvc.activities[activity]"
+        [icon]="fa.eyeSlashRegular"
+        class="visible"
+        (click)="dataCacheSvc.toggleActivity(activity, true)"
+      ></fa-icon>
+      {{ moment(activity).calendar() }}
+    </li>
+  </ul>
+</div>

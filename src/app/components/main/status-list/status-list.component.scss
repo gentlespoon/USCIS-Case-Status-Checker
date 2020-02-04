@@ -1,0 +1,35 @@
+.panel-title {
+  text-align: left;
+  padding: 0 2px;
+}
+.panel-title > * {
+  margin: 2px;
+}
+
+.panel-title button:not(.btn-freeWidth) {
+  width: 80px;
+}
+
+.panel-title button:disabled {
+  opacity: 0.3;
+}
+
+.panel-title .input-threads {
+  width: 80px;
+}
+
+.container-records {
+  height: calc(100vh - 30px);
+}
+
+table {
+  overflow: scroll;
+}
+
+th.caseId {
+  width: 150px;
+}
+
+th:not(.caseId) {
+  width: 250px;
+}
