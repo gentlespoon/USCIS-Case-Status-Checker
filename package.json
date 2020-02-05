@@ -1,8 +1,8 @@
 {
-  "name": "Gs-USCIS-Case-BatchQuery",
-  "version": "20.01.01",
-  "description": "A tool for tracking USCIS case status in batch.",
-  "homepage": "https://github.com/gentlespoon/USCIS-Case-BatchQuery",
+  "name": "Gs-USCIS-Case-Status-Checker",
+  "version": "20.02.04",
+  "description": "A tool for tracking USCIS case status.",
+  "homepage": "https://github.com/gentlespoon/USCIS-Case-Status-Checker",
   "author": {
     "name": "GentleSpoon",
     "email": "github@gentlespoon.com"

@@ -30,12 +30,6 @@
     <textarea [(ngModel)]="data" readonly></textarea>
   </div>
 
-  <div
-    class="error-message"
-    *ngIf="errorMessage"
-    wrap="true"
-    [innerHTML]="errorMessage"
-  ></div>
   <div class="foot">
     <button class="btn btn-danger" (click)="close()">Close</button>
   </div>

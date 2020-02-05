@@ -16,8 +16,8 @@ function createWindow(): BrowserWindow {
     // y: 0,
     // width: size.width,
     // height: size.height,
-    width: 1366,
-    height: 1440,
+    width: 1280,
+    height: 768,
 
     minWidth: 1024,
     minHeight: 720,

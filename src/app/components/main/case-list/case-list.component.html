@@ -27,7 +27,7 @@
   <button
     class="btn btn-sm btn-success half-width"
     (click)="exportList()"
-    [disabled]="!caseListSvc.caseIdList.length"
+    [disabled]="!caseIdList.length"
   >
     <fa-icon [icon]="fa.fileExport"></fa-icon>
     Export List

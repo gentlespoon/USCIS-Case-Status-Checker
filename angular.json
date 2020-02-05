@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-electron": {
+    "gs-uscis-case-status-checker": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -24,9 +24,7 @@
               "src/favicon.256x256.png",
               "src/favicon.512x512.png"
             ],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "styles": ["src/styles.scss"],
             "scripts": [],
             "customWebpackConfig": {
               "path": "./angular.webpack.js"
@@ -89,24 +87,24 @@
         "serve": {
           "builder": "@angular-builders/custom-webpack:dev-server",
           "options": {
-            "browserTarget": "angular-electron:build"
+            "browserTarget": "gs-uscis-case-status-checker:build"
           },
           "configurations": {
             "dev": {
-              "browserTarget": "angular-electron:build:dev"
+              "browserTarget": "gs-uscis-case-status-checker:build:dev"
             },
             "web": {
-              "browserTarget": "angular-electron:build:web"
+              "browserTarget": "gs-uscis-case-status-checker:build:web"
             },
             "production": {
-              "browserTarget": "angular-electron:build:production"
+              "browserTarget": "gs-uscis-case-status-checker:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angular-electron:build"
+            "browserTarget": "gs-uscis-case-status-checker:build"
           }
         },
         "test": {
@@ -117,9 +115,7 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "scripts": [],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "styles": ["src/styles.scss"],
             "assets": [
               "src/assets",
               "src/favicon.ico",
@@ -138,18 +134,13 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "eslintConfig": "src/eslintrc.config.json",
-            "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "tsConfig": ["src/tsconfig.app.json", "src/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
     },
-    "angular-electron-e2e": {
+    "gs-uscis-case-status-checker-e2e": {
       "root": "e2e",
       "projectType": "application",
       "architect": {
@@ -157,18 +148,14 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "eslintConfig": "e2e/eslintrc.e2e.json",
-            "tsConfig": [
-              "e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "tsConfig": ["e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
     }
   },
-  "defaultProject": "angular-electron",
+  "defaultProject": "gs-uscis-case-status-checker",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",
