@@ -1,6 +1,11 @@
 # USCIS Case Status BatchQuery
 
-For DEVs
+Currently I am busying with GRE, and I honestly do not have a lot of time working on this project.\
+If you have some great ideas and would like me to add to this project, please feel free to start an issue and let me know.\
+Also, PRs are more than welcome.
+
+
+## For DEVs
 
 Start the application in debugging mode
 ```
