@@ -4,6 +4,21 @@ Currently I am busying with GRE, and I honestly do not have a lot of time workin
 If you have some great ideas and would like me to add to this project, please feel free to start an issue and let me know.\
 Also, PRs are more than welcome.
 
+***
+
+#### This may be considered as a Denial of Service attack to USCIS system!
+#### You are responsible for all consequences of using this tool.
+If you do not know what DoS means, or if you do not fully understand the risk, just keep away from this tool.
+
+You have been warned!
+
+Your IP may be blocked by USCIS if you send a lot of queries without using any proxy server.
+
+> It was reported to us that your IP address or internet gateway has been locked out for a select period of time. This is due to an unusually high rate of use. In order to avoid this issue, please create a Customer account (single applicant) or a Representative account (representing many individuals).
+
+Exact IP rate limits imposed by USCIS are not known (and may change at any time), but it is likely that both per-minute and longer-term limits are in place. As a rough guide *with no warranty of reliability*, as of mid-2019, 100 requests/minute appears to be acceptable over short time periods. However, sustaining this rate for more than 12 hours (72,000 requests over 12 hours) seems highly likely to trigger an IP ban. Initial IP bans typically last 24 hours, but of course USCIS may have authority to issue longer bans or more serious punishments. Again, **you use this tool at your own risk**.
+
+***
 
 ## For DEVs
 
@@ -23,42 +38,31 @@ $ npm run electron:linux
 macOS - You will need a macOS computer to build for mac.
 $ npm run electron:mac
 ```
-## Ver. 2020.01 - Angular + Electron
-
-Allow importing custom Case ID list
-
-![alt text](https://raw.githubusercontent.com/gentlespoon/USCIS-Case-Status-Checker/master/20200129-044214.jpg "Running in Windows, v2020.01.29")
-
-## Ver. 2019.07 - Angular + Electron
-
-Added pause/resume.
-
-Optimized analyze algorithm.
-
-Allow save query configuration.
-
-Allow save results in localStorage.
-
-Allow export to CSV.
-
-Built for Windows, macOS, and Linux.
-
-
-![alt text](https://raw.githubusercontent.com/gentlespoon/USCIS-Case-Status-Checker/master/20190711-224137.png "Running in Windows, v2019.07.11")
 
 ***
 
-#### This may be considered as a Denial of Service attack to USCIS system!
-#### You are responsible for all consequences of using this tool.
-If you do not know what DoS means, or if you do not fully understand the risk, just keep away from this tool.
+## Ver. 2020.01 - Angular + Electron
 
-You have been warned!
+- Allow import/export custom Case ID list.
+- Better case list builder.
+- Save results in IndexedDB.
+- Removed account requirements.
 
-Your IP may be blocked by USCIS if you send a lot of queries without using any proxy server.
+![alt text](https://raw.githubusercontent.com/gentlespoon/USCIS-Case-Status-Checker/master/20200129-044214.jpg "Running in Windows, v2020.01.29")
 
-> It was reported to us that your IP address or internet gateway has been locked out for a select period of time. This is due to an unusually high rate of use. In order to avoid this issue, please create a Customer account (single applicant) or a Representative account (representing many individuals).
+***
 
-Exact IP rate limits imposed by USCIS are not known (and may change at any time), but it is likely that both per-minute and longer-term limits are in place. As a rough guide *with no warranty of reliability*, as of mid-2019, 100 requests/minute appears to be acceptable over short time periods. However, sustaining this rate for more than 12 hours (72,000 requests over 12 hours) seems highly likely to trigger an IP ban. Initial IP bans typically last 24 hours, but of course USCIS may have authority to issue longer bans or more serious punishments. Again, **you use this tool at your own risk**.
+## Ver. 2019.07 - Angular + Electron
+
+- Added pause/resume.
+- Optimized analyze algorithm.
+- Allow save query configuration.
+- Allow save results in localStorage.
+- Allow export to CSV.
+- Built for Windows, macOS, and Linux.
+
+![alt text](https://raw.githubusercontent.com/gentlespoon/USCIS-Case-Status-Checker/master/20190711-224137.png "Running in Windows, v2019.07.11")
+
 
 ***
 
