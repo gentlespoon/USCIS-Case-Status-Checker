@@ -22,7 +22,7 @@ $ npm run electron:mac
 
 Allow importing custom Case ID list
 
-![alt text](https://raw.githubusercontent.com/gentlespoon/USCIS-Case-Status-Checker/v2020.01.01/20200129-044214.jpg "Running in Windows, v2020.01.29")
+![alt text](https://raw.githubusercontent.com/gentlespoon/USCIS-Case-Status-Checker/master/20200129-044214.jpg "Running in Windows, v2020.01.29")
 
 ## Ver. 2019.07 - Angular + Electron
 
@@ -39,7 +39,7 @@ Allow export to CSV.
 Built for Windows, macOS, and Linux.
 
 
-![alt text](https://raw.githubusercontent.com/gentlespoon/USCIS-Case-BatchQuery/master/20190711-224137.png "Running in Windows, v2019.07.11")
+![alt text](https://raw.githubusercontent.com/gentlespoon/USCIS-Case-Status-Checker/master/20190711-224137.png "Running in Windows, v2019.07.11")
 
 ***
 
